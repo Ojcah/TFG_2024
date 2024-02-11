@@ -1,0 +1,126 @@
+\documentclass[12pt]{article}
+\usepackage{fullpage,amsmath,amssymb,graphicx}
+
+\usepackage{setspace}
+\spacing{1}
+
+\usepackage{amssymb, amsmath}
+\usepackage{textpos}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{multicol}
+\usepackage{longtable}
+
+
+\definecolor{encabezado}{rgb}{0.74, 0.83, 0.9}
+
+\begin{document}
+
+\hfill\\
+\rule{\textwidth}{1.5pt}
+
+\begin{minipage}[t]{85mm}
+  \begin{tabular}{l}
+    \textbf{\large Instituto Tecnológico de Costa Rica} \\  
+    \textbf{Escuela de Ingeniería Electrónica} \\
+    \textbf{Trabajo Final de Graduación} \\
+    \textbf{Proyecto:} Método basado en aprendizaje reforzado \\para el control automático de una planta no lineal. \\
+    \textbf{Estudiante:} Oscar Andrés Rojas Fonseca \hspace{3cm}\rule{4.5cm}{1.5pt}\\
+    I Semestre 2024 \hspace{8.5cm}\textbf{Firma del asesor}
+  \end{tabular}
+\end{minipage}
+\hfill\\
+\rule{\textwidth}{1.5pt}
+
+
+\section*{Bitácora de trabajo}
+
+%\begin{table}[h]
+\begin{minipage}[h]{\textwidth}
+	\centering
+	\begin{tabularx}{\textwidth}{|p{2cm}|X|X|p{2cm}|} 
+		\hline
+		\rowcolor{encabezado}
+		\textbf{Fecha} & 
+		\textbf{Actividad} & 
+		\textbf{Anotaciones} & 
+		\textbf{Horas dedicadas} \\ \hline
+		% ***************************************************************
+		05/02/2024 & 
+		$\mathbf{1}.$ Estudio de a teoría de control para el péndulo amortiguado a hélice (PAMH). & 
+		$a)$ Consulta a bibliografía de control automático: Nise (2020) y Ogata (2003). \newline $b)$ Revisión de material multimedia de Anibal Ruiz-Barquero referente al PAMH vía Youtube. \newline & 
+		3 horas \\
+	 	% ***************************************************************
+	 	06/02/2024 & 
+	 	$\mathbf{2}.$ Estudio de la teoría de aprendizaje reforzado (RL). &
+	 	$a)$ Consulta a libros de texto como \textit{Data-Driven Science and Engineering} (Brunton y Kutz, 2021). \newline $b)$ Revisión de material multimedia de Steven Brunton vía Youtube. \newline & 
+	 	3 horas \\
+	 	% ***************************************************************
+	 	06/02/2024 & 
+	 	$\mathbf{3}.$ Revisión bibliográfica de algoritmos de aplicación de aprendizaje automático. & 
+	 	$a)$ Consulta al libro \textit{Reinforcement Learning: An introduction} (Sutton y Barto, 2020) para mayor detalle. \newline $b)$ Revisión de otros métodos de aprendizaje automático. \newline $c)$ Ejemplos de implementación de las redes neuronales recurrentes (RNN) por Patrick Loeber vía Youtube y la tésis de graduación de Jorge Brenes. & 
+	 	3 horas \\
+	 	
+	 	\hline
+	\end{tabularx}
+\end{minipage}	 	
+	 	
+	 	% ***************************************************************
+
+\begin{minipage}[h]{\textwidth}
+	\centering
+	\begin{tabularx}{\textwidth}{|p{2cm}|X|X|p{2cm}|} 
+		\hline		
+		
+	 	07/02/2024 & 
+	 	$\mathbf{4}.$ Revisión de repositorios en línea de métodos de aplicación de aprendizaje automático. & 
+	 	$a)$ Búsqueda preliminar de repositorios generales de RL mediante Github. \newline $b)$ Selección de códigos con enfoques similares al control del PAMH. \newline & 
+	 	5 horas \\
+	 	% ***************************************************************
+	 	09/02/2024 & 
+	 	$\mathbf{5}.$ Creación del ambiente de trabajo anaconda para montaje de la red neuronal mimetizadora (RNAM). & 
+	 	$a)$ Revisión de bibliotecas utilizadas por el código base de la RNAM.\newline $b)$ Instalación/revisión de versiones adecuadas de \textit{Python}, \textit{ArgumentParser}, \textit{Numpy}, \textit{Matplotlib}, \textit{TensorFlow} y \textit{Weights\&Biasis}.\newline & 
+	 	2 horas \\
+	 	% ***************************************************************
+	 	09/02/2024 & 
+	 	$\mathbf{6}.$ Pruebas de funcionamiento de la red neuronal mimetizadora (Synthetic-PAHM.py). & 
+	 	$a)$ Estudio del código de la RNAM. \newline $b)$ Error en el proceso por falta de cuenta y permisos del autor en W\&B. \newline $c)$ Creación de cuenta y proyecto en W\&B. \newline & 
+	 	3 horas \\
+	 	% ***************************************************************
+	 	09/02/2024 & 
+	 	$\mathbf{7}.$ Estudio del funcionamiento de la herramienta Weights \& Biases (W\&B). & 
+	 	$a)$ Revisión de material en línea sobre el uso de W\&B. \newline $b)$ Ejemplos de implementación de W\&B. & 
+	 	2 horas \\
+	 	% ***************************************************************
+	 	\hline
+		\multicolumn{3}{|r|}{Total de horas de trabajo:} & 21 horas \\ 
+	 	\hline                 
+	\end{tabularx}
+\end{minipage}
+%\end{table}
+
+\section*{Contenidos de actividades}
+
+\subsection*{Resumen de teoría PAMH}
+
+AAAA
+
+\subsection*{Resumen de teoría RL}
+
+AAAA
+
+\subsection*{Ambiente de trabajo anaconda para la RNAM}
+
+AAAA
+
+
+
+
+\end{document}
