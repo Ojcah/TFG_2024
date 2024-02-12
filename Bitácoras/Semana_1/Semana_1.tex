@@ -4,7 +4,6 @@
 \usepackage{setspace}
 \spacing{1}
 
-\usepackage{amssymb, amsmath}
 \usepackage{textpos}
 \usepackage{tikz}
 \usepackage{pgf}
@@ -17,6 +16,7 @@
 \usepackage{colortbl}
 \usepackage{multicol}
 \usepackage{longtable}
+\usepackage{hyperref}
 
 
 \definecolor{encabezado}{rgb}{0.74, 0.83, 0.9}
@@ -73,7 +73,7 @@
 \end{minipage}	 	
 	 	
 	 	% ***************************************************************
-
+\hfill\\
 \begin{minipage}[h]{\textwidth}
 	\centering
 	\begin{tabularx}{\textwidth}{|p{2cm}|X|X|p{2cm}|} 
@@ -106,11 +106,35 @@
 \end{minipage}
 %\end{table}
 
+% *****************************************************************************
+% *****************************************************************************
+% *****************************************************************************
+
 \section*{Contenidos de actividades}
 
 \subsection*{Resumen de teoría PAMH}
 
-AAAA
+El péndulo amortiguado a hélice corresponde a una planta de laboratorio compuesta de un motor BLDC a $12 V$ controlado por torque, una masa pequeña, péndulo y soportes de aluminio de baja fricción. Un modelo simplificado del sistema se muestra en la Figura \ref{fig:modpen}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.3]{Fig/ModeloPendulo.png}
+	\caption{Modelo simplificado del PAMH.}
+	\label{fig:modpen}
+\end{figure}
+
+El objetivo de dicho sistema es controlar la magnitud del ángulo $\theta_p$, únicamente ejerciendo torque al accionar a una distancia $l_m$ el motor con una fuerza $F_m$ y movimiento de su masa $m_m$, mientras a una distancia de $l_p$ del centro se encuentra una masa $m_p$ que contrarresta el movimiento.
+
+De manera que al analizar el sistema con sumatoria de torques se obtiene la constante de rosamiento central $B$ (en caso de existir) junto con la inercia ejercida $J_p$. Por lo tanto, se definen las variables de estado siguientes y sus ecuaciones de estado mostradas en \ref{ecu:ecuestados}.
+
+\[x_1 = \theta_p \qquad x_2 = \dot{\theta}_p \qquad y = x_1 = \theta_p\]
+\begin{equation}
+	\left \{ \begin{array}{lcc} \dot{x}_1 = x_2 \\ \\ \dot{x}_2 = -\dfrac{B}{J_p} x_2 + (m_p l_p -m_m l_m)\dfrac{g}{J_p}sen(x_1) +\dfrac{l_m}{J_p}F_m \end{array} \right.
+	\label{ecu:ecuestados}
+\end{equation}
+
+
+
 
 \subsection*{Resumen de teoría RL}
 
@@ -118,7 +142,15 @@ AAAA
 
 \subsection*{Ambiente de trabajo anaconda para la RNAM}
 
-AAAA
+Luego de una revisión rápida del código perteneciente al repositorio del trabajo de Jorge Brenes, se instalaron versiones de bibliotecas necesarias para el funcionamiento de los registros, resultando en una lista simplificada como la mostrada en la Figura \ref{fig:capturaenv}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.45]{Fig/CapturaEnv.png}
+	\caption{Lista simplificada de bibliotecas del \textit{environment} TFG1.}
+	\label{fig:capturaenv}
+\end{figure}
+
 
 
 
