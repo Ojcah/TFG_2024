@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.2.6)  15 FEB 2024 23:09
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.2.6)  17 FEB 2024 21:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -798,33 +798,70 @@ Underfull \hbox (badness 10000) in paragraph at lines 72--72
 
 
 Overfull \hbox (1.84389pt too wide) in paragraph at lines 72--72
-[]|\OT1/cmr/m/n/12 05/02/2024| 
+[]|\OT1/cmr/m/n/12 12/02/2024| 
  []
 
 
 Overfull \hbox (1.84389pt too wide) in paragraph at lines 72--72
-[]|\OT1/cmr/m/n/12 06/02/2024| 
+[]|\OT1/cmr/m/n/12 13/02/2024| 
  []
 
 
 Overfull \hbox (1.84389pt too wide) in paragraph at lines 72--72
-[]|\OT1/cmr/m/n/12 06/02/2024| 
+[]|\OT1/cmr/m/n/12 13/02/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 95--95
-[]|\OT1/cmr/m/n/12 07/02/2024| 
+Underfull \hbox (badness 1596) in paragraph at lines 72--72
+[]|$\OT1/cmr/bx/n/12 3\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Tra-bajo en la tesis 
+del
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 95--95
-[]|\OT1/cmr/m/n/12 09/02/2024| 
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 97--97
+[]|\OT1/cmr/m/n/12 15/02/2024| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--97
+[]|$\OT1/cmr/bx/n/12 4\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Re-visi^^Son del fun-
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--97
+\OT1/cmr/m/n/12 cionamiento del c^^Sodigo
+ []
+
+
+Underfull \hbox (badness 2799) in paragraph at lines 97--97
+\OML/cmm/m/it/12 c\OT1/cmr/m/n/12 )$ Se prob^^So el c^^Sodigo de
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--97
+\OML/cmm/m/it/12 RNAM[]Real:py$ \OT1/cmr/m/n/12 sin ex-ito
+ []
+
+
+Underfull \hbox (badness 2772) in paragraph at lines 97--97
+\OT1/cmr/m/n/12 por la falta del di-rec-to-rio
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 97--97
+[]|\OT1/cmr/m/n/12 16/02/2024| 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 97--97
+\OT1/cmr/m/n/12 hiper-par^^Sametros al en-tre-
  []
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] (./Semana_2.bbl)
-[2] (./Semana_2.aux)
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] (./Semana_2.bbl)
+[3] (./Semana_2.aux)
 Package rerunfilecheck Info: File `Semana_2.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  )
@@ -833,21 +870,21 @@ Package rerunfilecheck Info: File `Semana_2.out' has not changed.
 ### semi simple group (level 1) entered at line 5 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 21759 strings out of 478287
- 406678 string characters out of 5849290
- 681225 words of memory out of 5000000
- 39581 multiletter control sequences out of 15000+600000
+ 21762 strings out of 478287
+ 406710 string characters out of 5849290
+ 683225 words of memory out of 5000000
+ 39583 multiletter control sequences out of 15000+600000
  476390 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,14n,89p,405b,18265s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,16n,89p,405b,18265s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
 sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Semana_2.pdf (2 pages, 57976 bytes).
+Output written on Semana_2.pdf (3 pages, 63845 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
- 36 compressed objects within 1 object stream
- 9 named destinations out of 1000 (max. 500000)
+ 53 PDF objects out of 1000 (max. 8388607)
+ 39 compressed objects within 1 object stream
+ 10 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
