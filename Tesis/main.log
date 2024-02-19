@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.2.6)  16 FEB 2024 13:30
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.2.6)  18 FEB 2024 21:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -766,6 +766,12 @@ Package xcolor Info: Driver file: pdftex.def on input line 227.
 (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/pdftex.def
 File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 )
+(/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
+\everycr=\toks31
+\minrowclearance=\skip93
+)
+\rownum=\count462
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
 Package xcolor Info: Model `RGB' extended on input line 1368.
@@ -803,12 +809,12 @@ Package graphics Info: Driver file: pdftex.def on input line 107.
 (/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pppdftex.def
 File: pppdftex.def 2022/01/29 v0.5u Pdfpages driver for pdfTeX (AM)
 )
-\pdfpages@includegraphics@status=\count462
+\pdfpages@includegraphics@status=\count463
 \AM@pagebox=\box116
-\AM@global@opts=\toks31
-\AM@pagecnt=\count463
-\AM@toc@title=\toks32
-\c@AM@survey=\count464
+\AM@global@opts=\toks32
+\AM@pagecnt=\count464
+\AM@toc@title=\toks33
+\c@AM@survey=\count465
 \AM@templatesizebox=\box117
 )
 (./sty/tecStyle.sty
@@ -822,22 +828,22 @@ Package: ifmtarg 2018/04/16 v1.2b check for an empty argument
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/tools/theorem.sty
 Package: theorem 2014/10/28 v2.2c Theorem extension package (FMi)
-\theorem@style=\toks33
-\theorem@bodyfont=\toks34
-\theorempreskipamount=\skip93
-\theorempostskipamount=\skip94
+\theorem@style=\toks34
+\theorem@bodyfont=\toks35
+\theorempreskipamount=\skip94
+\theorempostskipamount=\skip95
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/thp.sty
 File: thp.sty 2014/10/28 v2.2c Theorem extension package (FMi)
 )) 2009/02/15 tecStyle
-\c@Def=\count465
-\c@nexample=\count466
+\c@Def=\count466
+\c@nexample=\count467
 )
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
 (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks35
+\pgfutil@everybye=\toks36
 \pgfutil@tempdima=\dimen260
 \pgfutil@tempdimb=\dimen261
 
@@ -856,12 +862,12 @@ Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
 Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks36
-\pgfkeys@temptoks=\toks37
+\pgfkeys@pathtoks=\toks37
+\pgfkeys@temptoks=\toks38
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.t
 ex
-\pgfkeys@tmptoks=\toks38
+\pgfkeys@tmptoks=\toks39
 ))
 \pgf@x=\dimen262
 \pgf@y=\dimen263
@@ -875,14 +881,14 @@ ex
 \pgf@yd=\dimen271
 \w@pgf@writea=\write4
 \r@pgf@reada=\read4
-\c@pgf@counta=\count467
-\c@pgf@countb=\count468
-\c@pgf@countc=\count469
-\c@pgf@countd=\count470
-\t@pgf@toka=\toks39
-\t@pgf@tokb=\toks40
-\t@pgf@tokc=\toks41
-\pgf@sys@id@count=\count471
+\c@pgf@counta=\count468
+\c@pgf@countb=\count469
+\c@pgf@countc=\count470
+\c@pgf@countd=\count471
+\t@pgf@toka=\toks40
+\t@pgf@tokb=\toks41
+\t@pgf@tokc=\toks42
+\pgf@sys@id@count=\count472
  (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2021/05/15 v3.1.9a (3.1.9a)
 )
@@ -898,8 +904,8 @@ File: pgfsys-common-pdf.def 2021/05/15 v3.1.9a (3.1.9a)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.
 tex
 File: pgfsyssoftpath.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfsyssoftpath@smallbuffer@items=\count472
-\pgfsyssoftpath@bigbuffer@items=\count473
+\pgfsyssoftpath@smallbuffer@items=\count473
+\pgfsyssoftpath@bigbuffer@items=\count474
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
 tex
@@ -913,11 +919,11 @@ Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
 \pgfmath@dimen=\dimen272
-\pgfmath@count=\count474
+\pgfmath@count=\count475
 \pgfmath@box=\box119
-\pgfmath@toks=\toks42
-\pgfmath@stack@operand=\toks43
-\pgfmath@stack@operation=\toks44
+\pgfmath@toks=\toks43
+\pgfmath@stack@operand=\toks44
+\pgfmath@stack@operation=\toks45
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code
@@ -937,7 +943,7 @@ tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerari
 thmetics.code.tex)))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count475
+\c@pgfmathroundto@lastzeros=\count476
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.te
@@ -976,7 +982,7 @@ File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgfpic=\box120
 \pgf@hbox=\box121
 \pgf@layerbox@main=\box122
-\pgf@picture@serial@count=\count476
+\pgf@picture@serial@count=\count477
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.c
 ode.tex
@@ -1009,8 +1015,8 @@ File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \pgf@max=\dimen296
-\pgf@sys@shading@range@num=\count477
-\pgf@shadingcount=\count478
+\pgf@sys@shading@range@num=\count478
+\pgf@shadingcount=\count479
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
@@ -1061,8 +1067,8 @@ Package: pgffor 2021/05/15 v3.1.9a (3.1.9a)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
 \pgffor@iter=\dimen299
 \pgffor@skip=\dimen300
-\pgffor@stack=\toks45
-\pgffor@toks=\toks46
+\pgffor@stack=\toks46
+\pgffor@toks=\toks47
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
@@ -1070,7 +1076,7 @@ Package: tikz 2021/05/15 v3.1.9a (3.1.9a)
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers
 .code.tex
 File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgf@plot@mark@count=\count479
+\pgf@plot@mark@count=\count480
 \pgfplotmarksize=\dimen301
 )
 \tikz@lastx=\dimen302
@@ -1085,18 +1091,18 @@ File: pgflibraryplothandlers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
 \tikz@figbox@bg=\box126
 \tikz@tempbox=\box127
 \tikz@tempbox@bg=\box128
-\tikztreelevel=\count480
-\tikznumberofchildren=\count481
-\tikznumberofcurrentchild=\count482
-\tikz@fig@count=\count483
+\tikztreelevel=\count481
+\tikznumberofchildren=\count482
+\tikznumberofcurrentchild=\count483
+\tikz@fig@count=\count484
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2021/05/15 v3.1.9a (3.1.9a)
-\pgfmatrixcurrentrow=\count484
-\pgfmatrixcurrentcolumn=\count485
-\pgf@matrix@numberofcolumns=\count486
+\pgfmatrixcurrentrow=\count485
+\pgfmatrixcurrentcolumn=\count486
+\pgf@matrix@numberofcolumns=\count487
 )
-\tikz@expandcount=\count487
+\tikz@expandcount=\count488
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
 zlibrarytopaths.code.tex
@@ -1108,12 +1114,12 @@ Package: pgfplots 2021/05/15 v1.18.1 Data Visualization (1.18.1)
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscore.code.tex
-\t@pgfplots@toka=\toks47
-\t@pgfplots@tokb=\toks48
-\t@pgfplots@tokc=\toks49
+\t@pgfplots@toka=\toks48
+\t@pgfplots@tokb=\toks49
+\t@pgfplots@tokc=\toks50
 \pgfplots@tmpa=\dimen310
-\c@pgfplots@coordindex=\count488
-\c@pgfplots@scanlineindex=\count489
+\c@pgfplots@coordindex=\count489
+\c@pgfplots@scanlineindex=\count490
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgfplotssysgeneric.code
 .tex))
@@ -1130,14 +1136,14 @@ tructure.code.tex)
 tructureext.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsarray
 .code.tex
-\c@pgfplotsarray@tmp=\count490
+\c@pgfplotsarray@tmp=\count491
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsmatri
 x.code.tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/numtable/pgfplotstableshare
 d.code.tex
-\c@pgfplotstable@counta=\count491
-\t@pgfplotstable@a=\toks50
+\c@pgfplotstable@counta=\count492
+\t@pgfplotstable@a=\toks51
 )
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsdeque
 .code.tex)
@@ -1149,7 +1155,7 @@ de.tex))
 .tex)
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/pgflibrarypgfplots.sur
 fshading.code.tex
-\c@pgfplotslibrarysurf@no=\count492
+\c@pgfplotslibrarysurf@no=\count493
 
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgflibrarypgfplots.surf
 shading.pgfsys-pdftex.def)))
@@ -1181,7 +1187,7 @@ e.tex
 \pgfdecoratedinputsegmentcompleteddistance=\dimen313
 \pgfdecoratedinputsegmentremainingdistance=\dimen314
 \pgf@decorate@distancetomove=\dimen315
-\pgf@decorate@repeatstate=\count493
+\pgf@decorate@repeatstate=\count494
 \pgfdecorationsegmentamplitude=\dimen316
 \pgfdecorationsegmentlength=\dimen317
 )
@@ -1197,7 +1203,7 @@ zlibrarydecorations.pathreplacing.code.tex
 decorations.pathreplacing.code.tex))
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/tikzlibrarypgfplots.co
 ntourlua.code.tex)
-\pgfplots@numplots=\count494
+\pgfplots@numplots=\count495
 \pgfplots@xmin@reg=\dimen318
 \pgfplots@xmax@reg=\dimen319
 \pgfplots@ymin@reg=\dimen320
@@ -1221,7 +1227,7 @@ etween.code.tex
 zlibraryintersections.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryintersection
 s.code.tex
-\pgf@intersect@solutions=\count495
+\pgf@intersect@solutions=\count496
 ))
 (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfcontrib/tikzlibrarydecor
 ations.softclip.code.tex
@@ -1334,23 +1340,23 @@ zlibrarydecorations.markings.code.tex
 (/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrary
 decorations.markings.code.tex))
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count496
+\lst@mode=\count497
 \lst@gtempboxa=\box150
-\lst@token=\toks51
-\lst@length=\count497
+\lst@token=\toks52
+\lst@length=\count498
 \lst@currlwidth=\dimen328
-\lst@column=\count498
-\lst@pos=\count499
+\lst@column=\count499
+\lst@pos=\count500
 \lst@lostspace=\dimen329
 \lst@width=\dimen330
-\lst@newlines=\count500
-\lst@lineno=\count501
+\lst@newlines=\count501
+\lst@lineno=\count502
 \lst@maxwidth=\dimen331
 
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
-\c@lstnumber=\count502
-\lst@skipnumbers=\count503
+\c@lstnumber=\count503
+\lst@skipnumbers=\count504
 \lst@framebox=\box151
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
@@ -1377,8 +1383,8 @@ Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
 \@linkdim=\dimen332
-\Hy@linkcounter=\count504
-\Hy@pagecounter=\count505
+\Hy@linkcounter=\count505
+\Hy@pagecounter=\count506
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
@@ -1395,7 +1401,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count506
+\Hy@SavedSpaceFactor=\count507
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
@@ -1418,7 +1424,7 @@ Package hyperref Info: Plain pages OFF on input line 4207.
 Package hyperref Info: Backreferencing OFF on input line 4212.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4445.
-\c@Hy@tempcnt=\count507
+\c@Hy@tempcnt=\count508
 LaTeX Info: Redefining \url on input line 4804.
 \XeTeXLinkMargin=\dimen333
 
@@ -1429,7 +1435,7 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count508
+\Fld@menulength=\count509
 \Field@Width=\dimen334
 \Fld@charsize=\dimen335
 Package hyperref Info: Hyper figures OFF on input line 6076.
@@ -1446,9 +1452,9 @@ LaTeX Info: Redefining \pageref on input line 6150.
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count509
-\c@Item=\count510
-\c@Hfootnote=\count511
+\Hy@abspage=\count510
+\c@Item=\count511
+\c@Hfootnote=\count512
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
@@ -1460,8 +1466,8 @@ Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
 kage
 with kernel methods
 )
-\Fld@listcount=\count512
-\c@bookmark@seq@number=\count513
+\Fld@listcount=\count513
+\c@bookmark@seq@number=\count514
 
 (/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
@@ -1472,18 +1478,18 @@ Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 86.
 )
-\Hy@SectionHShift=\skip95
+\Hy@SectionHShift=\skip96
 )
 (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/hypcap.sty
 Package: hypcap 2016/05/16 v1.12 Adjusting the anchors of captions (HO)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/graphics/rotating.sty
 Package: rotating 2016/08/11 v2.16d rotated objects in LaTeX
-\c@r@tfl@t=\count514
-\rotFPtop=\skip96
-\rotFPbot=\skip97
+\c@r@tfl@t=\count515
+\rotFPtop=\skip97
+\rotFPbot=\skip98
 \rot@float@box=\box152
-\rot@mess@toks=\toks52
+\rot@mess@toks=\toks53
 )
 (/usr/share/texlive/texmf-dist/tex/latex/vmargin/vmargin.sty
 Package: vmargin 2004/07/15 V2.5 set document margins (VK)
@@ -1494,15 +1500,15 @@ Package: vmargin 2004/07/15 V2.5 set document margins (VK)
 ) (/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 Package: fancyhdr 2021/01/28 v4.0.1 Extensive control of page headers and foote
 rs
-\f@nch@headwidth=\skip98
-\f@nch@O@elh=\skip99
-\f@nch@O@erh=\skip100
-\f@nch@O@olh=\skip101
-\f@nch@O@orh=\skip102
-\f@nch@O@elf=\skip103
-\f@nch@O@erf=\skip104
-\f@nch@O@olf=\skip105
-\f@nch@O@orf=\skip106
+\f@nch@headwidth=\skip99
+\f@nch@O@elh=\skip100
+\f@nch@O@erh=\skip101
+\f@nch@O@olh=\skip102
+\f@nch@O@orh=\skip103
+\f@nch@O@elf=\skip104
+\f@nch@O@erf=\skip105
+\f@nch@O@olf=\skip106
+\f@nch@O@orf=\skip107
 )
 (/usr/share/texlive/texmf-dist/tex/latex/lastpage/lastpage.sty
 Package: lastpage 2021/09/03 v1.2n Refers to last page's name (HMM; JPG)
@@ -1515,8 +1521,11 @@ Writing index file main.idx
 \@nomenclaturefile=\write6
 \openout6 = `main.nlo'.
 
-Package nomencl Info: Writing nomenclature file main.nlo on input line 650.
-)
+Package nomencl Info: Writing nomenclature file main.nlo on input line 651.
+(/usr/share/texlive/texmf-dist/tex/latex/comment/comment.sty
+\CommentStream=\write7
+
+Excluding comment 'comment'))
 
 LaTeX Warning: \include should only be used after \begin{document} on input lin
 e 57.
@@ -1576,9 +1585,8 @@ Package biblatex Info: Automatic encoding selection.
 \openout3 = `main.bcf'.
 
 Package biblatex Info: Trying to load bibliographic data...
-Package biblatex Info: ... file 'main.bbl' not found.
-
-No file main.bbl.
+Package biblatex Info: ... file 'main.bbl' found.
+ (./main.bbl)
 Package biblatex Info: Reference section=0 on input line 63.
 Package biblatex Info: Reference segment=0 on input line 63.
 Package caption Info: Begin \AtBeginDocument code.
@@ -1589,17 +1597,17 @@ Package caption Info: rotating package is loaded.
 Package caption Info: End \AtBeginDocument code.
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count515
+\scratchcounter=\count516
 \scratchdimen=\dimen338
 \scratchbox=\box153
-\nofMPsegments=\count516
-\nofMParguments=\count517
-\everyMPshowfont=\toks53
-\MPscratchCnt=\count518
+\nofMPsegments=\count517
+\nofMParguments=\count518
+\everyMPshowfont=\toks54
+\MPscratchCnt=\count519
 \MPscratchDim=\dimen339
-\MPnumerator=\count519
-\makeMPintoPDFobject=\count520
-\everyMPtoPDFconversion=\toks54
+\MPnumerator=\count520
+\makeMPintoPDFobject=\count521
+\everyMPtoPDFconversion=\toks55
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -1620,7 +1628,7 @@ Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 Package pgfplots notification 'compat/show suggested version=true': you might b
 enefit from \pgfplotsset{compat=1.18} (current compat level: 1.16).
 
-\c@lstlisting=\count521
+\c@lstlisting=\count522
 Package hyperref Info: Link coloring ON on input line 63.
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
@@ -1631,15 +1639,15 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count522
+\c@section@level=\count523
 )
 LaTeX Info: Redefining \ref on input line 63.
 LaTeX Info: Redefining \pageref on input line 63.
 LaTeX Info: Redefining \nameref on input line 63.
 
 (./main.out) (./main.out)
-\@outlinefile=\write7
-\openout7 = `main.out'.
+\@outlinefile=\write8
+\openout8 = `main.out'.
 
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
@@ -1661,14 +1669,10 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `\\' on input line 63.
 
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\\' on input line 63.
-
 \openout2 = `titlepage_licel_es.aux'.
 
 (./titlepage_licel_es.tex
-<./fig//Firma_TEC-4.pdf, id=119, 201.75375pt x 41.15375pt>
+<./fig//Firma_TEC-4.pdf, id=183, 201.75375pt x 41.15375pt>
 File: ./fig//Firma_TEC-4.pdf Graphic file (type pdf)
 <use ./fig//Firma_TEC-4.pdf>
 Package pdftex.def Info: ./fig//Firma_TEC-4.pdf  used on input line 27.
@@ -1686,7 +1690,7 @@ LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 2
 (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-<./fig//by-sa.pdf, id=132, 121.45375pt x 43.16125pt>
+<./fig//by-sa.pdf, id=196, 121.45375pt x 43.16125pt>
 File: ./fig//by-sa.pdf Graphic file (type pdf)
 <use ./fig//by-sa.pdf>
 Package pdftex.def Info: ./fig//by-sa.pdf  used on input line 47.
@@ -1780,42 +1784,44 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 4
 LaTeX Info: Redefining \sptext on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
-)
-\tf@toc=\write8
-\openout8 = `main.toc'.
-
  [1
 
 
 
 
 
-] (./main.lof
+])
+\tf@toc=\write9
+\openout9 = `main.toc'.
+
+LaTeX Info: Redefining \. on input line 136.
+LaTeX Info: Redefining \% on input line 136.
+ [2] (./main.lof
 LaTeX Info: Redefining \sptext on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 )
-\tf@lof=\write9
-\openout9 = `main.lof'.
+\tf@lof=\write10
+\openout10 = `main.lof'.
 
- [2
+ [3
 
-] (./main.lot
+]
+(./main.lot
 LaTeX Info: Redefining \sptext on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 )
-\tf@lot=\write10
-\openout10 = `main.lot'.
-
-
-[3
-
-] (./main.todo)
-\tf@todo=\write11
-\openout11 = `main.todo'.
+\tf@lot=\write11
+\openout11 = `main.lot'.
 
  [4
+
+] (./main.todo)
+\tf@todo=\write12
+\openout12 = `main.todo'.
+
+ [5
 
 ]
 \openout2 = `glosario.aux'.
@@ -1827,12 +1833,6 @@ No file main.nls.
 
  (./intro.tex
 Cap\'{\i }tulo 1.
-
-LaTeX Warning: Citation 'AlvaradoWeb' on page 1 undefined on input line 34.
-
-
-LaTeX Warning: Citation 'Fulano21' on page 1 undefined on input line 55.
-
 [1
 
 
@@ -1842,105 +1842,171 @@ LaTeX Warning: Citation 'Fulano21' on page 1 undefined on input line 55.
 
 
 ]
-LaTeX Info: Redefining \. on input line 147.
-LaTeX Info: Redefining \% on input line 147.
- [2])
+LaTeX Info: Redefining \. on input line 31.
+LaTeX Info: Redefining \% on input line 31.
+ [2]
+LaTeX Info: Redefining \. on input line 50.
+LaTeX Info: Redefining \% on input line 50.
+ [3]
+<fig/new/PAMH.png, id=376, 495.8525pt x 615.29875pt>
+File: fig/new/PAMH.png Graphic file (type png)
+<use fig/new/PAMH.png>
+Package pdftex.def Info: fig/new/PAMH.png  used on input line 54.
+(pdftex.def)             Requested size: 136.48926pt x 169.36258pt.
+<fig/new/EstructuraAR.png, id=378, 616.3025pt x 246.9225pt>
+File: fig/new/EstructuraAR.png Graphic file (type png)
+<use fig/new/EstructuraAR.png>
+Package pdftex.def Info: fig/new/EstructuraAR.png  used on input line 61.
+(pdftex.def)             Requested size: 272.97852pt x 109.36963pt.
+LaTeX Info: Redefining \. on input line 75.
+LaTeX Info: Redefining \% on input line 75.
+ [4 <./fig/new/PAMH.PNG> <./fig/new/EstructuraAR.png>]
+LaTeX Info: Redefining \. on input line 162.
+LaTeX Info: Redefining \% on input line 162.
+ [5]
+<fig/new/Diagbloques.png, id=395, 1082.54437pt x 270.25969pt>
+File: fig/new/Diagbloques.png Graphic file (type png)
+<use fig/new/Diagbloques.png>
+Package pdftex.def Info: fig/new/Diagbloques.png  used on input line 177.
+(pdftex.def)             Requested size: 318.4703pt x 79.50734pt.
+
+Excluding 'comment' comment. Excluding 'comment' comment.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+LaTeX Info: Redefining \. on input line 220.
+LaTeX Info: Redefining \% on input line 220.
+[6 <./fig/new/Diagbloques.PNG>] Excluding 'comment' comment.
+Overfull \hbox (49.45055pt too wide) in paragraph at lines 392--392
+[]\T1/cmr/bx/n/17.28 ************************************************* 
+ []
+
+LaTeX Info: Redefining \. on input line 400.
+LaTeX Info: Redefining \% on input line 400.
+[7]
+LaTeX Info: Redefining \. on input line 454.
+LaTeX Info: Redefining \% on input line 454.
+ [8]
+LaTeX Info: Redefining \. on input line 537.
+LaTeX Info: Redefining \% on input line 537.
+ [9])
 LaTeX Info: Redefining \. on input line 157.
 LaTeX Info: Redefining \% on input line 157.
- [3]
+ [10]
 \openout2 = `teoria.aux'.
 
  (./teoria.tex
 Cap\'{\i }tulo 2.
+<fig/new/ModeloPendulo.png, id=437, 681.54625pt x 615.29875pt>
+File: fig/new/ModeloPendulo.png Graphic file (type png)
+<use fig/new/ModeloPendulo.png>
+Package pdftex.def Info: fig/new/ModeloPendulo.png  used on input line 11.
+(pdftex.def)             Requested size: 204.46545pt x 184.59105pt.
+[11
 
-Overfull \hbox (7.66492pt too wide) in paragraph at lines 16--23
+
+
+
+ <./fig/new/ModeloPendulo.png>]
+<fig/new/CatRL.png, id=447, 908.39375pt x 496.85625pt>
+File: fig/new/CatRL.png Graphic file (type png)
+<use fig/new/CatRL.png>
+Package pdftex.def Info: fig/new/CatRL.png  used on input line 36.
+(pdftex.def)             Requested size: 317.94258pt x 173.90228pt.
+ Excluding 'comment' comment.
+Overfull \hbox (49.45055pt too wide) in paragraph at lines 73--73
+[]\T1/cmr/bx/n/17.28 ************************************************* 
+ []
+
+LaTeX Info: Redefining \. on input line 91.
+LaTeX Info: Redefining \% on input line 91.
+[12 <./fig/new/CatRL.png>]
+Overfull \hbox (7.66492pt too wide) in paragraph at lines 94--101
 \T1/cmtt/m/n/12 publications _ standards / publications / authors / authors _ j
 ournals . html$[][]\T1/cmr/m/n/12 , don-de pue-
  []
 
-[4
-
-
-
-
-]
-LaTeX Font Info:    Trying to load font information for T1+cmss on input line 7
-9.
+LaTeX Info: Redefining \. on input line 150.
+LaTeX Info: Redefining \% on input line 150.
+[13]
+LaTeX Font Info:    Trying to load font information for T1+cmss on input line 1
+57.
  (/usr/share/texlive/texmf-dist/tex/latex/base/t1cmss.fd
 File: t1cmss.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-Overfull \hbox (0.70549pt too wide) in paragraph at lines 79--79
+Overfull \hbox (0.70549pt too wide) in paragraph at lines 157--157
 [][] 
  []
 
 
-Overfull \hbox (0.70549pt too wide) in paragraph at lines 79--79
+Overfull \hbox (0.70549pt too wide) in paragraph at lines 157--157
 [][] 
  []
 
 Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 79.
+ine 157.
 
-Overfull \hbox (0.70549pt too wide) in paragraph at lines 104--104
+Overfull \hbox (0.70549pt too wide) in paragraph at lines 182--182
 [][] 
  []
 
 
-Overfull \hbox (0.70549pt too wide) in paragraph at lines 104--104
+Overfull \hbox (0.70549pt too wide) in paragraph at lines 182--182
 [][] 
  []
 
-LaTeX Info: Redefining \. on input line 105.
-LaTeX Info: Redefining \% on input line 105.
-[5]
-LaTeX Info: Redefining \. on input line 187.
-LaTeX Info: Redefining \% on input line 187.
- [6]
-<./fig//figtemplate.pdf, id=320, 206.35294pt x 196.27428pt>
+LaTeX Info: Redefining \. on input line 224.
+LaTeX Info: Redefining \% on input line 224.
+[14]
+LaTeX Info: Redefining \. on input line 281.
+LaTeX Info: Redefining \% on input line 281.
+ [15]
+<./fig//figtemplate.pdf, id=490, 206.35294pt x 196.27428pt>
 File: ./fig//figtemplate.pdf Graphic file (type pdf)
 <use ./fig//figtemplate.pdf>
-Package pdftex.def Info: ./fig//figtemplate.pdf  used on input line 235.
+Package pdftex.def Info: ./fig//figtemplate.pdf  used on input line 313.
 (pdftex.def)             Requested size: 206.35242pt x 196.27379pt.
-LaTeX Info: Redefining \. on input line 241.
-LaTeX Info: Redefining \% on input line 241.
- [7]
-<./fig//ltxfig_prototipo.pdf, id=330, 663.47874pt x 222.8325pt>
+LaTeX Info: Redefining \. on input line 325.
+LaTeX Info: Redefining \% on input line 325.
+ [16 <./fig//figtemplate.pdf>]
+<./fig//ltxfig_prototipo.pdf, id=524, 663.47874pt x 222.8325pt>
 File: ./fig//ltxfig_prototipo.pdf Graphic file (type pdf)
 <use ./fig//ltxfig_prototipo.pdf>
-Package pdftex.def Info: ./fig//ltxfig_prototipo.pdf  used on input line 273.
+Package pdftex.def Info: ./fig//ltxfig_prototipo.pdf  used on input line 351.
 (pdftex.def)             Requested size: 409.46083pt x 137.51889pt.
-LaTeX Info: Redefining \. on input line 289.
-LaTeX Info: Redefining \% on input line 289.
- [8 <./fig//figtemplate.pdf>]
-<./fig//prototipo_gnuplot.pdf, id=363, 219.82124pt x 148.555pt>
+<./fig//prototipo_gnuplot.pdf, id=526, 219.82124pt x 148.555pt>
 File: ./fig//prototipo_gnuplot.pdf Graphic file (type pdf)
 <use ./fig//prototipo_gnuplot.pdf>
-Package pdftex.def Info: ./fig//prototipo_gnuplot.pdf  used on input line 292.
+Package pdftex.def Info: ./fig//prototipo_gnuplot.pdf  used on input line 370.
 (pdftex.def)             Requested size: 219.8207pt x 148.55463pt.
+LaTeX Info: Redefining \. on input line 386.
+LaTeX Info: Redefining \% on input line 386.
+ [17 <./fig//ltxfig_prototipo.pdf>]
 File: ./fig//figtemplate.pdf Graphic file (type pdf)
 <use ./fig//figtemplate.pdf>
-Package pdftex.def Info: ./fig//figtemplate.pdf  used on input line 312.
+Package pdftex.def Info: ./fig//figtemplate.pdf  used on input line 390.
 (pdftex.def)             Requested size: 123.8127pt x 117.76546pt.
 File: ./fig//prototipo_gnuplot.pdf Graphic file (type pdf)
 <use ./fig//prototipo_gnuplot.pdf>
-Package pdftex.def Info: ./fig//prototipo_gnuplot.pdf  used on input line 314.
+Package pdftex.def Info: ./fig//prototipo_gnuplot.pdf  used on input line 392.
 (pdftex.def)             Requested size: 131.89375pt x 89.13368pt.
-LaTeX Info: Redefining \. on input line 334.
-LaTeX Info: Redefining \% on input line 334.
- [9 <./fig//ltxfig_prototipo.pdf> <./fig//prototipo_gnuplot.pdf>]
-LaTeX Info: Redefining \. on input line 370.
-LaTeX Info: Redefining \% on input line 370.
- [10]
-LaTeX Info: Redefining \. on input line 442.
-LaTeX Info: Redefining \% on input line 442.
- [11]
+LaTeX Info: Redefining \. on input line 414.
+LaTeX Info: Redefining \% on input line 414.
+
+[18 <./fig//prototipo_gnuplot.pdf>]
+LaTeX Info: Redefining \. on input line 520.
+LaTeX Info: Redefining \% on input line 520.
+ [19]
+LaTeX Info: Redefining \. on input line 520.
+LaTeX Info: Redefining \% on input line 520.
+ [20]
 File: ./fig//ltxfig_prototipo.pdf Graphic file (type pdf)
 <use ./fig//ltxfig_prototipo.pdf>
-Package pdftex.def Info: ./fig//ltxfig_prototipo.pdf  used on input line 442.
+Package pdftex.def Info: ./fig//ltxfig_prototipo.pdf  used on input line 520.
 (pdftex.def)             Requested size: 688.14758pt x 231.1283pt.
-LaTeX Info: Redefining \. on input line 442.
-LaTeX Info: Redefining \% on input line 442.
- [12]
+LaTeX Info: Redefining \. on input line 520.
+LaTeX Info: Redefining \% on input line 520.
+ [21]
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
@@ -1950,100 +2016,69 @@ File: lstlang2.sty 2020/03/24 1.8d listings language file
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang3.sty
 File: lstlang3.sty 2020/03/24 1.8d listings language file
 )
-
-LaTeX Warning: Citation 'Davis1963' on page 13 undefined on input line 530.
-
-
-LaTeX Warning: Citation 'ProakisManolakis1998' on page 13 undefined on input li
-ne 531.
-
-
-LaTeX Warning: Citation 'Oppenheim1998' on page 13 undefined on input line 533.
-
-
-
-LaTeX Warning: Citation 'Roberts2005' on page 13 undefined on input line 533.
-
-
-LaTeX Warning: Citation 'Haykin2001' on page 13 undefined on input line 533.
-
-
-LaTeX Warning: Citation 'Burrus1998' on page 13 undefined on input line 534.
-
-
-LaTeX Warning: Citation 'Octave' on page 13 undefined on input line 538.
-
-
-LaTeX Warning: Citation 'Lindner2002' on page 13 undefined on input line 540.
-
-
-LaTeX Warning: Citation 'Soria2003' on page 13 undefined on input line 541.
-
-
-LaTeX Warning: Citation 'Shilov1973' on page 13 undefined on input line 541.
-
-LaTeX Info: Redefining \. on input line 542.
-LaTeX Info: Redefining \% on input line 542.
-[13
+LaTeX Info: Redefining \. on input line 620.
+LaTeX Info: Redefining \% on input line 620.
+ [22
 
 
 
 ]
-LaTeX Info: Redefining \. on input line 561.
-LaTeX Info: Redefining \% on input line 561.
- [14]
-LaTeX Info: Redefining \. on input line 608.
-LaTeX Info: Redefining \% on input line 608.
- [15]
-Overfull \hbox (0.70549pt too wide) in paragraph at lines 610--610
+LaTeX Info: Redefining \. on input line 639.
+LaTeX Info: Redefining \% on input line 639.
+ [23]
+LaTeX Info: Redefining \. on input line 686.
+LaTeX Info: Redefining \% on input line 686.
+
+[24]
+Overfull \hbox (0.70549pt too wide) in paragraph at lines 688--688
 [][] 
  []
 
 
-Overfull \hbox (0.70549pt too wide) in paragraph at lines 610--610
+Overfull \hbox (0.70549pt too wide) in paragraph at lines 688--688
 [][] 
  []
 
 
-Overfull \hbox (0.70549pt too wide) in paragraph at lines 612--612
+Overfull \hbox (0.70549pt too wide) in paragraph at lines 690--690
 [][] 
  []
 
 
-Overfull \hbox (0.70549pt too wide) in paragraph at lines 612--612
+Overfull \hbox (0.70549pt too wide) in paragraph at lines 690--690
 [][] 
  []
 
 
-Overfull \hbox (0.70549pt too wide) in paragraph at lines 614--614
+Overfull \hbox (0.70549pt too wide) in paragraph at lines 692--692
 [][] 
  []
 
 
-Overfull \hbox (0.70549pt too wide) in paragraph at lines 614--614
+Overfull \hbox (0.70549pt too wide) in paragraph at lines 692--692
 [][] 
  []
 
 
-LaTeX Warning: Marginpar on page 16 moved.
+LaTeX Warning: Marginpar on page 25 moved.
 
 
-LaTeX Warning: Marginpar on page 16 moved.
+LaTeX Warning: Marginpar on page 25 moved.
 
 
-Overfull \hbox (6.0pt too wide) in paragraph at lines 617--618
+Overfull \hbox (6.0pt too wide) in paragraph at lines 695--696
 [][][][][][][] 
  []
 
 )
 LaTeX Info: Redefining \. on input line 158.
 LaTeX Info: Redefining \% on input line 158.
- [16]
+ [25]
 \openout2 = `solucion.aux'.
 
  (./solucion.tex
 Cap\'{\i }tulo 3.
-) [17
+) [26
 
 
 
@@ -2053,7 +2088,7 @@ Cap\'{\i }tulo 3.
 
  (./resultados.tex
 Cap\'{\i }tulo 4.
-) [18
+) [27
 
 
 
@@ -2063,22 +2098,21 @@ Cap\'{\i }tulo 4.
 
  (./conclusiones.tex
 Cap\'{\i }tulo 5.
-) [19
+) [28
 
+
+
+
+] [29
 
 
 
 ]
-
-LaTeX Warning: Empty bibliography on input line 168.
-
 \openout2 = `apendice.aux'.
 
-(./apendice.tex
+ (./apendice.tex
 Ap\'{e}ndice A.
-) [20
-
-
+) [30
 
 
 ]
@@ -2094,28 +2128,20 @@ LaTeX Info: Redefining \% on input line 27.
 (./dedicatoria.aux) (./agradecimientos.aux) (./glosario.aux) (./intro.aux)
 (./teoria.aux) (./solucion.aux) (./resultados.aux) (./conclusiones.aux)
 (./apendice.aux))
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 87EB84D478486EDB53DE4BCB5F81CF57;4711.
-
-Package biblatex Warning: Please (re)run Biber on the file:
-(biblatex)                main
-(biblatex)                and rerun LaTeX afterwards.
-
+(rerunfilecheck)             Checksum: E639A24EAE848D75812B08E4F75B4A7F;7954.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 54002 strings out of 478287
- 1228436 string characters out of 5849290
- 2102604 words of memory out of 5000000
- 71061 multiletter control sequences out of 15000+600000
- 500482 words of font info for 111 fonts, out of 8000000 for 9000
+ 54308 strings out of 478287
+ 1234899 string characters out of 5849290
+ 2106723 words of memory out of 5000000
+ 71299 multiletter control sequences out of 15000+600000
+ 501158 words of font info for 112 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 115i,13n,120p,1149b,1942s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 115i,16n,120p,1499b,2684s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/
 fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
@@ -2135,23 +2161,24 @@ per/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095.pfb></u
 sr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts
 /type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-sup
 er/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></us
-r/share/texmf/fonts/type1/public/cm-super/sfcc1200.pfb></usr/share/texmf/fonts/
-type1/public/cm-super/sfrm0600.pfb></usr/share/texmf/fonts/type1/public/cm-supe
-r/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr
-/share/texmf/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/t
-ype1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super
-/sfsl0600.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsl1095.pfb></usr/
-share/texmf/fonts/type1/public/cm-super/sfsl1200.pfb></usr/share/texmf/fonts/ty
-pe1/public/cm-super/sfss1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/
-sfti1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/s
-hare/texmf/fonts/type1/public/cm-super/sfti1728.pfb></usr/share/texmf/fonts/typ
-e1/public/cm-super/sftt1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/s
-ftt1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1200.pfb></usr/sh
-are/texmf/fonts/type1/public/cm-super/sfxc1200.pfb>
-Output written on main.pdf (33 pages, 642780 bytes).
+r/share/texmf/fonts/type1/public/cm-super/sfcc1095.pfb></usr/share/texmf/fonts/
+type1/public/cm-super/sfcc1200.pfb></usr/share/texmf/fonts/type1/public/cm-supe
+r/sfrm0600.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr
+/share/texmf/fonts/type1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/t
+ype1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/cm-super
+/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsl0600.pfb></usr/
+share/texmf/fonts/type1/public/cm-super/sfsl1095.pfb></usr/share/texmf/fonts/ty
+pe1/public/cm-super/sfsl1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/
+sfss1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1000.pfb></usr/s
+hare/texmf/fonts/type1/public/cm-super/sfti1200.pfb></usr/share/texmf/fonts/typ
+e1/public/cm-super/sfti1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/s
+ftt1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sftt1095.pfb></usr/sh
+are/texmf/fonts/type1/public/cm-super/sftt1200.pfb></usr/share/texmf/fonts/type
+1/public/cm-super/sfxc1200.pfb>
+Output written on main.pdf (44 pages, 1484988 bytes).
 PDF statistics:
- 648 PDF objects out of 1000 (max. 8388607)
- 525 compressed objects within 6 object streams
- 111 named destinations out of 1000 (max. 500000)
- 262 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 859 PDF objects out of 1000 (max. 8388607)
+ 711 compressed objects within 8 object streams
+ 162 named destinations out of 1000 (max. 500000)
+ 415 words of extra memory for PDF output out of 10000 (max. 10000000)
 
