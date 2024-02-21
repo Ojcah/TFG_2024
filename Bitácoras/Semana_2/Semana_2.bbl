@@ -21,8 +21,11 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{DataScience}
-S.~L. Brunton and J.~N. Kutz, \emph{Data-Driven Science and Engineering}.\hskip
-  1em plus 0.5em minus 0.4em\relax Cambridge University Press, 2021.
+\bibitem{rltools}
+J.~Eschmann, D.~Albani, and G.~Loianno, ``Rltools: A fast, portable deep
+  reinforcement learning library for continuous control,'' 2023.
+
+\bibitem{mamban}
+AlxndrRL, ``mamba.py: a simple and efficient mamba implementation,'' 2023.
 
 \end{thebibliography}
