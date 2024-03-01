@@ -53,43 +53,26 @@
 		\textbf{Anotaciones} & 
 		\textbf{Horas dedicadas} \\ \hline
 		% ***************************************************************
-		19/02/2024 & 
-		$\mathbf{1}.$ ADADADADAD. & 
-		$a)$ AAAAAAAAAAAAAA \newline  & 
-		4 horas \\
-	 	% ***************************************************************
-	 	20/02/2024 & 
-	 	$\mathbf{2}.$ ADADADADAD. &
-	 	$a)$ AAAAAAAAAAAAAA \newline  & 
+		20/02/2024 & 
+	 	$\mathbf{2}.$ Estudio del funcionamiento de RLtools (C++) junto con Python. &
+	 	$a)$ Revisión de opciones disponibles para el manejo de sistemas en ambos lenguajes de programación. \newline $b)$ Dadas las características, se prefiere el \textit{C++ wrapper}. \newline & 
 	 	5 horas \\
 	 	% ***************************************************************
 	 	21/02/2024 & 
 	 	$\mathbf{3}.$ Estudio de la comunicación entre el sistema (planta) y el módulo de control al sistema (Red neuronal). & 
 	 	$a)$ Revisión de la teoría correspondiente en \cite{DataScience}. \newline 
-	 	$b)$ ADADADADAd \newline & 
-	 	3 horas \\
-	 	
-	 	\hline
-	\end{tabularx}
-\end{minipage}	 	
-	 	
+	 	$b)$ Revisión de ejemplos de funcionamiento del MPC \cite{Airdaldi2023}. \newline & 
+	 	5 horas \\	
 	 	% ***************************************************************
-\hfill\\
-\begin{minipage}[h]{\textwidth}
-	\centering
-	\begin{tabularx}{\textwidth}{|p{2cm}|X|X|p{2cm}|} 
-		\hline		
-		
 	 	22/02/2024 & 
-	 	$\mathbf{4}.$ ADADADADAD. & 
-	 	$a)$ AAAAAAAAAAAAAA \newline  & 
+	 	$\mathbf{4}.$ Pruebas realizadas con la librería RLtools. & 
+	 	$a)$ Instalación de dependencias y pruebas de paquetería \cite{rltools}. \newline  & 
 	 	6 horas \\
 	 	% ***************************************************************
 	 	23/02/2024 & 
 	 	$\mathbf{5}.$ Prueba de entrenamiento con datos reales del PAMH. & 
-	 	$a)$ Se ejecutó el script $RNAM\_Real.py$ con una primera versión de los datos recolectados. Sin exito por tiempo de ejecución muy largo. \newline 
-	 	$b)$ ADADADA. \newline & 
-	 	3 horas \\
+	 	$a)$ Se ejecutó el script $RNAM\_Real.py$ con una primera versión de los datos recolectados. Sin exito por tiempo de ejecución muy largo. \newline & 
+	 	5 horas \\
 	 	% ***************************************************************
 	 	\hline
 		\multicolumn{3}{|r|}{Total de horas de trabajo:} & 21 horas \\ 
@@ -99,18 +82,6 @@
 %\end{table}
 
 
-\begin{enumerate}
-	\item Estudio de la comunicación entre el sistema (planta) y el módulo de control al sistema (Red neuronal).
-	\begin{enumerate}
-		\item Model Predictive Control (MPC) \cite{DataScience} Figura 10.2.
-		\item a
-	\end{enumerate}
-	\item a
-	\item a
-	\item a
-\end{enumerate}
-
-
 % *****************************************************************************
 % *****************************************************************************
 % *****************************************************************************
@@ -118,9 +89,34 @@
 
 \section*{Contenidos de actividades}
 
-\subsection*{Resumen de repositorios encontrados}
+\subsection*{C++ Wrapper}
 
-ADADADADADAD \cite{DataScience}.
+Para la utilización de algoritmos definidos en $C++$ como es el caso de la libretía RLtools y aplicarlos a modelos o bases en $Python$, es necesaria la "traduccción" o adaptación para manejar los dos sistemas, donde es posible traducir todo el modelo previo a $C++$ o la implementación de un \textit{C++ wrapper}, en este caso preferido para no afectar el modelo de entrenamiento de la red neuronal mimetizadora, anteriormente definida, y su control en tiempo continuo.
+
+\subsection*{Control predictivo del modelo (MCU)}
+
+La estructura de comunicación entre el sistema y el modelo de control mediante maching learning se efectua con base en funciones de optimización, donde se generan acciones controladas en cada paso para controlar alguna característica ($\mathbf{\hat{F}}$) y se toma la primera muestra de dicha acción ($\hat{x}_{k+1}$) para variar la respuesta del controlador enviada al sistema ($\mathbf{u}_j$), esto independiente y apllicable a sistemas lineales o no lineales. El proceso se simplifica en la Fig. \ref{fig:mpc}.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.35]{Fig/MPC.png}
+	\caption{Esquemático del control predictivo del modelo (MPC) \cite{DataScience}.}
+	\label{fig:mpc}
+\end{figure}
+
+
+\subsection*{Pruebas de funcionamiento}
+
+Luego de instalar las dependencias necesarias para un primer entrenamiento usando \textit{RLtools}, se logró el entrenamiento del modelo más simple de la librería, el péndulo con TD3. Ejemplo de esto se muestra en la Fig. \ref{fig:pendtraining}.
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.5]{Fig/PruebaPendulo.png}
+	\caption{Entrenamiento preliminar del péndulo con RLtools.}
+	\label{fig:pendtraining}
+\end{figure}
 
 
 

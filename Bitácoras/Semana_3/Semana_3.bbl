@@ -25,4 +25,13 @@
 S.~L. Brunton and J.~N. Kutz, \emph{Data-Driven Science and Engineering}.\hskip
   1em plus 0.5em minus 0.4em\relax Cambridge University Press, 2021.
 
+\bibitem{Airdaldi2023}
+F.~Airaldi, A.~Bietti, A.~Casagrande, and A.~Bemporad, ``Learning model
+  predictive control with policy gradients,'' \emph{IEEE Transactions on
+  Automatic Control}, 2023.
+
+\bibitem{rltools}
+J.~Eschmann, D.~Albani, and G.~Loianno, ``Rltools: A fast, portable deep
+  reinforcement learning library for continuous control,'' 2023.
+
 \end{thebibliography}

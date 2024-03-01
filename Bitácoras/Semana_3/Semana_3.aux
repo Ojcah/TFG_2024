@@ -2,10 +2,13 @@
 \providecommand\hyper@newdestlabel[2]{}
 \providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
 \HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
 \global\let\oldnewlabel\newlabel
 \gdef\newlabel#1#2{\newlabelxx{#1}#2}
 \gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
 \AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
 \let\newlabel\oldnewlabel
 \fi}
 \fi}
@@ -14,9 +17,18 @@
 \providecommand\HyField@AuxAddToFields[1]{}
 \providecommand\HyField@AuxAddToCoFields[2]{}
 \citation{DataScience}
+\citation{Airdaldi2023}
+\citation{rltools}
 \citation{DataScience}
 \citation{DataScience}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Esquemático del control predictivo del modelo (MPC) \cite  {DataScience}.\relax }}{2}{figure.caption.5}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:mpc}{{1}{2}{Esquemático del control predictivo del modelo (MPC) \cite {DataScience}.\relax }{figure.caption.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Entrenamiento preliminar del péndulo con RLtools.\relax }}{3}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:pendtraining}{{2}{3}{Entrenamiento preliminar del péndulo con RLtools.\relax }{figure.caption.7}{}}
 \bibstyle{IEEEtran}
 \bibdata{references}
 \bibcite{DataScience}{1}
+\bibcite{Airdaldi2023}{2}
+\bibcite{rltools}{3}
 \gdef \@abspage@last{4}
