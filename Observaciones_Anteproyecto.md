@@ -28,3 +28,15 @@ La redacción de las posibles soluciones y Selección de la solución se vuelve 
 El diagrama que pone de la solución es más bien un esquema de la secuencia de pasos que se realizarán. No es lo mismo.
 
 ### Criterio: Aprobado  05/02/2024
+
+# ********************************************
+# ********************************************
+# ********************************************
+
+# Respuesta a observaciones de Alfonso Chacón
+
+
+# Respuesta a observaciones de Javier Pérez
+
+
+
