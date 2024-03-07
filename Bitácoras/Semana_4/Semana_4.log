@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.2.25)  27 FEB 2024 19:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.2.6)  6 MAR 2024 18:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -792,68 +792,93 @@ Overfull \hbox (206.51926pt too wide) in paragraph at lines 30--38
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--73
+Underfull \hbox (badness 10000) in paragraph at lines 75--75
 []|\OT1/cmr/bx/n/12 Horas
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 73--73
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 75--75
 []|\OT1/cmr/m/n/12 26/02/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 73--73
+Underfull \hbox (badness 4013) in paragraph at lines 75--75
+\OT1/cmr/m/n/12 tre-namiento con la lap-top
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 75--75
 []|\OT1/cmr/m/n/12 27/02/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 73--73
+Underfull \hbox (badness 1931) in paragraph at lines 75--75
+[]|$\OT1/cmr/bx/n/12 2\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Es-tu-dio de re-quer-
+im-ien-
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 75--75
 []|\OT1/cmr/m/n/12 28/02/2024| 
  []
 
 
-LaTeX Warning: Citation `DataScience' on page 1 undefined on input line 73.
+Underfull \hbox (badness 3364) in paragraph at lines 75--75
+[]|$\OT1/cmr/bx/n/12 3\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Prueba de mon-taje de
+
+ []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 97--97
+Underfull \hbox (badness 10000) in paragraph at lines 75--75
+\OT1/cmr/m/n/12 mod-e-los vir-tuales de la
+ []
+
+
+Underfull \hbox (badness 3547) in paragraph at lines 75--75
+\OT1/cmr/m/n/12 secci^^Son $\OML/cmm/m/it/12 Classic  Control$ \OT1/cmr/m/n/12 
+de
+ []
+
+
+Underfull \hbox (badness 1558) in paragraph at lines 75--75
+\OT1/cmr/m/n/12 ini-ciales del $\OML/cmm/m/it/12 MPCRL$ \OT1/cmr/m/n/12 para
+ []
+
+
+Underfull \hbox (badness 2253) in paragraph at lines 75--75
+\OML/cmm/m/it/12 b\OT1/cmr/m/n/12 )$ Prob-lema de gen-eraci^^Son
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 95--95
 []|\OT1/cmr/m/n/12 29/02/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 97--97
-[]|\OT1/cmr/m/n/12 01/03/2024| 
+Underfull \hbox (badness 1168) in paragraph at lines 95--95
+\OT1/cmr/m/n/12 para solu-cionar el er-ror de
  []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 97--97
-[]|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Se eje-cut^^So el script
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 97--97
-\OML/cmm/m/it/12 RNAM[]Real:py$ \OT1/cmr/m/n/12 con una
- []
-
-
-Underfull \hbox (badness 7722) in paragraph at lines 97--97
-\OT1/cmr/m/n/12 tiempo de eje-cuci^^Son muy
- []
-
-
-LaTeX Warning: Citation `DataScience' on page 1 undefined on input line 105.
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+<Fig/WyBp1.png, id=31, 1770.615pt x 668.4975pt>
+File: Fig/WyBp1.png Graphic file (type png)
+<use Fig/WyBp1.png>
+Package pdftex.def Info: Fig/WyBp1.png  used on input line 112.
+(pdftex.def)             Requested size: 389.53651pt x 147.0699pt.
+<Fig/Errorp1.png, id=34, 668.4975pt x 466.74374pt>
+File: Fig/Errorp1.png Graphic file (type png)
+<use Fig/Errorp1.png>
+Package pdftex.def Info: Fig/Errorp1.png  used on input line 121.
+(pdftex.def)             Requested size: 200.5508pt x 140.0242pt.
+ [2 <./Fig/WyBp1.png> <./Fig/Errorp1.png>] (./Semana_4.bbl
+Underfull \hbox (badness 2189) in paragraph at lines 30--32
+[]\OT1/cmr/m/n/12 T. F. Foun-da-tion, ``Gym-na-sium doc-u-men-ta-tion,'' []$htt
+ps : / / gymnasium . farama . org /
+ []
 
-LaTeX Warning: Citation `DataScience' on page 3 undefined on input line 123.
-
-[3]
-No file Semana_4.bbl.
-[4] (./Semana_4.aux)
-
-LaTeX Warning: There were undefined references.
-
+) [3] (./Semana_4.aux)
 Package rerunfilecheck Info: File `Semana_4.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  )
@@ -862,20 +887,21 @@ Package rerunfilecheck Info: File `Semana_4.out' has not changed.
 ### semi simple group (level 1) entered at line 5 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 21755 strings out of 478287
- 406539 string characters out of 5849289
- 684192 words of memory out of 5000000
- 39574 multiletter control sequences out of 15000+600000
- 476043 words of font info for 53 fonts, out of 8000000 for 9000
+ 21789 strings out of 478287
+ 407126 string characters out of 5849290
+ 681426 words of memory out of 5000000
+ 39602 multiletter control sequences out of 15000+600000
+ 476092 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,16n,89p,405b,18339s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 84i,14n,89p,405b,18340s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.
-pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
-Output written on Semana_4.pdf (4 pages, 49353 bytes).
+pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></u
+sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on Semana_4.pdf (3 pages, 175615 bytes).
 PDF statistics:
- 56 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
- 15 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 78 PDF objects out of 1000 (max. 8388607)
+ 52 compressed objects within 1 object stream
+ 14 named destinations out of 1000 (max. 500000)
+ 23 words of extra memory for PDF output out of 10000 (max. 10000000)
 

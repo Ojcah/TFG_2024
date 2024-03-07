@@ -55,19 +55,21 @@
 		% ***************************************************************
 		26/02/2024 & 
 		$\mathbf{1}.$ Pruebas de entrenamiento del modelo imitador en Nvidia K80. & 
-		$a)$ AAAAAAAAAAAAAA \newline  & 
-		4 horas \\
+		$a)$ También se probó el entrenamiento con la laptop personal, requiriendo aproximadamente $3$ horas para $70$ episodios. \newline 
+		$b)$ El entrenamiento en la $K80$ se suspendió con $10$ episodios por requerir más tiempo del disponible en el SIPLab. \newline & 
+		5 horas \\
 	 	% ***************************************************************
 	 	27/02/2024 & 
-	 	$\mathbf{2}.$ ADADADADAD. &
-	 	$a)$ AAAAAAAAAAAAAA \newline  & 
-	 	5 horas \\
+	 	$\mathbf{2}.$ Estudio de requerimientos y ambiente de la librería \href{https://github.com/FilippoAiraldi/mpc-reinforcement-learning/tree/main}{$MPCRL$} de Filippo Airaldi \cite{Airdaldi2023}. &
+	 	$a)$ Creación del ambiente de trabajo $conda$ para el uso de $MPCRL$. \newline
+	 	$b)$ Instalación de dependencias necesarias. \newline  & 
+	 	3 horas \\
 	 	% ***************************************************************
 	 	28/02/2024 & 
-	 	$\mathbf{3}.$ Estudio de la comunicación entre el sistema (planta) y el módulo de control al sistema (Red neuronal). & 
-	 	$a)$ Revisión de la teoría correspondiente en \cite{DataScience}. \newline 
-	 	$b)$ ADADADADAd \newline & 
-	 	3 horas \\
+	 	$\mathbf{3}.$ Prueba de montaje de modelos virtuales de la sección $Classic\,\, Control$ de \href{https://gymnasium.farama.org/environments/classic_control/}{$Gymnasium$} \cite{gym}. & 
+	 	$a)$ Dadas las características iniciales del $MPCRL$ para sistemas LTI se selecciona el env $Cart Pole$ por encima del env $Pendulum$. \newline 
+	 	$b)$ Problema de generación de ventana gráfica relacionada con la API OpenGL \newline & 
+	 	5 horas \\
 	 	
 	 	\hline
 	\end{tabularx}
@@ -81,46 +83,50 @@
 		\hline		
 		
 	 	29/02/2024 & 
-	 	$\mathbf{4}.$ ADADADADAD. & 
-	 	$a)$ AAAAAAAAAAAAAA \newline  & 
-	 	6 horas \\
+	 	$\mathbf{4}.$ Continuación de pruebas para solucionar el error de OpenGL. & 
+	 	$a)$ Pruebas de actualización de drivers y revisión del $PATH$. \newline
+	 	$b)$ Luego de varias pruebas y consultas en linea el problema persiste con Visual Code y en la terminal. \newline  & 
+	 	5 horas \\
 	 	% ***************************************************************
-	 	01/03/2024 & 
-	 	$\mathbf{5}.$ Prueba de entrenamiento con datos reales del PAMH. & 
-	 	$a)$ Se ejecutó el script $RNAM\_Real.py$ con una primera versión de los datos recolectados. Sin exito por tiempo de ejecución muy largo. \newline 
-	 	$b)$ ADADADA. \newline & 
-	 	3 horas \\
-	 	% ***************************************************************
+	 	
 	 	\hline
-		\multicolumn{3}{|r|}{Total de horas de trabajo:} & 21 horas \\ 
+		\multicolumn{3}{|r|}{Total de horas de trabajo:} & 18 horas \\ 
 	 	\hline                 
 	\end{tabularx}
 \end{minipage}
 %\end{table}
 
 
-\begin{enumerate}
-	\item Estudio de la comunicación entre el sistema (planta) y el módulo de control al sistema (Red neuronal).
-	\begin{enumerate}
-		\item Model Predictive Control (MPC) \cite{DataScience} Figura 10.2.
-		\item a
-	\end{enumerate}
-	\item a
-	\item a
-	\item a
-\end{enumerate}
-
 
 % *****************************************************************************
 % *****************************************************************************
 % *****************************************************************************
-\newpage
 
 \section*{Contenidos de actividades}
 
-\subsection*{Resumen de repositorios encontrados}
+\begin{enumerate}
+	\item Luego de los entrenamientos suspendidos del modelo imitador, el mayor avance se obtuvo con la laptop personal y los $70$ episodios, ejemplificado mediante $W\& B$ en la Fig. \ref{fig:Wyb}.
 
-ADADADADADAD \cite{DataScience}.
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.22]{Fig/WyBp1.png}
+	\caption{Resultado de entrenamiento del modelo imitador luego de $70$ episodios.}
+	\label{fig:Wyb}
+\end{figure}	
+
+	\item En la Fig. \ref{fig:errorpen} se muestra una captura de uno de los mensajes correspondientes al error presentado con OpenGL en las pruebas gráficas con $gymnasium$.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=0.3]{Fig/Errorp1.png}
+	\caption{Mensaje de error en prueba de pendulum.py.}
+	\label{fig:errorpen}
+\end{figure}	
+
+\end{enumerate}
+
+
+
 
 
 
