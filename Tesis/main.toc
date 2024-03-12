@@ -1,7 +1,7 @@
 \babel@toc {spanish}{}\relax 
-\contentsline {chapter}{\'{I}ndice de figuras}{\es@scroman {iii}}{chapter*.6}%
-\contentsline {chapter}{\'{I}ndice de tablas}{\es@scroman {iv}}{chapter*.7}%
-\contentsline {chapter}{Revisar}{\es@scroman {v}}{chapter*.8}%
+\contentsline {chapter}{\'{I}ndice de figuras}{\es@scroman {ii}}{chapter*.6}%
+\contentsline {chapter}{\'{I}ndice de tablas}{\es@scroman {iii}}{chapter*.7}%
+\contentsline {chapter}{Revisar}{\es@scroman {iv}}{chapter*.8}%
 \contentsline {chapter}{\numberline {1}Introducción}{2}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Entorno del proyecto}{2}{section.1.1}%
 \contentsline {section}{\numberline {1.2}Planteamiento del problema}{3}{section.1.2}%
@@ -15,38 +15,11 @@
 \contentsline {section}{\numberline {1.4}Objetivo General}{8}{section.1.4}%
 \contentsline {subsection}{\numberline {1.4.1}Objetivos específicos}{8}{subsection.1.4.1}%
 \contentsline {section}{\numberline {1.5}*************************************************}{8}{section.1.5}%
-\contentsline {section}{\numberline {1.6}El cambio climático y la electrónica}{9}{section.1.6}%
-\contentsline {section}{\numberline {1.7}Antecedentes}{9}{section.1.7}%
-\contentsline {section}{\numberline {1.8}La disipación de energía en el reactor 42}{10}{section.1.8}%
-\contentsline {section}{\numberline {1.9}Sistema de almacenamiento energético}{10}{section.1.9}%
-\contentsline {section}{\numberline {1.10}Objetivos y estructura del documento}{11}{section.1.10}%
-\contentsline {chapter}{\numberline {2}Marco teórico}{12}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Péndulo amortiguado a hélice PAMH}{12}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Aprendizaje reforzado RL}{13}{section.2.2}%
-\contentsline {section}{\numberline {2.3}*************************************************}{13}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Descripción}{13}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Generalidades}{14}{section.2.5}%
-\contentsline {subsection}{\numberline {2.5.1}Redacción}{14}{subsection.2.5.1}%
-\contentsline {subsubsection}{Numeración del documento}{14}{section*.15}%
-\contentsline {subsection}{\numberline {2.5.2}Ecuaciones}{15}{subsection.2.5.2}%
-\contentsline {subsection}{\numberline {2.5.3}Figuras}{16}{subsection.2.5.3}%
-\contentsline {subsubsection}{Imágenes raster}{16}{section*.16}%
-\contentsline {subsubsection}{Imágenes vectoriales}{16}{section*.17}%
-\contentsline {subsubsection}{Figuras tikz}{17}{section*.18}%
-\contentsline {subsubsection}{Figuras ltxfig/psfrag}{18}{section*.20}%
-\contentsline {subsubsection}{Figuras pstricks}{18}{section*.22}%
-\contentsline {subsubsection}{Subfiguras}{19}{section*.24}%
-\contentsline {subsubsection}{Entradas en el índice de figuras}{19}{section*.26}%
-\contentsline {subsection}{\numberline {2.5.4}Cuadros o tablas}{20}{subsection.2.5.4}%
-\contentsline {subsubsection}{Figuras enormes de una página en horizontal}{20}{section*.27}%
-\contentsline {subsection}{\numberline {2.5.5}Código}{23}{subsection.2.5.5}%
-\contentsline {subsection}{\numberline {2.5.6}Referencias bibliográficas}{23}{subsection.2.5.6}%
-\contentsline {subsection}{\numberline {2.5.7}Extensión}{25}{subsection.2.5.7}%
-\contentsline {section}{\numberline {2.6}Sobre esta plantilla \LaTeX }{25}{section.2.6}%
-\contentsline {subsection}{\numberline {2.6.1}Marcar asuntos pendientes}{25}{subsection.2.6.1}%
-\contentsline {subsection}{\numberline {2.6.2}Índices}{26}{subsection.2.6.2}%
-\contentsline {chapter}{\numberline {3}Solución propuesta}{27}{chapter.3}%
-\contentsline {chapter}{\numberline {4}Resultados y análisis}{28}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{29}{chapter.5}%
-\contentsline {chapter}{Bibliografía}{30}{chapter*.29}%
-\contentsline {chapter}{\numberline {A}Demostración del teorema de Nyquist}{31}{appendix.Alph1}%
+\contentsline {chapter}{\numberline {2}Marco teórico}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Péndulo amortiguado a hélice PAMH}{9}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Aprendizaje reforzado RL}{10}{section.2.2}%
+\contentsline {section}{\numberline {2.3}*************************************************}{11}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Solución propuesta}{12}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Resultados y análisis}{13}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{14}{chapter.5}%
+\contentsline {chapter}{\numberline {A}Demostración del teorema de Nyquist}{15}{appendix.Alph1}%

@@ -3,16 +3,10 @@
 \contentsline {figure}{\numberline {1.1}{\ignorespaces Planta de laboratorio PAMH \leavevmode {\color {SkyBlue}TesisJorge}.\relax }}{5}{figure.caption.9}%
 \contentsline {figure}{\numberline {1.2}{\ignorespaces Modelo de aprendizaje reforzado \leavevmode {\color {SkyBlue}FiguraEstructAR}.\relax }}{5}{figure.caption.10}%
 \contentsline {figure}{\numberline {1.3}{\ignorespaces Diagrama de bloques del proceso simplificado de aprendizaje reforzado profundo.\relax }}{7}{figure.caption.11}%
-\contentsline {figure}{\numberline {1.4}{\ignorespaces Diagrama de bloques.}}{10}{figure.caption.12}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Modelo simplificado del PAMH.\relax }}{12}{figure.caption.13}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Resumen de categorización del RL \leavevmode {\color {SkyBlue}DataScience}.\relax }}{13}{figure.caption.14}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Ejemplo de figura con tikz}}{17}{figure.caption.19}%
-\contentsline {figure}{\numberline {2.4}{\ignorespaces Ejemplo de imagen ltxfig/psfrag\relax }}{18}{figure.caption.21}%
-\contentsline {figure}{\numberline {2.5}{\ignorespaces Ejemplo de imagen gnuplot/pstricks\relax }}{19}{figure.caption.23}%
-\contentsline {figure}{\numberline {2.6}{\ignorespaces Ejemplo de figuras con subcaption}}{19}{figure.caption.25}%
-\contentsline {figure}{\numberline {2.7}{\ignorespaces Ejemplo de figura enorme.\relax }}{22}{figure.2.7}%
-\contentsline {figure}{\numberline {2.8}{\ignorespaces Ejemplo de código con listings.}}{24}{figure.caption.28}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Modelo simplificado del PAMH.\relax }}{9}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Resumen de categorización del RL \leavevmode {\color {SkyBlue}DataScience}.\relax }}{10}{figure.caption.13}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Esquemático del control predictivo del modelo (MPC) \leavevmode {\color {SkyBlue}DataScience}.\relax }}{11}{figure.caption.15}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
