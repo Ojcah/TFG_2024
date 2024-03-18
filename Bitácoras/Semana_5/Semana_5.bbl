@@ -26,4 +26,8 @@ F.~Airaldi, A.~Bietti, A.~Casagrande, and A.~Bemporad, ``Learning model
   predictive control with policy gradients,'' \emph{IEEE Transactions on
   Automatic Control}, 2023.
 
+\bibitem{gym}
+T.~F. Foundation, ``Gymnasium documentation,''
+  \url{https://gymnasium.farama.org/environments/classic_control/}, 2024.
+
 \end{thebibliography}

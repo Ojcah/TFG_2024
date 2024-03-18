@@ -62,8 +62,9 @@
 	 	% ***************************************************************
 	 	06/03/2024 & 
 	 	$\mathbf{2}.$ Estudio del código de ejemplo \textit{dpg.py} y \textit{q-learning.py} del repositorio \href{https://github.com/FilippoAiraldi/mpc-reinforcement-learning/tree/main}{MPCRL} \cite{Airdaldi2023}. & 
-	 	$a)$ ADADAD \newline & 
-	 	5 horas \\
+	 	$a)$ Se identificaron las 2 clases principales del código ejemplo, correspondientes a un entorno definido en el momento $LtiSystem$ y una clase de administración de la anterior mediante MPCRL llamada $LinearMpc$. \newline
+	 	$b)$ La clase $LinearMpc$ se encarga de hacer la distinción, dentro de sus funciones, entren el método $DPG$ y $Q-Learning$. \newline & 
+	 	6 horas \\
 	 	
 	 	\hline
 	\end{tabularx}
@@ -77,14 +78,20 @@
 		\hline		
 		
 	 	07/03/2024 & 
-	 	$\mathbf{3}.$ ADADAD & 
-	 	$a)$ ADADADAD \newline & 
+	 	$\mathbf{3}.$ Pruebas de definición de clases adaptadas en ejemplos de MPCRL a entornos Gymnasium \textit{CartPole} y \textit{Pendulum} \cite{gym}. & 
+	 	$a)$ La definición del entorno propio del ejemplo es un poco diferente comparado con la respectiva al $CartPole$ de Gymnasium \cite{gym}.  \newline & 
 	 	5 horas \\
 	 	% ***************************************************************
-	 	08/03/2024 & 
-	 	$\mathbf{4}.$ ADADADAD &
-	 	$a)$ ADADADADAD \newline & 
+	 	07/03/2024 & 
+	 	$\mathbf{4}.$ Ordenamiento del material agregado al documento final del proyecto (tesis). &
+	 	$a)$ Se copió información anteriormente adquirida en marco teórico. \newline
+	 	$b)$ Supresión de líneas previas de la plantilla. \newline & 
 	 	3 horas \\
+	 	% ***************************************************************
+	 	08/03/2024 & 
+	 	$\mathbf{5}.$ Estudio de las clases adaptadas $CartPoleSystem$ y $CartPoleMpc$. &
+	 	$a)$ Al analizar las estructuras generadas se obtienen errores y parámetros que no corresponde. Es necesario replantear las clases. \newline & 
+	 	4 horas \\
 	 	% ***************************************************************
 	 	
 	 	\hline
@@ -102,8 +109,11 @@
 
 \section*{Contenidos de actividades}
 
-ADADADA
+La estructura de clases utilizada en los ejemplos responde en primera instancia a una clase llamada en $LtiSystem$, encargada de definir las características del entorno basado en Gymnasium ($step$, $action$ y $get_stage_cost$) que se utiliza para los ejemplos, esto va desde las dimensiones del sistema de espacio de estados hasta los contenidos de sus matrices $A$ y $B$ \cite{Airdaldi2023}.
 
+Seguidamente se cuenta con la clase $LinearMpc$, la cual cuenta con los ajustes referentes a los parámetros del entrenamiento del modelo propio del ejemplo como $V0$, sin embargo, la definición de dichos parámetros para el nuevo entorno $CartPole$ puede recibir ciertas variaciones. Ademaś, esta clase se encarga de la dinámica deseada del entorno y su comunicación para el entrenamiento siguiente \cite{Airdaldi2023}.
+
+Estas características son las que se deben adaptar en la nueva versión del código, primero con los entornos virtuales de Gymnasium y seguidamente, en el control del modelo imitador del PAMH objetivo.
 
 
 
