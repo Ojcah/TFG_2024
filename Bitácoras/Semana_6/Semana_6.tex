@@ -1,0 +1,154 @@
+
+\documentclass[12pt]{article}
+\usepackage{fullpage,amsmath,amssymb,graphicx}
+
+\usepackage{setspace}
+\spacing{1}
+
+\usepackage{textpos}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{comment}
+\usepackage{listings}
+
+
+
+\definecolor{encabezado}{rgb}{0.74, 0.83, 0.9}
+
+\begin{document}
+
+\hfill\\
+\rule{\textwidth}{1.5pt}
+
+\begin{minipage}[t]{85mm}
+  \begin{tabular}{l}
+    \textbf{\large Instituto Tecnológico de Costa Rica} \\  
+    \textbf{Escuela de Ingeniería Electrónica} \\
+    \textbf{Trabajo Final de Graduación} \\
+    \textbf{Proyecto:} Método basado en aprendizaje reforzado \\para el control automático de una planta no lineal. \\
+    \textbf{Estudiante:} Oscar Andrés Rojas Fonseca \hspace{3cm}\rule{4.5cm}{1.5pt}\\
+    I Semestre 2024 \hspace{8.5cm}\textbf{Firma del asesor}
+  \end{tabular}
+\end{minipage}
+\hfill\\
+\rule{\textwidth}{1.5pt}
+
+
+\section*{Bitácora de trabajo}
+
+%\begin{table}[h]
+\begin{minipage}[h]{\textwidth}
+	\centering
+	\begin{tabularx}{\textwidth}{|p{2cm}|X|X|p{2cm}|} 
+		\hline
+		\rowcolor{encabezado}
+		\textbf{Fecha} & 
+		\textbf{Actividad} & 
+		\textbf{Anotaciones} & 
+		\textbf{Horas dedicadas} \\ \hline
+		% ***************************************************************
+	 	11/03/2024 & 
+	 	$\mathbf{1}.$ Pruebas con las versiones de las clases $CartPoleSystem$ y $CartPoleMpc$. & 
+	 	$a)$ Luego del nuevo estudio del código original de ejemplo \cite{Airdaldi2023}, se evidencia que las condiciones o parámetros definicos no son adecuados. \newline & 
+	 	3 horas \\
+		% ***************************************************************
+	 	12/03/2024 & 
+	 	$\mathbf{2}.$ Continuación de pruebas para la definición de las clases referentes a $CartPole$. & 
+	 	$a)$ Se definió una nueva versión de la clase $CartPoleSystem$ utilizando las funciones $\_init\_()$, $reset()$, $step()$, $render()$, $close()$ y $get\_stage\_cost()$. \newline
+	 	$b)$ Revisión de parámetros funcionales de los ejemplos con la adaptación a $CartPole$. \newline & 
+	 	6 horas \\
+		% ***************************************************************
+	 	13/03/2024 & 
+	 	$\mathbf{3}.$ Reunión de seguimiento con el asesor del proyecto. & 
+	 	$a)$ Revisión de avance en el código y resaltado de errores de forma.  \newline
+	 	$b)$ Se indicó los puntos importantes por replantear.  \newline & 
+	 	2 horas \\
+	 	% ***************************************************************
+	 	13/03/2024 & 
+	 	$\mathbf{4}.$ Continuación de pruebas para la definición de las clases referentes a CartPole. & 
+	 	$a)$ Prueba con resultado incorrecto de las matrices que definen la dinámica del sistema. \newline & 
+	 	4 horas \\
+	 	
+	 	\hline
+	\end{tabularx}
+\end{minipage}	 	
+	 	
+	 	% ***************************************************************
+\hfill\\
+\begin{minipage}[h]{\textwidth}
+	\centering
+	\begin{tabularx}{\textwidth}{|p{2cm}|X|X|p{2cm}|} 
+		\hline		
+		
+		% ***************************************************************
+	 	14/03/2024 & 
+	 	$\mathbf{5}.$ Reunión de seguimiento con coordinador del TFG a las $15:00$. &
+	 	$a)$ No asistí a la reunión por motivos personales. \newline 
+	 	$b)$ Se contactó al coordinador mediante correo electrónico para solicitar información. \newline & 
+	 	1 horas \\
+		% ***************************************************************
+		15/03/2024 & 
+	 	$\mathbf{6}.$ Hora consulta con coordinador del TFG $08:00$. &
+	 	$a)$ Se consultó mediante llamada telefónica para solicitud de información respecto a la reunión. \newline
+	 	$b)$ Redacción de correo electrónico con datos solicitados por el coordinador. \newline & 
+	 	1 horas \\
+	 	% ***************************************************************
+	 	15/03/2024 & 
+	 	$\mathbf{7}.$ Continuación de pruebas para la definición de las clases referentes a CartPole. &
+	 	$a)$ Los parámetros del ejemplo $dpg.py$ son diferentes al caso del $CartPole$ por el objetivo de aprendizaje del modelo. \newline
+	 	$b)$ Se redefinieron las funciones $\_init\_()$, $dynamics()$, $plan()$ y $execute()$ de la clase $CartPoleMpc$. \newline
+	 	$c)$ Nuevamente se tienen errores de definición, se debe replantear la clase $CartPoleMpc$. \newline & 
+	 	6 horas \\
+	 	% ***************************************************************
+	 	
+	 	\hline
+		\multicolumn{3}{|r|}{Total de horas de trabajo:} & 23 horas \\ 
+	 	\hline                 
+	\end{tabularx}
+\end{minipage}
+%\end{table}
+
+
+
+% *****************************************************************************
+% *****************************************************************************
+% *****************************************************************************
+
+\section*{Contenidos de actividades}
+
+Al observar los ejemplos del repositorio \href{https://github.com/FilippoAiraldi/mpc-reinforcement-learning/tree/main}{$MPC-RL$} \cite{Airdaldi2023} y al replantear las clases $CartPoleSystem$ y $CartPoleMpc$, se definió nuevamente la primera con la estructura siguiente:\\
+
+\textbf{CartPoleSystem(gym.Env):}
+\begin{itemize}
+	\item $\_init\_(self)$: Define el tipo de \textit{environment} virtual de $Gymnasium$ y guarda las obseraciones del espacio de estados y las acciones.
+	\item $reset(self)$: Reinicia el proceso del ambiente virtual.
+	\item $step(self, action)$: Recibe la acción, la aplica al ambiente y da un paso en el proceso.
+	\item $render(self, mode)$: Plantea el tipo de proceso a observar entre gráfico ($human$) y numérico ($rgb\_array$).
+	\item $close(self)$: Termina el proceso del ambiente virtual.
+	\item $get\_stage\_cost(self, state)$: Define un primer comportamiento del ambiente virtual para pantearlo a la recompensa.
+\end{itemize}
+
+Por otro lado, la clase $CartPoleMpc$ presenta muchos errores, por lo que se debe analizar cuidadosamente y replantear por completo.
+
+\newpage
+
+\section*{Referencias}
+\renewcommand\refname{}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+
+
+
+
+\end{document}
