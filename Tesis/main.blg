@@ -1,9 +1,14 @@
-[0] Config.pm:307> INFO - This is Biber 2.17
-[0] Config.pm:310> INFO - Logfile is 'main.blg'
-[78] biber:340> INFO - === lun mar 11, 2024, 19:12:24
-[93] Biber.pm:418> INFO - Reading 'main.bcf'
-[153] Biber.pm:972> INFO - Found 0 citekeys in bib section 0
-[165] bbl.pm:654> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[165] bbl.pm:757> INFO - Output to main.bbl
-[165] Biber.pm:130> WARN - The file 'main.bcf' does not contain any citations!
-[165] Biber.pm:132> INFO - WARNINGS: 1
+[0] Config.pm:306> INFO - This is Biber 2.18
+[0] Config.pm:309> INFO - Logfile is 'main.blg'
+[148] biber-MSWIN32:340> INFO - === 
+[202] Biber.pm:418> INFO - Reading 'main.bcf'
+[372] Biber.pm:978> INFO - Found 1 citekeys in bib section 0
+[395] Biber.pm:4401> INFO - Processing section 0
+[415] Biber.pm:4592> INFO - Looking for bibtex file 'literatura.bib' for section 0
+[539] bibtex.pm:1713> INFO - LaTeX decoding ...
+[574] bibtex.pm:1518> INFO - Found BibTeX data source 'literatura.bib'
+[646] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[647] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[647] Biber.pm:4221> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'es-ES'
+[649] bbl.pm:654> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[650] bbl.pm:757> INFO - Output to main.bbl

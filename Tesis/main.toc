@@ -22,4 +22,5 @@
 \contentsline {chapter}{\numberline {3}Solución propuesta}{12}{chapter.3}%
 \contentsline {chapter}{\numberline {4}Resultados y análisis}{13}{chapter.4}%
 \contentsline {chapter}{\numberline {5}Conclusiones}{14}{chapter.5}%
-\contentsline {chapter}{\numberline {A}Demostración del teorema de Nyquist}{15}{appendix.Alph1}%
+\contentsline {chapter}{Bibliografía}{15}{chapter*.16}%
+\contentsline {chapter}{\numberline {A}Demostración del teorema de Nyquist}{16}{appendix.Alph1}%

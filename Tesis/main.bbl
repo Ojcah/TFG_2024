@@ -16,5 +16,59 @@
   {}
 \endgroup
 
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{Burrus1998}{book}{}
+      \name{author}{6}{}{%
+        {{hash=5156be377b7ac55f647ba9c7a953b49c}{%
+           family={Burrus},
+           familyi={B\bibinitperiod},
+           given={C.\bibnamedelimi S.},
+           giveni={C\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=9f10c501f4570d775a5b3c57bd1a60e9}{%
+           family={McClellan},
+           familyi={M\bibinitperiod},
+           given={J.\bibnamedelimi H.},
+           giveni={J\bibinitperiod\bibinitdelim H\bibinitperiod}}}%
+        {{hash=91dbf9ff367cd6c6bb21dadfe228fb18}{%
+           family={Oppenheim},
+           familyi={O\bibinitperiod},
+           given={A.\bibnamedelimi V.},
+           giveni={A\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+        {{hash=93dd9810ccae5b3a76ba36949d228629}{%
+           family={Parks},
+           familyi={P\bibinitperiod},
+           given={T.\bibnamedelimi W.},
+           giveni={T\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=a044dbc8269130b0dbab3ef220d25a5d}{%
+           family={Schafer},
+           familyi={S\bibinitperiod},
+           given={R.\bibnamedelimi W.},
+           giveni={R\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+        {{hash=a8d002ffb457a5a9986a8126474b2d82}{%
+           family={Schuessler},
+           familyi={S\bibinitperiod},
+           given={H.\bibnamedelimi W.},
+           giveni={H\bibinitperiod\bibinitdelim W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Prentice Hall}%
+      }
+      \strng{namehash}{2446635bf2ac4fcd0209589cade03de1}
+      \strng{fullhash}{69a602ed042255a6fffafab3411fffb0}
+      \strng{bibnamehash}{69a602ed042255a6fffafab3411fffb0}
+      \strng{authorbibnamehash}{69a602ed042255a6fffafab3411fffb0}
+      \strng{authornamehash}{2446635bf2ac4fcd0209589cade03de1}
+      \strng{authorfullhash}{69a602ed042255a6fffafab3411fffb0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Ejercicios de Tratamiento de la Señal. Un enfoque práctico}
+      \field{year}{1998}
+    \endentry
+  \enddatalist
+\endrefsection
 \endinput
 
