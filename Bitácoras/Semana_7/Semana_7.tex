@@ -1,0 +1,129 @@
+
+\documentclass[12pt]{article}
+\usepackage{fullpage,amsmath,amssymb,graphicx}
+
+\usepackage{setspace}
+\spacing{1}
+
+\usepackage{textpos}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{tabularx}
+\usepackage{colortbl}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{hyperref}
+\usepackage{comment}
+\usepackage{listings}
+
+
+
+\definecolor{encabezado}{rgb}{0.74, 0.83, 0.9}
+
+\begin{document}
+
+\hfill\\
+\rule{\textwidth}{1.5pt}
+
+\begin{minipage}[t]{85mm}
+  \begin{tabular}{l}
+    \textbf{\large Instituto Tecnológico de Costa Rica} \\  
+    \textbf{Escuela de Ingeniería Electrónica} \\
+    \textbf{Trabajo Final de Graduación} \\
+    \textbf{Proyecto:} Método basado en aprendizaje reforzado \\para el control automático de una planta no lineal. \\
+    \textbf{Estudiante:} Oscar Andrés Rojas Fonseca \hspace{3cm}\rule{4.5cm}{1.5pt}\\
+    I Semestre 2024 \hspace{8.5cm}\textbf{Firma del asesor}
+  \end{tabular}
+\end{minipage}
+\hfill\\
+\rule{\textwidth}{1.5pt}
+
+
+\section*{Bitácora de trabajo}
+
+%\begin{table}[h]
+\begin{minipage}[h]{\textwidth}
+	\centering
+	\begin{tabularx}{\textwidth}{|p{2cm}|X|X|p{2cm}|} 
+		\hline
+		\rowcolor{encabezado}
+		\textbf{Fecha} & 
+		\textbf{Actividad} & 
+		\textbf{Anotaciones} & 
+		\textbf{Horas dedicadas} \\ \hline
+		% ***************************************************************
+	 	19/03/2024 & 
+	 	$\mathbf{2}.$ Continuación de pruebas para la definición de las clases referentes a $CartPole$. & 
+	 	$a)$ Se definió una nueva versión de la clase $CartPoleSystem$ utilizando las funciones $\_init\_()$, $reset()$, $step()$, $render()$, $close()$ y $get\_stage\_cost()$. \newline & 
+	 	6 horas \\
+		% ***************************************************************
+	 	20/03/2024 & 
+	 	$\mathbf{3}.$ Reunión de seguimiento con el asesor del proyecto. & 
+	 	$a)$ Revisión de avance en el código y resaltado de errores de forma.  \newline
+	 	$b)$ Dada la complejidad de la adaptación de los ambientes $CartPole$ al $MPC$ \cite{Airdaldi2023}, se decidió revisar otras fuentes, encontrando un ejemplo de implementación $CartPole$ con \href{https://pytorch.org/tutorials/intermediate/reinforcement_q_learning.html}{$DQN$} \cite{DQNCart}.  \newline & 
+	 	2 horas \\
+	 	% ***************************************************************
+	 	20/03/2024 & 
+	 	$\mathbf{4}.$ Pruebas de montaje del código $DQN$ mencionado. & 
+	 	$a)$ Creación de nuevo $env$ para el funcionamiento del código en \cite{DQNCart}. \newline
+	 	$b)$ Pruebas de funcionamiento del código original (exitosa). \newline
+	 	$c)$ Pruebas de implementación del código con su versión CUDA para mejor desempeño en SO Windows. \newline & 
+	 	4 horas \\
+	 	
+	 	\hline
+	\end{tabularx}
+\end{minipage}	 	
+	 	
+	 	% ***************************************************************
+\hfill\\
+\begin{minipage}[h]{\textwidth}
+	\centering
+	\begin{tabularx}{\textwidth}{|p{2cm}|X|X|p{2cm}|} 
+		\hline		
+		
+	 	% ***************************************************************
+	 	21/03/2024 & 
+	 	$\mathbf{5}.$ Continuación de pruebas para la definición de las clases referentes a CartPole. &
+	 	$a)$ Los parámetros del ejemplo $dpg.py$ son diferentes al caso del $CartPole$ por el objetivo de aprendizaje del modelo. \newline & 
+	 	6 horas \\
+	 	% ***************************************************************
+	 	22/03/2024 & 
+	 	$\mathbf{6}.$ Continuación de pruebas para la definición de las clases referentes a CartPole. &
+	 	$a)$ Los parámetros del ejemplo $dpg.py$ son diferentes al caso del $CartPole$ por el objetivo de aprendizaje del modelo. \newline & 
+	 	6 horas \\
+	 	% ***************************************************************
+	 	
+	 	\hline
+		\multicolumn{3}{|r|}{Total de horas de trabajo:} & 23 horas \\ 
+	 	\hline                 
+	\end{tabularx}
+\end{minipage}
+%\end{table}
+
+
+
+% *****************************************************************************
+% *****************************************************************************
+% *****************************************************************************
+
+\section*{Contenidos de actividades}
+
+AAAA \cite{Airdaldi2023}
+
+\newpage
+
+\section*{Referencias}
+\renewcommand\refname{}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+
+
+
+
+\end{document}
