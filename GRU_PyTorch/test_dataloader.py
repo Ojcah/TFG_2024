@@ -1,6 +1,7 @@
 from dataloader import get_dataloaders
 import os
 import matplotlib.pyplot as plt
+import matplotlib
 import torch
 
 def plot_all_sequences(dataloaders):
@@ -11,20 +12,22 @@ def plot_all_sequences(dataloaders):
     dataloaders (tuple): A tuple containing training, validation, 
     and testing dataloaders.
   """
-  colors = plt.cm.get_cmap('tab20').colors  # Get a colormap with 20 colors
+  colors = matplotlib.colormaps.get_cmap('tab20').colors  # Get a colormap with 20 colors
 
   sequence_count = 0
   for loader in dataloaders:
     for pwm, angle in loader:
+      pwm = pwm.squeeze().cpu().numpy()
+      angle = angle.squeeze().cpu().numpy()
       # Plot PWM values
       plt.figure(1)
-      plt.plot(pwm.cpu().numpy(),
+      plt.plot(pwm,
                label=f"Sequence {sequence_count}",
                color=colors[sequence_count % len(colors)])
 
       # Plot angle values (separate figure)
       plt.figure(2)
-      plt.plot(angle.cpu().numpy().squeeze(),
+      plt.plot(angle,
                label=f"Sequence {sequence_count}",
                color=colors[sequence_count % len(colors)])
 
