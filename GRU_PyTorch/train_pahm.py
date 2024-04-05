@@ -1,3 +1,4 @@
+print("Loading packages...")
 import argparse
 
 import torch
@@ -12,7 +13,7 @@ import wandb
 class Trainer:
     def __init__(self):
         parser = argparse.ArgumentParser(description='Mimetic Model for the Dynamical System.')
-        parser.add_argument('--project_name', type=str,
+        parser.add_argument('--wandb_run', type=str,
                             default='',
                             help='Name of the run in Weights & Biases.')
         parser.add_argument('--units', type=int,
@@ -42,7 +43,7 @@ class Trainer:
         self.args = parser.parse_args()
 
 
-        self.use_wandb = bool(self.args.project_name)
+        self.use_wandb = bool(self.args.wandb_run)
 
         if self.use_wandb:
             # Remember to follow the instructions at
@@ -51,9 +52,9 @@ class Trainer:
             wandb.login()
             wandb.init(project="pytorch-gru", 
                        entity="mimetic-rna", 
-                       name=self.args.project_name,
+                       name=self.args.wandb_run,
                        resume='Allow',
-                       id=self.args.project_name)
+                       id=self.args.wandb_run)
             
             wandb.config.update({
                 "epochs": self.args.epochs,
@@ -94,7 +95,7 @@ class Trainer:
             print(f'Epoch {epoch+1}/{self.args.epochs}, Train Loss: {total_loss/len(train_loader)}, Validation Loss: {val_loss/len(val_loader)}')
 
             # Log losses to Weights & Biases
-            if self.use_wanb:
+            if self.use_wandb:
                 wandb.log({"Train Loss": total_loss/len(train_loader), "Validation Loss": val_loss/len(val_loader)})
             
         return model
@@ -107,6 +108,7 @@ if __name__ == "__main__":
     hidden_size = trainer.args.units  # Number of features in the hidden state
     output_size = 1  # Number of features in the output
 
+    print("Cargando datos...")
     # Load data
     root_dir = "../Datos_Recolectados/"
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -118,6 +120,8 @@ if __name__ == "__main__":
         # Initialize model
         model = PAHMModel(input_size, hidden_size, output_size)
 
+    print("Inicio de entrenamiento...")
+        
     # Train model
     model = trainer.train_model(model, train_loader, val_loader)
 
