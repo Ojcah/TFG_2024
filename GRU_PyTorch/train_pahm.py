@@ -68,9 +68,11 @@ class Trainer:
         optimizer = torch.optim.Adam(model.parameters())
 
         model = model.to(device)
+        
 
         for epoch in range(self.args.epochs):
-            model.train()
+            model.train()            
+            total_loss = 0
             for pwm, angle in train_loader:
 
                 # Forward pass
@@ -81,17 +83,19 @@ class Trainer:
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
-
+                model.hidden = None # Reset hidden state
+                total_loss += loss.item()
+                
             # Validation
             model.eval()
             with torch.no_grad():
                 val_loss = sum(criterion(model(pwm.to(device)), angle.to(device)) for pwm, angle in val_loader)
 
-            print(f'Epoch {epoch+1}/{self.args.epochs}, Train Loss: {loss.item()}, Validation Loss: {val_loss/len(val_loader)}')
+            print(f'Epoch {epoch+1}/{self.args.epochs}, Train Loss: {total_loss/len(train_loader)}, Validation Loss: {val_loss/len(val_loader)}')
 
             # Log losses to Weights & Biases
             if self.use_wanb:
-                wandb.log({"Train Loss": loss.item(), "Validation Loss": val_loss/len(val_loader)})
+                wandb.log({"Train Loss": total_loss/len(train_loader), "Validation Loss": val_loss/len(val_loader)})
             
         return model
 
