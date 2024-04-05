@@ -46,8 +46,10 @@ class PAHMDataset(Dataset):
     pwm, angle = self.data[idx]
     
     # Convert to tensors and move to specified device
-    pwm = torch.tensor(pwm, dtype=torch.float32).unsqueeze(0).to(self.device)
-    angle = torch.tensor(angle.reshape(-1, 1), dtype=torch.float32).unsqueeze(0).to(self.device)
+
+    # This needs to be batch_size, seq_len, num_features
+    pwm = torch.tensor(pwm, dtype=torch.float32).unsqueeze(1).to(self.device)
+    angle = torch.tensor(angle, dtype=torch.float32).unsqueeze(1).to(self.device)
 
     return pwm, angle
 
