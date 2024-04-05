@@ -1,5 +1,7 @@
 print("Loading packages...")
 import argparse
+import time
+import datetime
 
 import torch
 import torch.optim as optim
@@ -20,7 +22,7 @@ class Trainer:
                             default=32,
                             help='Number of units for the RNAM.')
         parser.add_argument('--epochs', type=int,
-                            default=1000,
+                            default=30,
                             help='Number of training epochs.')
         parser.add_argument('--batch_size', type=int,
                             default=1,
@@ -40,8 +42,10 @@ class Trainer:
         parser.add_argument('--load_model', type=str,
                             default='',
                             help='Load a previously trained model (.pth) and train it further.')
+        parser.add_argument('--checkpoints_every', type=int,
+                            default=0,
+                            help='Number of epochs between saving checkpoints (default 0: save only at the end).')
         self.args = parser.parse_args()
-
 
         self.use_wandb = bool(self.args.wandb_run)
 
@@ -98,6 +102,20 @@ class Trainer:
             if self.use_wandb:
                 wandb.log({"Train Loss": total_loss/len(train_loader), "Validation Loss": val_loss/len(val_loader)})
             
+            # Save model checkpoints
+            if self.args.checkpoints_every > 0 and (epoch + 1) % self.args.checkpoints_every == 0:
+                timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+
+                num_digits = len(str(self.args.epochs))  # Get number of digits in epochs
+                epoch_str = str(epoch + 1).zfill(num_digits)  # Pad epoch with zeros
+                model_name = f"{self.args.wandb_run}_{epoch_str}_{timestamp}.pth"
+
+                model.save_model(model_name)
+                print(f"  Model saved at epoch {epoch + 1} to {model_name}")
+
+        # Save model at the end of training
+        model.save_model(self.args.model_name)
+        print(f"Model saved at the end of training to {self.args.model_name}")
         return model
 
 if __name__ == "__main__":
