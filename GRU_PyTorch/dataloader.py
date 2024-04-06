@@ -44,6 +44,9 @@ class PAHMDataset(Dataset):
         # Shift elements, create a copy for the first element
         pwm = np.column_stack((pwm, np.roll(pwm, 1)))  
         pwm[0,1]=0
+      else:
+        pwm = pwm.reshape(-1,1)
+
       
       if self.normalize:        
         angle=np.concatenate((np.zeros(1500), data.values[:, 3]))

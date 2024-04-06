@@ -1,8 +1,11 @@
+print("Loading packages...")
+
 from dataloader import get_dataloaders
 import os
 import matplotlib.pyplot as plt
 import matplotlib
 import torch
+import numpy as np
 
 def plot_all_sequences(dataloaders):
   """
@@ -15,41 +18,57 @@ def plot_all_sequences(dataloaders):
   # Get a colormap with 20 colors
   colors = matplotlib.colormaps.get_cmap('tab20').colors 
 
-  sequence_count = 0
+  fig_base = 1
   for loader in dataloaders:
+    print(f"Plotting set {(fig_base+1)/2}")
+    pwms = []
+    angles = []
+
     for pwm, angle in loader:
-      pwm = pwm.squeeze().cpu().numpy()
-      pwm = pwm[:,0] if len(pwm.shape) > 1 else pwm
-      
+      pwm = pwm.squeeze().cpu().numpy()[:,0]
       angle = angle.squeeze().cpu().numpy()
       
-      # Plot PWM values
-      plt.figure(1)
-      plt.plot(pwm,
-               label=f"Sequence {sequence_count}",
-               color=colors[sequence_count % len(colors)])
+      pwms.append(pwm)
+      angles.append(angle)
 
-      # Plot angle values (separate figure)
-      plt.figure(2)
-      plt.plot(angle,
-               label=f"Sequence {sequence_count}",
-               color=colors[sequence_count % len(colors)])
+    num_sequences=len(pwms)
+    all_pwms = np.concatenate(pwms)
+    all_angles = np.concatenate(angles)
 
-      sequence_count += 1
+    start_index=0
+    for i in range(num_sequences):    
+      end_index = start_index + pwms[i].shape[0]
+      plt.figure(fig_base)
+      plt.plot(
+        range(start_index, end_index),
+        all_pwms[start_index:end_index],
+        color=colors[i % len(colors)],
+        label="",
+        linewidth=2
+      )
+      plt.figure(fig_base+1)
+      plt.plot(
+        range(start_index, end_index),
+        all_angles[start_index:end_index],
+        color=colors[i % len(colors)],
+        label="",
+        linewidth=2
+      )
+      start_index=end_index
 
-  # Set labels and legends for PWM plot
-  plt.figure(1)
-  plt.xlabel("Index")
-  plt.ylabel("PWM Value")
-  plt.grid(True)
-  plt.legend(title="Sequences")
+    # Set labels and legends for PWM plot
+    plt.figure(fig_base)
+    plt.xlabel("Index")
+    plt.ylabel(f"PWM Value {(fig_base+1)/2}")
+    plt.grid(True)
 
-  # Set labels and legends for angle plot
-  plt.figure(2)
-  plt.xlabel("Index")
-  plt.ylabel("Angle (degrees)")
-  plt.grid(True)
-  plt.legend(title="Sequences")
+    # Set labels and legends for angle plot
+    plt.figure(fig_base+1)
+    plt.xlabel("Index")
+    plt.ylabel(f"Angle (degrees) {(fig_base+1)/2}")
+    plt.grid(True)
+
+    fig_base = fig_base + 2
 
   # Show both plots
   plt.show()
@@ -67,6 +86,7 @@ if __name__ == "__main__":
  
   device = "cuda" if torch.cuda.is_available() else "cpu"
 
+  print("Loading data...")
   train_loader, val_loader, test_loader = get_dataloaders(root_dir, device=device,extension="zero")
 
   plot_all_sequences((train_loader, val_loader, test_loader))
