@@ -22,7 +22,7 @@ class Trainer:
                             default=32,
                             help='Number of units for the RNAM.')
         parser.add_argument('--epochs', type=int,
-                            default=30,
+                            default=500,
                             help='Number of training epochs.')
         parser.add_argument('--batch_size', type=int,
                             default=1,
@@ -34,7 +34,7 @@ class Trainer:
                             default='Prediction_',
                             help='Name for the prediction figure (.png).')
         parser.add_argument('--model_name', type=str,
-                            default='Model_Synth_',
+                            default='pahm_model',
                             help='Name for the RNAM model (.pth).')
         parser.add_argument('--loss_type', type=str,
                             default='mse',
@@ -70,7 +70,7 @@ class Trainer:
     def train_model(self, model, train_loader, val_loader):
         # Define loss function and optimizer
         criterion = torch.nn.MSELoss() if self.args.loss_type == 'mse' else torch.nn.L1Loss()
-        optimizer = torch.optim.Adam(model.parameters())
+        optimizer = torch.optim.NAdam(model.parameters())
 
         model = model.to(device)
         
@@ -94,16 +94,22 @@ class Trainer:
             # Validation
             model.eval()
             with torch.no_grad():
-                val_loss = sum(criterion(model(pwm.to(device)), angle.to(device)) for pwm, angle in val_loader)
+                val_loss = sum(criterion(model(pwm.to(device)), \
+                                               angle.to(device)) for pwm, angle in val_loader)
 
-            print(f'Epoch {epoch+1}/{self.args.epochs}, Train Loss: {total_loss/len(train_loader)}, Validation Loss: {val_loss/len(val_loader)}')
+            print(f'Epoch {epoch+1}/{self.args.epochs}, '
+                  f'Train Loss: {total_loss/len(train_loader)}, '
+                  f'Validation Loss: {val_loss/len(val_loader)}')
 
             # Log losses to Weights & Biases
             if self.use_wandb:
-                wandb.log({"Train Loss": total_loss/len(train_loader), "Validation Loss": val_loss/len(val_loader)})
+                wandb.log({"Train Loss": total_loss/len(train_loader),
+                           "Validation Loss": val_loss/len(val_loader)})
             
             # Save model checkpoints
-            if self.args.checkpoints_every > 0 and (epoch + 1) % self.args.checkpoints_every == 0:
+            if (self.args.checkpoints_every > 0 and
+                (epoch + 1) % self.args.checkpoints_every == 0):
+                
                 timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
 
                 num_digits = len(str(self.args.epochs))  # Get number of digits in epochs
@@ -144,4 +150,9 @@ if __name__ == "__main__":
     model = trainer.train_model(model, train_loader, val_loader)
 
     # Save model
-    model.save_model(trainer.args.model_name)
+    timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    model_name = f"{trainer.args.model_name}_{timestamp}.pth"
+
+    model.save_model(model_name)
+
+    wandb.finish()

@@ -24,7 +24,6 @@ class PAHMDataset(Dataset):
     self.max_angle = max_angle
 
     # Read data from CSV files
-    print("Loading data...")
     for filename in os.listdir(root_dir):
       data = pd.read_csv(os.path.join(root_dir, filename))
       pwm=np.concatenate((np.zeros(1500), data.values[:, 2]))
