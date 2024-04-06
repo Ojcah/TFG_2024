@@ -10,13 +10,20 @@ def main():
     parser = argparse.ArgumentParser(description='Test the PAHM Model.')
     parser.add_argument('--model_name', type=str, default='pahm_model.pth',
                         help='Path to the saved model file.')
+    
+    parser.add_argument('--extension', type=str,
+                        default="none",
+                        help='Feature extension (none,one,zero,past) (default "none": no extension.')
+
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    _, _, test_loader = get_dataloaders(root_dir="../Datos_Recolectados/", device=device)
 
     model = PAHMModel.load_model(args.model_name)
     model = model.to(device)
+
+    _, _, test_loader, _ = get_dataloaders(root_dir="../Datos_Recolectados/",extension=args.extension)
+
 
     predictions = []
     ground_truths = []
@@ -27,6 +34,8 @@ def main():
     with torch.no_grad():
         for pwm, angle in test_loader:
             pwm = pwm.to(device)
+            angle = angle.to(device)
+
             model.hidden = None # Reset hidden state
             prediction = model.forward(pwm)
             prediction = prediction.squeeze().cpu().numpy()
@@ -50,23 +59,24 @@ def plot_results(pwm_values, predictions, ground_truths):
 
     
     plt.figure(1,figsize=(15, 6))
+    start_index=0
     for i in range(num_sequences):
-        start_index = sum(predictions[j].shape[0] for j in range(i))  # Calculate starting index for each sequence
         end_index = start_index + predictions[i].shape[0]
         plt.plot(
             range(start_index, end_index),
             all_predictions[start_index:end_index],
-            color=colors[i],
+            color=colors[i % len(colors)],
             label="",
             linewidth=2
         )
         plt.plot(
             range(start_index, end_index),
             all_ground_truths[start_index:end_index],
-            color=colors[i],
+            color=colors[i % len(colors)],
             linestyle="--",
             label=""
         )
+        start_index=end_index
 
     plt.xlabel("Timesteps (concatenated sequences)")
     plt.ylabel("Angle")

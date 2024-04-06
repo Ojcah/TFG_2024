@@ -19,11 +19,13 @@ def plot_all_sequences(dataloaders):
   colors = matplotlib.colormaps.get_cmap('tab20').colors 
 
   fig_base = 1
-  for loader in dataloaders:
+  for loader in dataloaders: 
+    # We'll plot a pair of figures for each dataloader
     print(f"Plotting set {(fig_base+1)/2}")
     pwms = []
     angles = []
 
+    # First, pack all sequences in a lilst
     for pwm, angle in loader:
       pwm = pwm.squeeze().cpu().numpy()[:,0]
       angle = angle.squeeze().cpu().numpy()
@@ -31,12 +33,15 @@ def plot_all_sequences(dataloaders):
       pwms.append(pwm)
       angles.append(angle)
 
+    # Now crunch all of them as a single, long one, together.
     num_sequences=len(pwms)
     all_pwms = np.concatenate(pwms)
     all_angles = np.concatenate(angles)
 
     start_index=0
-    for i in range(num_sequences):    
+    for i in range(num_sequences):
+      # Plot now each subsequence in its own place
+      # First the PWM vallues
       end_index = start_index + pwms[i].shape[0]
       plt.figure(fig_base)
       plt.plot(
@@ -46,6 +51,7 @@ def plot_all_sequences(dataloaders):
         label="",
         linewidth=2
       )
+      # And now the angles
       plt.figure(fig_base+1)
       plt.plot(
         range(start_index, end_index),
@@ -84,9 +90,7 @@ if __name__ == "__main__":
           "y descomprima en el padre de este directorio.")
     exit()  # Exit the script if the directory is missing
  
-  device = "cuda" if torch.cuda.is_available() else "cpu"
-
   print("Loading data...")
-  train_loader, val_loader, test_loader = get_dataloaders(root_dir, device=device,extension="zero")
+  train_loader, val_loader, test_loader, _ = get_dataloaders(root_dir,extension="zero")
 
   plot_all_sequences((train_loader, val_loader, test_loader))

@@ -27,12 +27,6 @@ class Trainer:
         parser.add_argument('--batch_size', type=int,
                             default=1,
                             help='Batch size used for training.')
-        parser.add_argument('--loss_name', type=str,
-                            default='loss_',
-                            help='Name for the loss figure (.png).')
-        parser.add_argument('--predict_name', type=str,
-                            default='Prediction_',
-                            help='Name for the prediction figure (.png).')
         parser.add_argument('--model_name', type=str,
                             default='pahm_model',
                             help='Name for the RNAM model (.pth).')
@@ -44,7 +38,10 @@ class Trainer:
                             help='Load a previously trained model (.pth) and train it further.')
         parser.add_argument('--checkpoints_every', type=int,
                             default=0,
-                            help='Number of epochs between saving checkpoints (default 0: save only at the end).')
+                            help='Number of epochs between checkpoints (default 0: save only at the end).')
+        parser.add_argument('--extension', type=str,
+                            default="none",
+                            help='Feature extension (none,one,zero,past) (default "none": no extension.')
         self.args = parser.parse_args()
 
         self.use_wandb = bool(self.args.wandb_run)
@@ -65,6 +62,7 @@ class Trainer:
                 "batch_size": self.args.batch_size,
                 "units": self.args.units,
                 "learning_rate": 0.001,
+                "extension": self.args.extension
             })
 
     def train_model(self, model, train_loader, val_loader):
@@ -79,6 +77,9 @@ class Trainer:
             model.train()            
             total_loss = 0
             for pwm, angle in train_loader:
+
+                pwm = pwm.to(device)
+                angle = angle.to(device)
 
                 # Forward pass
                 outputs = model(pwm)
@@ -127,16 +128,17 @@ class Trainer:
 if __name__ == "__main__":
     trainer = Trainer()
 
-    # Hyperparameters
-    input_size = 1  # Number of features in the input
-    hidden_size = trainer.args.units  # Number of features in the hidden state
-    output_size = 1  # Number of features in the output
-
     print("Cargando datos...")
     # Load data
     root_dir = "../Datos_Recolectados/"
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    train_loader, val_loader, _ = get_dataloaders(root_dir, device=device)
+    train_loader, val_loader, _, wholeset = get_dataloaders(root_dir,extension=trainer.args.extension)
+
+    # Hyperparameters
+    input_size = wholeset.features()  # Number of features in the input
+    hidden_size = trainer.args.units  # Number of features in the hidden state
+    output_size = 1  # Number of features in the output
+
 
     if trainer.args.load_model:
         model = PAHMModel.load_model(trainer.args.load_model)
