@@ -12,13 +12,17 @@ def plot_all_sequences(dataloaders):
     dataloaders (tuple): A tuple containing training, validation, 
     and testing dataloaders.
   """
-  colors = matplotlib.colormaps.get_cmap('tab20').colors  # Get a colormap with 20 colors
+  # Get a colormap with 20 colors
+  colors = matplotlib.colormaps.get_cmap('tab20').colors 
 
   sequence_count = 0
   for loader in dataloaders:
     for pwm, angle in loader:
       pwm = pwm.squeeze().cpu().numpy()
+      pwm = pwm[:,0] if len(pwm.shape) > 1 else pwm
+      
       angle = angle.squeeze().cpu().numpy()
+      
       # Plot PWM values
       plt.figure(1)
       plt.plot(pwm,
@@ -63,6 +67,6 @@ if __name__ == "__main__":
  
   device = "cuda" if torch.cuda.is_available() else "cpu"
 
-  train_loader, val_loader, test_loader = get_dataloaders(root_dir, device=device)
+  train_loader, val_loader, test_loader = get_dataloaders(root_dir, device=device,extension="zero")
 
   plot_all_sequences((train_loader, val_loader, test_loader))

@@ -9,7 +9,12 @@ class PAHMDataset(Dataset):
   A PyTorch Dataset class for loading PAHM data.
   """
 
-  def __init__(self, root_dir, device, normalize=True,min_angle=-120,max_angle=120):
+  def __init__(self,
+               root_dir,
+               device,
+               normalize=True,
+               min_angle=-120,max_angle=120,
+               extension=None):
     """
     Args:
       root_dir (str): Path to the directory containing CSV files.
@@ -26,7 +31,20 @@ class PAHMDataset(Dataset):
     # Read data from CSV files
     for filename in os.listdir(root_dir):
       data = pd.read_csv(os.path.join(root_dir, filename))
-      pwm=np.concatenate((np.zeros(1500), data.values[:, 2]))
+      pwm = np.concatenate((np.zeros(1500), data.values[:, 2]))
+
+      # Modify pwm based on extension argument
+      if extension == "zero":
+        pwm = np.column_stack((pwm, np.zeros_like(pwm)))
+        pwm[0,1]=0
+      elif extension == "one":
+        pwm = np.column_stack((pwm, np.ones_like(pwm)))
+        pwm[0,1]=0
+      elif extension == "past":
+        # Shift elements, create a copy for the first element
+        pwm = np.column_stack((pwm, np.roll(pwm, 1)))  
+        pwm[0,1]=0
+      
       if self.normalize:        
         angle=np.concatenate((np.zeros(1500), data.values[:, 3]))
       else:
@@ -52,10 +70,19 @@ class PAHMDataset(Dataset):
 
     return pwm, angle
 
-def get_dataloaders(root_dir, train_split=0.6, val_split=0.2, device="cpu", normalize=True,min_angle=-120,max_angle=120):
-  """Creates training, validation, and testing dataloaders without randomization."""
+def get_dataloaders(root_dir,
+                    train_split=0.6,
+                    val_split=0.2,
+                    device="cpu",
+                    normalize=True,
+                    min_angle=-120,
+                    max_angle=120,
+                    extension=None):
+  """Creates training, validation, and testing dataloaders without
+     randomization."""
 
-  dataset = PAHMDataset(root_dir, device, normalize,min_angle,max_angle)
+  dataset = PAHMDataset(root_dir,device,normalize,
+                        min_angle,max_angle,extension)
   total_len = len(dataset)
 
   train_len = int(train_split * total_len)
