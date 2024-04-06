@@ -7,6 +7,12 @@ from pahm_model import PAHMModel
 import numpy as np
 
 def main():
+    """
+    To test a model, two parameters must be passed:
+    --model_name: the name of the model file stored in train_pahm
+    --extension: the same extension used by train_pahm when creating the model
+    """
+
     parser = argparse.ArgumentParser(description='Test the PAHM Model.')
     parser.add_argument('--model_name', type=str, default='pahm_model.pth',
                         help='Path to the saved model file.')
@@ -14,6 +20,8 @@ def main():
     parser.add_argument('--extension', type=str,
                         default="none",
                         help='Feature extension (none,one,zero,past) (default "none": no extension.')
+    parser.add_argument('--keep_angles', action='store_false',
+                        help='Set this flag to not normalize angles.')
 
     args = parser.parse_args()
 
@@ -22,7 +30,7 @@ def main():
     model = PAHMModel.load_model(args.model_name)
     model = model.to(device)
 
-    _, _, test_loader, _ = get_dataloaders(root_dir="../Datos_Recolectados/",extension=args.extension)
+    _, _, test_loader, _ = get_dataloaders(root_dir="../Datos_Recolectados/",extension=args.extension,normalize_angles=not args.keep_angles)
 
 
     predictions = []

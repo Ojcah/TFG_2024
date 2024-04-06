@@ -42,6 +42,8 @@ class Trainer:
         parser.add_argument('--extension', type=str,
                             default="none",
                             help='Feature extension (none,one,zero,past) (default "none": no extension.')
+        parser.add_argument('--keep_angles', action='store_true',
+                            help='Set this flag to not normalize angles.')
         self.args = parser.parse_args()
 
         self.use_wandb = bool(self.args.wandb_run)
@@ -62,7 +64,8 @@ class Trainer:
                 "batch_size": self.args.batch_size,
                 "units": self.args.units,
                 "learning_rate": 0.001,
-                "extension": self.args.extension
+                "extension": self.args.extension,
+                "normalize_angles": not self.keep_angles
             })
 
     def train_model(self, model, train_loader, val_loader):
@@ -132,7 +135,9 @@ if __name__ == "__main__":
     # Load data
     root_dir = "../Datos_Recolectados/"
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    train_loader, val_loader, _, wholeset = get_dataloaders(root_dir,extension=trainer.args.extension)
+    train_loader, val_loader, _, wholeset = get_dataloaders(root_dir,
+                                                            extension=trainer.args.extension,
+                                                            normalize_angles=not trainer.args.keep_angles)
 
     # Hyperparameters
     input_size = wholeset.features()  # Number of features in the input

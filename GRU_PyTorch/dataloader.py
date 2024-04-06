@@ -31,13 +31,18 @@ class PAHMDataset(Dataset):
     self.min_angle = min_angle
     self.max_angle = max_angle
 
+    self.angle_norm_slope = 2/(self.max_angle-self.min_angle)
+    self.angle_norm_intercept = 1 - self.angle_norm_slope*self.max_angle
+
     self.num_features=[]
+
+    prepadding = np.zeros(1500)
 
 
     # Read data from CSV files
     for filename in os.listdir(root_dir):
       data = pd.read_csv(os.path.join(root_dir, filename))
-      pwm = np.concatenate((np.zeros(1500), data.values[:, 2]))
+      pwm = np.concatenate((prepadding, data.values[:, 2]))
 
       # Modify pwm based on extension argument
       if extension == "zero":
@@ -59,9 +64,9 @@ class PAHMDataset(Dataset):
 
       
       if self.normalize_angles:        
-        angle=np.concatenate((np.zeros(1500), self.norm(data.values[:, 3])))
+        angle=np.concatenate((prepadding, self.norm(data.values[:, 3])))
       else:
-        angle=np.concatenate((np.zeros(1500), data.values[:, 3]))
+        angle=np.concatenate((prepadding, data.values[:, 3]))
         
       angle = angle.reshape(-1,1)
 
@@ -72,7 +77,7 @@ class PAHMDataset(Dataset):
 
 
   def norm(self,data):
-      data = (data - self.min_angle) / (self.max_angle-self.min_angle)
+      data = data*self.angle_norm_slope + self.angle_norm_intercept
       return data
                              
   def __len__(self):
