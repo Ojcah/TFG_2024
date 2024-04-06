@@ -65,7 +65,7 @@ class Trainer:
                 "units": self.args.units,
                 "learning_rate": 0.001,
                 "extension": self.args.extension,
-                "normalize_angles": not self.keep_angles
+                "normalize_angles": not self.args.keep_angles
             })
 
     def train_model(self, model, train_loader, val_loader):
