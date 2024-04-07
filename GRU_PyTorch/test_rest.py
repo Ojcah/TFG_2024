@@ -41,7 +41,7 @@ def main():
     
     with torch.no_grad():
         # Initialize hidden state
-        model.hidden = torch.zeros(1, 1, model.hidden_size).to(device)
+        model.reset()
             
         # Create a numpy array to hold the predictions for this sequence
         prediction = np.zeros(length)

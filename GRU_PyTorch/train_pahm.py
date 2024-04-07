@@ -19,9 +19,9 @@ class Trainer:
         parser.add_argument('--wandb_run', type=str,
                             default='',
                             help='Name of the run in Weights & Biases.')
-        parser.add_argument('--units', type=int,
+        parser.add_argument('--hidden_size', type=int,
                             default=32,
-                            help='Number of units for the RNAM.')
+                            help='Size of the hidden state.')
         parser.add_argument('--epochs', type=int,
                             default=500,
                             help='Number of training epochs.')
@@ -63,17 +63,19 @@ class Trainer:
             wandb.config.update({
                 "epochs": self.args.epochs,
                 "batch_size": self.args.batch_size,
-                "units": self.args.units,
+                "hidden_size": self.args.hidden_size,
                 "learning_rate": 0.001,
                 "extension": self.args.extension,
                 "normalize_angles": not self.args.keep_angles
             })
 
     def create_mask(self,lengths, max_length,prepadding=1500):
-        mask = torch.arange(max_length).expand(len(lengths), max_length) < lengths.unsqueeze(1)
+        mask = torch.arange(max_length).expand(len(lengths),
+                                               max_length) < lengths.unsqueeze(1)
 
-        # This doesn't affect training, but testing => reset of hidden state is done for every seq.
-        # mask[:, :prepadding] = 0  # Set the first 'prepadding' samples to zero
+        # This doesn't affect training, but testing => reset of hidden
+        # state is done for every seq.  mask[:, :prepadding] = 0 # Set
+        # the first 'prepadding' samples to zero
         return mask.float()
             
     def train_model(self, model, train_loader, val_loader):
@@ -89,7 +91,7 @@ class Trainer:
             for pwm, lengths, angle in train_loader:
 
                 # Initialize hidden state
-                model.hidden = torch.zeros(1, pwm.size(0), model.hidden_size).to(device)
+                model.reset(batch_size=pwm.size(0)
                 
                 pwm = pwm.to(device)
                 angle = angle.to(device)
@@ -119,7 +121,7 @@ class Trainer:
                 val_loss = 0
                 for pwm, lengths, angle in val_loader:
                     # Initialize hidden state
-                    model.hidden = torch.zeros(1, pwm.size(0), model.hidden_size).to(device)
+                    model.reset(batch_size=pwm.size(0)
 
                     pwm = pwm.to(device)
                     angle = angle.to(device)
@@ -174,7 +176,7 @@ if __name__ == "__main__":
 
     # Hyperparameters
     input_size = wholeset.features()  # Number of features in the input
-    hidden_size = trainer.args.units  # Number of features in the hidden state
+    hidden_size = trainer.args.hidden_size  # Dimension of the hidden state
     output_size = 1  # Number of features in the output
 
 

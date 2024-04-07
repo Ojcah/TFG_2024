@@ -35,6 +35,14 @@ class PAHMModel(nn.Module):
             return out.squeeze(0)  # Remove batch dimension
     
     
+    def reset(self,batch_size=1):
+        """
+        Resets the hidden state.  Used everytime the model needs to restart
+        predictions
+        """
+        device = next(self.parameters()).device
+        self.hidden = torch.zeros(1, batch_size, self.hidden_size).to(device)
+
     def save_model(self, path):
         torch.save({
             'input_size': self.input_size,
@@ -42,7 +50,6 @@ class PAHMModel(nn.Module):
             'output_size': self.output_size,
             'state_dict': self.state_dict(),
         }, path)
-
 
     @classmethod
     def load_model(cls, path):

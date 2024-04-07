@@ -42,7 +42,7 @@ def main():
     with torch.no_grad():
         for pwm, lengths, angle in test_loader:
             # Initialize hidden state
-            model.hidden = torch.zeros(1, pwm.size(0), model.hidden_size).to(device)
+            model.reset(batch_size=pwm.size(0))
             
             pwm = pwm.to(device)
             angle = angle.to(device)
