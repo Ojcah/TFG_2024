@@ -6,6 +6,7 @@ import datetime
 import torch
 import torch.optim as optim
 from torch.utils.data import DataLoader
+from torch.nn.utils.rnn import pad_sequence, pack_padded_sequence
 
 from dataloader import get_dataloaders
 from pahm_model import PAHMModel
@@ -73,33 +74,43 @@ class Trainer:
         criterion = torch.nn.MSELoss() if self.args.loss_type == 'mse' else torch.nn.L1Loss()
         optimizer = torch.optim.NAdam(model.parameters())
 
-        model = model.to(device)
-        
+        model = model.to(device)        
 
         for epoch in range(self.args.epochs):
             model.train()            
             total_loss = 0
-            for pwm, angle in train_loader:
+            for pwm, lengths, angle in train_loader:
 
+                # Initialize hidden state
+                model.hidden = torch.zeros(1, pwm.size(0), model.hidden_size).to(device)
+                
                 pwm = pwm.to(device)
                 angle = angle.to(device)
-
-                # Forward pass
-                outputs = model(pwm)
+                   
+                outputs = model(pwm,lengths)
                 loss = criterion(outputs, angle)
 
                 # Backward pass and optimization
                 optimizer.zero_grad()
                 loss.backward()
                 optimizer.step()
-                model.hidden = None # Reset hidden state
+
                 total_loss += loss.item()
                 
             # Validation
             model.eval()
             with torch.no_grad():
-                val_loss = sum(criterion(model(pwm.to(device)), \
-                                               angle.to(device)) for pwm, angle in val_loader)
+                val_loss = 0
+                for pwm, lengths, angle in val_loader:
+                    # Initialize hidden state
+                    model.hidden = torch.zeros(1, pwm.size(0), model.hidden_size).to(device)
+
+                    pwm = pwm.to(device)
+                    angle = angle.to(device)
+
+                    outputs = model(pwm,lengths)
+                    loss = criterion(outputs, angle)
+                    val_loss += loss.item()
 
             print(f'Epoch {epoch+1}/{self.args.epochs}, '
                   f'Train Loss: {total_loss/len(train_loader)}, '
@@ -123,9 +134,6 @@ class Trainer:
                 model.save_model(model_name)
                 print(f"  Model saved at epoch {epoch + 1} to {model_name}")
 
-        # Save model at the end of training
-        model.save_model(self.args.model_name)
-        print(f"Model saved at the end of training to {self.args.model_name}")
         return model
 
 if __name__ == "__main__":
@@ -137,7 +145,8 @@ if __name__ == "__main__":
     device = "cuda" if torch.cuda.is_available() else "cpu"
     train_loader, val_loader, _, wholeset = get_dataloaders(root_dir,
                                                             extension=trainer.args.extension,
-                                                            normalize_angles=not trainer.args.keep_angles)
+                                                            normalize_angles=not trainer.args.keep_angles,
+                                                            batch_size=trainer.args.batch_size)
 
     # Hyperparameters
     input_size = wholeset.features()  # Number of features in the input
@@ -161,5 +170,6 @@ if __name__ == "__main__":
     model_name = f"{trainer.args.model_name}_{timestamp}.pth"
 
     model.save_model(model_name)
+    print(f"Model saved at the end of training to {model_name}")
 
     wandb.finish()

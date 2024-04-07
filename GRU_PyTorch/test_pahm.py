@@ -20,7 +20,7 @@ def main():
     parser.add_argument('--extension', type=str,
                         default="none",
                         help='Feature extension (none,one,zero,past) (default "none": no extension.')
-    parser.add_argument('--keep_angles', action='store_false',
+    parser.add_argument('--keep_angles', action='store_true',
                         help='Set this flag to not normalize angles.')
 
     args = parser.parse_args()
@@ -40,12 +40,14 @@ def main():
 
     model.eval()
     with torch.no_grad():
-        for pwm, angle in test_loader:
+        for pwm, lengths, angle in test_loader:
+            # Initialize hidden state
+            model.hidden = torch.zeros(1, pwm.size(0), model.hidden_size).to(device)
+            
             pwm = pwm.to(device)
             angle = angle.to(device)
 
-            model.hidden = None # Reset hidden state
-            prediction = model.forward(pwm)
+            prediction = model(pwm,lengths)
             prediction = prediction.squeeze().cpu().numpy()
             
             predictions.append(prediction)
@@ -89,7 +91,6 @@ def plot_results(pwm_values, predictions, ground_truths):
     plt.xlabel("Timesteps (concatenated sequences)")
     plt.ylabel("Angle")
     plt.title("Predictions and Ground Truth (concatenated)")
-    plt.legend(loc='upper left', bbox_to_anchor=(1, 1), ncol=2)  # Hide legend
 
     # Calculate differences
     differences = all_predictions - all_ground_truths
@@ -109,7 +110,6 @@ def plot_results(pwm_values, predictions, ground_truths):
     plt.xlabel("Timesteps (concatenated sequences)")
     plt.ylabel("Difference (Prediction - Ground Truth)")
     plt.title("Differences between Predictions and Ground Truth (concatenated)")
-    plt.legend(loc='upper left', bbox_to_anchor=(1, 1), ncol=2)  # Hide legend
 
     # Use numpy functions for MSE, MAE, and RMSE calculation
     mse = np.mean(differences**2)

@@ -26,7 +26,7 @@ def plot_all_sequences(dataloaders):
     angles = []
 
     # First, pack all sequences in a lilst
-    for pwm, angle in loader:
+    for pwm, lengths, angle in loader:
       pwm = pwm.squeeze().cpu().numpy()[:,0]
       angle = angle.squeeze().cpu().numpy()
       

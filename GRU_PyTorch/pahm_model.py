@@ -1,5 +1,7 @@
 import torch
 import torch.nn as nn
+from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence, PackedSequence
+
 
 class PAHMModel(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
@@ -11,8 +13,18 @@ class PAHMModel(nn.Module):
         self.fc = nn.Linear(hidden_size, output_size)
         self.hidden = None
 
-    def forward(self, x):
+    def forward(self, x, lengths=None):
+
+        # Pack the sequences (i.e. tell gru to ignore padding)
+        if lengths is not None:
+            x = pack_padded_sequence(x, lengths, batch_first=True)
+    
         out, self.hidden = self.gru(x, self.hidden)  # we need the hidden state for the next sequence
+
+        # Unpack the output from GRU
+        if isinstance(out, PackedSequence):
+            out, _ = pad_packed_sequence(out, batch_first=True)
+        
         out = self.fc(out)
         return out
 

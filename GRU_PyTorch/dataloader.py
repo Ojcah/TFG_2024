@@ -3,6 +3,26 @@ import pandas as pd
 import numpy as np
 import torch
 from torch.utils.data import Dataset, DataLoader
+from torch.nn.utils.rnn import pad_sequence
+
+# Function used to pad all sequences in a batch to the same size
+def collate_fn(batch):
+    # Sort the batch by sequence length
+    batch.sort(key=lambda x: x[0].shape[0], reverse=True)
+
+    # Separate the input data and targets
+    sequences, targets = zip(*batch)
+
+    # Pad the sequences
+    sequences_padded = pad_sequence(sequences, batch_first=True)
+
+    # Stack the targets into a single tensor
+    targets_padded = pad_sequence(targets,batch_first=True)
+
+    # Get the lengths of the sequences
+    lengths = torch.tensor([len(seq) for seq in sequences])
+
+    return sequences_padded, lengths, targets_padded
 
 class PAHMDataset(Dataset):
   """
@@ -58,7 +78,7 @@ class PAHMDataset(Dataset):
         pwm = np.column_stack((pwm, np.roll(pwm, 1)))  
         pwm[0,1]=0
         self.num_features=2
-      else:
+      else: # Just use the scalar input, but return is as an m x 1 matrix
         pwm = pwm.reshape(-1,1)
         self.num_features=1
 
@@ -98,12 +118,15 @@ def get_dataloaders(root_dir,
                     normalize_angles=True,
                     min_angle=-120,
                     max_angle=120,
+                    batch_size=1,
                     extension=None):
   """Creates training, validation, and testing dataloaders without
      randomization."""
 
-  dataset = PAHMDataset(root_dir=root_dir,normalize_angles=normalize_angles,
-                        min_angle=min_angle,max_angle=max_angle,
+  dataset = PAHMDataset(root_dir=root_dir,
+                        normalize_angles=normalize_angles,
+                        min_angle=min_angle,
+                        max_angle=max_angle,
                         extension=extension)
   total_len = len(dataset)
 
@@ -115,9 +138,9 @@ def get_dataloaders(root_dir,
   val_data = torch.utils.data.Subset(dataset, range(train_len, train_len + val_len))
   test_data = torch.utils.data.Subset(dataset, range(train_len + val_len, total_len))
 
-  train_dataloader = DataLoader(train_data, batch_size=1, shuffle=True)
-  val_dataloader = DataLoader(val_data, batch_size=1, shuffle=False)
-  test_dataloader = DataLoader(test_data, batch_size=1, shuffle=False)
+  train_dataloader = DataLoader(train_data, batch_size=batch_size, shuffle=True,collate_fn=collate_fn)
+  val_dataloader = DataLoader(val_data, batch_size=1, shuffle=False,collate_fn=collate_fn)
+  test_dataloader = DataLoader(test_data, batch_size=1, shuffle=False,collate_fn=collate_fn)
 
   return train_dataloader, val_dataloader, test_dataloader, dataset
 
