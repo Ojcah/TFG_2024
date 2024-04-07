@@ -69,6 +69,10 @@ class Trainer:
                 "normalize_angles": not self.args.keep_angles
             })
 
+    def create_mask(self,lengths, max_length):
+        mask = torch.arange(max_length).expand(len(lengths), max_length) < lengths.unsqueeze(1)
+        return mask.float()
+            
     def train_model(self, model, train_loader, val_loader):
         # Define loss function and optimizer
         criterion = torch.nn.MSELoss() if self.args.loss_type == 'mse' else torch.nn.L1Loss()
@@ -87,8 +91,17 @@ class Trainer:
                 pwm = pwm.to(device)
                 angle = angle.to(device)
                    
+
+                # Create a mask for the current batch
+                mask = self.create_mask(lengths, pwm.size(1)).to(device)
+                
                 outputs = model(pwm,lengths)
-                loss = criterion(outputs, angle)
+
+                # Apply the mask to the outputs and angle
+                masked_outputs = outputs * mask.unsqueeze(-1)
+                masked_angle = angle * mask.unsqueeze(-1)
+                
+                loss = criterion(masked_outputs, masked_angle)
 
                 # Backward pass and optimization
                 optimizer.zero_grad()
@@ -108,7 +121,15 @@ class Trainer:
                     pwm = pwm.to(device)
                     angle = angle.to(device)
 
+                    # Create a mask for the current batch
+                    mask = self.create_mask(lengths, pwm.size(1)).to(device)
+                    
                     outputs = model(pwm,lengths)
+
+                    # Apply the mask to the outputs and angle
+                    masked_outputs = outputs * mask.unsqueeze(-1)
+                    masked_angle = angle * mask.unsqueeze(-1)
+                    
                     loss = criterion(outputs, angle)
                     val_loss += loss.item()
 
