@@ -69,8 +69,9 @@ class Trainer:
                 "normalize_angles": not self.args.keep_angles
             })
 
-    def create_mask(self,lengths, max_length):
+    def create_mask(self,lengths, max_length,prepadding=1500):
         mask = torch.arange(max_length).expand(len(lengths), max_length) < lengths.unsqueeze(1)
+        mask[:, :prepadding] = 0  # Set the first 'prepadding' samples to zero
         return mask.float()
             
     def train_model(self, model, train_loader, val_loader):

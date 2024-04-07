@@ -66,7 +66,7 @@ def main():
 
     plot_results(pwm_values, predictions, ground_truths)
 
-def plot_results(pwm_values, predictions, ground_truths):
+def plot_results(pwm_values, predictions, ground_truths,prepadding=1500):
     num_sequences = len(predictions)
     colors = matplotlib.colormaps.get_cmap('tab20').colors  # Get a colormap with 20 colors
 
@@ -101,10 +101,10 @@ def plot_results(pwm_values, predictions, ground_truths):
 
     # Calculate differences
     differences = all_predictions - all_ground_truths
-    
+    differences[0:prepadding]=0
     plt.figure(2,figsize=(15, 6))
-    for i in range(num_sequences):
-        start_index = sum(predictions[j].shape[0] for j in range(i))  # Calculate starting index for each sequence
+    start_index=0
+    for i in range(num_sequences):        
         end_index = start_index + predictions[i].shape[0]
         plt.plot(
             range(start_index, end_index),
@@ -113,6 +113,7 @@ def plot_results(pwm_values, predictions, ground_truths):
             label="",
             linewidth=2
         )
+        start_index=end_index
         
     plt.xlabel("Timesteps (concatenated sequences)")
     plt.ylabel("Difference (Prediction - Ground Truth)")
