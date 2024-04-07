@@ -1,8 +1,9 @@
+
 import os
 import pandas as pd
 import numpy as np
 import torch
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader, random_split
 from torch.nn.utils.rnn import pad_sequence
 
 # Function used to pad all sequences in a batch to the same size
@@ -61,7 +62,9 @@ class PAHMDataset(Dataset):
 
     # Read data from CSV files
     for filename in os.listdir(root_dir):
-      data = pd.read_csv(os.path.join(root_dir, filename))
+      datafile=os.path.join(root_dir, filename)
+      print(f"Reading file '{datafile}'")
+      data = pd.read_csv(datafile)
       pwm = np.concatenate((prepadding, data.values[:, 2]))
 
       # Modify pwm based on extension argument
@@ -132,12 +135,14 @@ def get_dataloaders(root_dir,
 
   train_len = int(train_split * total_len)
   val_len = int(val_split * total_len)
-  
-  # Split the dataset preserving the order of time sequences
-  train_data = torch.utils.data.Subset(dataset, range(0, train_len))
-  val_data = torch.utils.data.Subset(dataset, range(train_len, train_len + val_len))
-  test_data = torch.utils.data.Subset(dataset, range(train_len + val_len, total_len))
+  test_len = total_len - train_len - val_len
 
+  # Randomly split the dataset
+  generator = torch.Generator().manual_seed(425)
+  train_data, val_data, test_data = random_split(dataset=dataset,
+                                                 lengths=[train_len, val_len, test_len],
+                                                 generator=generator)
+  
   train_dataloader = DataLoader(train_data, batch_size=batch_size, shuffle=True,collate_fn=collate_fn)
   val_dataloader = DataLoader(val_data, batch_size=1, shuffle=False,collate_fn=collate_fn)
   test_dataloader = DataLoader(test_data, batch_size=1, shuffle=False,collate_fn=collate_fn)

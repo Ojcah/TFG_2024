@@ -79,7 +79,7 @@ class Trainer:
     def train_model(self, model, train_loader, val_loader):
         # Define loss function and optimizer
         criterion = torch.nn.MSELoss() if self.args.loss_type == 'mse' else torch.nn.L1Loss()
-        optimizer = torch.optim.NAdam(model.parameters())
+        optimizer = torch.optim.Adam(model.parameters())
 
         model = model.to(device)        
 
