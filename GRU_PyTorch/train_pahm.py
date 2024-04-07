@@ -71,7 +71,9 @@ class Trainer:
 
     def create_mask(self,lengths, max_length,prepadding=1500):
         mask = torch.arange(max_length).expand(len(lengths), max_length) < lengths.unsqueeze(1)
-        mask[:, :prepadding] = 0  # Set the first 'prepadding' samples to zero
+
+        # This doesn't affect training, but testing => reset of hidden state is done for every seq.
+        # mask[:, :prepadding] = 0  # Set the first 'prepadding' samples to zero
         return mask.float()
             
     def train_model(self, model, train_loader, val_loader):
@@ -131,7 +133,7 @@ class Trainer:
                     masked_outputs = outputs * mask.unsqueeze(-1)
                     masked_angle = angle * mask.unsqueeze(-1)
                     
-                    loss = criterion(outputs, angle)
+                    loss = criterion(masked_outputs, masked_angle)
                     val_loss += loss.item()
 
             print(f'Epoch {epoch+1}/{self.args.epochs}, '
