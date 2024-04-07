@@ -65,8 +65,8 @@ class LearnedPAHM(gym.Env):
     ```python
     >>> import gymnasium as gym
     >>> from learned_pahm import LearnedPAHM
-    >>> env = learned_pahm()
-    >>> observation, info = env.reset(seed=123, options={})
+    >>> env = LearnedPAHM()
+    >>> observation, info = env.reset(seed=123)
     >>> done = False
     >>> while not done:
     >>>    action = env.action_space.sample()
@@ -90,7 +90,7 @@ class LearnedPAHM(gym.Env):
 
     metadata = {
         "render_modes": ["human", "rgb_array"],
-        "render_fps": 30,
+        "render_fps": 50,
     }
 
     def __init__(self,
@@ -103,7 +103,7 @@ class LearnedPAHM(gym.Env):
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.pahm_model = PAHMModel.load_model(self.model_name)
-        self.pahm_model.to(device)
+        self.pahm_model.to(self.device)
         self.normangles = model_normangles
 
         # Initialize hidden state (layers,batch_size,hidden units )
@@ -139,7 +139,7 @@ class LearnedPAHM(gym.Env):
         self.last_action = action  # for rendering
         
         # The model produces an angle in a normalized frame from -1 to 1.
-        pwm_sample = torch.full((1,1), action).to(self.device)
+        pwm_sample = torch.full((1,1), action[0]).to(self.device)
         angle = self.pahm_model.predict(pwm_sample).cpu().numpy().item()
        
         # Denormalize the angle, which assumes the model was created
@@ -240,10 +240,11 @@ class LearnedPAHM(gym.Env):
             self.surf, rod_end[0], rod_end[1], int(rod_width / 2), (31,47,95,255)
         )
 
-        if self.last_u is not None:
+        # Show the excerpted force
+        if self.last_action is not None:
             # The PWM action is drawn as a line showing the wind
             # direction blown by the propeller
-            wind = (rod_length,rod_length*self.last_u)
+            wind = (rod_length,-rod_length*self.last_action)
 
             wind = pygame.math.Vector2(wind).rotate_rad(self.state[0] - np.pi / 2)
             wind = (int(wind[0] + offset), int(wind[1] + offset))
@@ -251,8 +252,8 @@ class LearnedPAHM(gym.Env):
             gfxdraw.line(self.surf,rod_end[0], rod_end[1], wind[0], wind[1], (210,64,64))
 
         # drawing axle
-        gfxdraw.filled_circle(self.surf, offset, offset, int(0.05 * scale), (0, 0, 0))
-        gfxdraw.aacircle(self.surf, offset, offset, int(0.05 * scale), (0, 0, 0))
+        gfxdraw.filled_circle(self.surf, offset, offset, int(0.05 * scale), (255, 240, 0))
+        gfxdraw.aacircle(self.surf, offset, offset, int(0.05 * scale), (255, 240, 0))
 
         self.surf = pygame.transform.flip(self.surf, False, True)
         self.screen.blit(self.surf, (0, 0))
