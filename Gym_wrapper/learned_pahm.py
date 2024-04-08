@@ -103,7 +103,7 @@ class LearnedPAHM(gym.Env):
         self.render_skip = None
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.pahm_model = PAHMModel.load_model(self.model_name)
+        self.pahm_model = PAHMModel.load_model(self.model_name,self.device)
         self.pahm_model.to(self.device)
         self.normangles = model_normangles
 

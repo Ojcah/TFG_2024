@@ -181,7 +181,7 @@ if __name__ == "__main__":
 
 
     if trainer.args.load_model:
-        model = PAHMModel.load_model(trainer.args.load_model)
+        model = PAHMModel.load_model(trainer.args.load_model,device=device)
     else:
         # Initialize model
         model = PAHMModel(input_size, hidden_size, output_size)

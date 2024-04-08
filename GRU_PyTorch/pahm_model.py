@@ -44,16 +44,23 @@ class PAHMModel(nn.Module):
         self.hidden = torch.zeros(1, batch_size, self.hidden_size).to(device)
 
     def save_model(self, path):
+        device = next(self.parameters()).device
+        self.to('cpu')
         torch.save({
             'input_size': self.input_size,
             'hidden_size': self.hidden_size,
             'output_size': self.output_size,
             'state_dict': self.state_dict(),
         }, path)
+        self.to(device)
 
     @classmethod
-    def load_model(cls, path):
-        checkpoint = torch.load(path)
-        model = cls(checkpoint['input_size'], checkpoint['hidden_size'], checkpoint['output_size'])
+    def load_model(cls, path,device=None):
+        checkpoint = torch.load(path,map_location=device)
+        model = cls(checkpoint['input_size'],
+                    checkpoint['hidden_size'],
+                    checkpoint['output_size'])
         model.load_state_dict(checkpoint['state_dict'])
+        if device is not None:
+            model.to(device)
         return model
