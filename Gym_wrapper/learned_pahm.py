@@ -100,6 +100,7 @@ class LearnedPAHM(gym.Env):
         
         self.model_name = model_name
         self.render_mode = render_mode
+        self.render_skip = None
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.pahm_model = PAHMModel.load_model(self.model_name)
@@ -169,9 +170,6 @@ class LearnedPAHM(gym.Env):
 
         self.last_action = None
         self.last_angle = None
-
-        if self.render_mode == "human":
-            self.render()
             
         return self.state, {}
 

@@ -28,8 +28,12 @@ while True:
         
             
         observation,reward,terminated,truncated,info = env.step(action)
-        env.render()
+        if step%5==0:
+            env.render() 
         step+=1
         done=terminated or truncated
+
+        if step%50 == 0:
+            print(".")
 
 env.close()
