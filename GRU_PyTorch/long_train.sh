@@ -1,6 +1,9 @@
 #!/bin/bash
+python train_pahm.py --epochs 1500 --loss_type mse --batch_size 1 --hidden_size [32,64,16] --checkpoints_every 500 --model_name gru_mse_simple_b1_32-64-16_8 --extension none
 
-python train_pahm.py --epochs 1500 --loss_type mae --batch_size 1 --checkpoints_every 500 --model_name gru_mae_simple_b1_7 --extension none --wandb_run gru_mae_simple_b1_7 --load_model gru_mse_simple_b1_4_20240407_002119.pth
+#python train_pahm.py --epochs 1500 --loss_type mse --batch_size 1 --hidden_size [32,64,16] --checkpoints_every 500 --model_name gru_mse_simple_b1_32-64-16_8 --extension none --wandb_run gru_mse_simple_b1_32-64-16-8 
+
+#python train_pahm.py --epochs 1500 --loss_type mae --batch_size 1 --checkpoints_every 500 --model_name gru_mae_simple_b1_7 --extension none --wandb_run gru_mae_simple_b1_7 --load_model gru_mse_simple_b1_4_20240407_002119.pth
 
 
 #python train_pahm.py --epochs 1500 --loss_type mae --batch_size 16 --checkpoints_every 500 --model_name gru_mae_simple_b16_5 --extension none --wandb_run gru_mae_simple_b16_5 --load_model gru_mse_simple_b16_20240406_202344.pth

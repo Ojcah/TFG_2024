@@ -12,6 +12,7 @@ from dataloader import get_dataloaders
 from pahm_model import PAHMModel
 
 import wandb
+import ast
 
 class Trainer:
     def __init__(self):
@@ -19,9 +20,9 @@ class Trainer:
         parser.add_argument('--wandb_run', type=str,
                             default='',
                             help='Name of the run in Weights & Biases.')
-        parser.add_argument('--hidden_size', type=int,
-                            default=32,
-                            help='Size of the hidden state.')
+        parser.add_argument('--hidden_size', type=str,
+                            default='32',
+                            help='Size of the hidden state. Use a single integer or lists [32 16]')
         parser.add_argument('--epochs', type=int,
                             default=500,
                             help='Number of training epochs.')
@@ -47,6 +48,23 @@ class Trainer:
                             help='Set this flag to not normalize angles.')
         self.args = parser.parse_args()
 
+        # Parse hidden_size
+        try:
+            self.args.hidden_size = ast.literal_eval(self.args.hidden_size)
+        except ValueError:
+            print("Invalid format for --hidden_size. It should be an integer or a list of integers.")
+            exit(1)
+
+        # Check if hidden_size is a list of integers
+        if isinstance(self.args.hidden_size, list):
+            if not all(isinstance(i, int) for i in self.args.hidden_size):
+                print("--hidden_size list should only contain integers.")
+                exit(1)
+        # Check if hidden_size is an integer
+        elif not isinstance(self.args.hidden_size, int):
+            print("--hidden_size should be an integer or a list of integers.")
+            exit(1)
+        
         self.use_wandb = bool(self.args.wandb_run)
 
         if self.use_wandb:
@@ -91,7 +109,7 @@ class Trainer:
             for pwm, lengths, angle in train_loader:
 
                 # Initialize hidden state
-                model.reset(batch_size=pwm.size(0)
+                model.reset(batch_size=pwm.size(0))
                 
                 pwm = pwm.to(device)
                 angle = angle.to(device)
@@ -121,7 +139,7 @@ class Trainer:
                 val_loss = 0
                 for pwm, lengths, angle in val_loader:
                     # Initialize hidden state
-                    model.reset(batch_size=pwm.size(0)
+                    model.reset(batch_size=pwm.size(0))
 
                     pwm = pwm.to(device)
                     angle = angle.to(device)
