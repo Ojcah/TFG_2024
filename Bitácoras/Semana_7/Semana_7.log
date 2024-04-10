@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.9)  1 APR 2024 22:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.9)  10 APR 2024 04:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -815,77 +815,87 @@ Overfull \hbox (206.51926pt too wide) in paragraph at lines 34--42
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 79--79
+Underfull \hbox (badness 10000) in paragraph at lines 80--80
 []|\OT1/cmr/bx/n/12 Horas
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 79--79
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 80--80
 []|\OT1/cmr/m/n/12 19/03/2024| 
  []
 
 
-Underfull \hbox (badness 7168) in paragraph at lines 79--79
-[]|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Se defini^^So una nueva
+Underfull \hbox (badness 10000) in paragraph at lines 80--80
+\OML/cmm/m/it/12 b\OT1/cmr/m/n/12 )$ Se con-tinua con la
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 79--79
-\OT1/cmr/m/n/12 versi^^Son de la clase
+Underfull \hbox (badness 4378) in paragraph at lines 80--80
+\OT1/cmr/m/n/12 definici^^Son en es-pec^^S^^Pfico de
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 79--79
-\OML/cmm/m/it/12 CartPoleSystem$ \OT1/cmr/m/n/12 uti-lizando
- []
-
-
-Underfull \hbox (badness 2213) in paragraph at lines 79--79
-\OML/cmm/m/it/12 step\OT1/cmr/m/n/12 ()$, $\OML/cmm/m/it/12 render\OT1/cmr/m/n/
-12 ()$, $\OML/cmm/m/it/12 close\OT1/cmr/m/n/12 ()$ y
- []
-
-
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 79--79
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 80--80
 []|\OT1/cmr/m/n/12 20/03/2024| 
  []
 
 
-Underfull \hbox (badness 1968) in paragraph at lines 79--79
+Underfull \hbox (badness 1968) in paragraph at lines 80--80
 \OT1/cmr/m/n/12 ple-mentaci^^Son $\OML/cmm/m/it/12 CartPole$ \OT1/cmr/m/n/12 co
 n
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 79--79
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 80--80
 []|\OT1/cmr/m/n/12 20/03/2024| 
  []
 
 
-Underfull \hbox (badness 1092) in paragraph at lines 79--79
-[]|$\OT1/cmr/bx/n/12 4\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Prue-bas de mon-taje 
+Underfull \hbox (badness 1092) in paragraph at lines 80--80
+[]|$\OT1/cmr/bx/n/12 3\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Prue-bas de mon-taje 
 del
  []
 
 
-Underfull \hbox (badness 3209) in paragraph at lines 79--79
+Underfull \hbox (badness 3209) in paragraph at lines 80--80
 \OT1/cmr/m/n/12 del c^^Sodigo con su versi^^Son
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 104--104
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 105--105
 []|\OT1/cmr/m/n/12 21/03/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 104--104
-[]|\OT1/cmr/m/n/12 22/03/2024| 
+Underfull \hbox (badness 10000) in paragraph at lines 105--105
+[]|$\OT1/cmr/bx/n/12 4\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Prue-bas con en-torno
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 105--105
+\OML/cmm/m/it/12 CartPole$ \OT1/cmr/m/n/12 para im-ple-
+ []
+
+
+Underfull \hbox (badness 1803) in paragraph at lines 105--105
+\OT1/cmr/m/n/12 cionamiento con CUDA en
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 105--105
+[]|\OT1/cmr/m/n/12 21/03/2024| 
  []
 
 [1
 
-{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-(./Semana_7.bbl) [3] (./Semana_7.aux)
+{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+<Fig/CapturaCartPole1.png, id=39, 446.41782pt x 437.38406pt>
+File: Fig/CapturaCartPole1.png Graphic file (type png)
+<use Fig/CapturaCartPole1.png>
+Package pdftex.def Info: Fig/CapturaCartPole1.png  used on input line 121.
+(pdftex.def)             Requested size: 267.85275pt x 262.43245pt.
+ [2 <./Fig/CapturaCartPole1.PNG>] (./Semana_7.bbl) [3] (./Semana_7.aux)
 Package rerunfilecheck Info: File `Semana_7.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  )
@@ -894,21 +904,21 @@ Package rerunfilecheck Info: File `Semana_7.out' has not changed.
 ### semi simple group (level 1) entered at line 6 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 23299 strings out of 477678
- 429553 string characters out of 5833468
- 717146 words of memory out of 5000000
- 41705 multiletter control sequences out of 15000+600000
+ 23315 strings out of 477678
+ 429875 string characters out of 5833468
+ 716249 words of memory out of 5000000
+ 41717 multiletter control sequences out of 15000+600000
  476092 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,16n,89p,405b,19361s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,14n,89p,518b,19366s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c
 :/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/
 2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Semana_7.pdf (3 pages, 65286 bytes).
+Output written on Semana_7.pdf (3 pages, 88653 bytes).
 PDF statistics:
- 65 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
- 10 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 77 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
+ 11 named destinations out of 1000 (max. 500000)
+ 18 words of extra memory for PDF output out of 10000 (max. 10000000)
 
