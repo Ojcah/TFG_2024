@@ -21,12 +21,12 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{DQNCart}
-A.~Paszke and M.~Towers, ``Reinforcement learning (dqn) tutorial,''
-  \emph{PyTorch}.
-
 \bibitem{gym}
 T.~F. Foundation, ``Gymnasium documentation,''
   \url{https://gymnasium.farama.org/environments/classic_control/}, 2024.
+
+\bibitem{DQNCart}
+A.~Paszke and M.~Towers, ``Reinforcement learning (dqn) tutorial,''
+  \emph{PyTorch}.
 
 \end{thebibliography}

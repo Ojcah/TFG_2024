@@ -58,19 +58,25 @@
 		\textbf{Horas dedicadas} \\ \hline
 		% ***************************************************************
 	 	01/04/2024 & 
-	 	$\mathbf{1}.$ AAA. & 
-	 	$a)$ DDDDDDD \newline & 
-	 	6 horas \\
+	 	$\mathbf{1}.$ Continuación de revisión del código original para $DQN$ \cite{DQNCart}. & 
+	 	$a)$ Identificación de la estructura del código ya facilitada ($Imports$, $Memory$, $DQN\,\, Algorithm$ y $Training$) y sub etapas (funciones importantes). \newline & 
+	 	4 horas \\
 		% ***************************************************************
 		02/04/2024 & 
-	 	$\mathbf{2}.$ ADADADAD. &
-	 	$a)$ SASASASAS. \newline & 
-	 	4 horas \\
+	 	$\mathbf{2}.$ Continuación de revisión del código original para $DQN$ \cite{DQNCart}. &
+	 	$a)$ Estudio de las funciones de optimización ($optimize\_ model()$) y selección de acciones ($select\_ action()$). \newline & 
+	 	2 horas \\
+	 	% ***************************************************************
+		02/04/2024 & 
+	 	$\mathbf{3}.$ Prueba de implementación CUDA en env anaconda Ubuntu. &
+	 	$a)$ Eliminación y replanteo de env conda con énfasis en herramientas $pytorch$ y CUDA. \newline
+	 	$b)$ Resultado de la prueba: fallida, apunta a problemas de versiones. \newline & 
+	 	6 horas \\
 	 	% ***************************************************************
 	 	03/04/2024 & 
-	 	$\mathbf{3}.$ Reunión de seguimiento con el asesor del proyecto. & 
+	 	$\mathbf{4}.$ Reunión de seguimiento con el profesor asesor del proyecto. & 
 	 	$a)$ Revisión de avance en el código y errores de forma.  \newline
-	 	$b)$ Dado el factor tiempo para el proyecto y el poco avance realizado, se acordó enfocarse directamente en el env $Pendulum$ de Gymnasium \cite{gym}.  \newline & 
+	 	$b)$ Dado el factor tiempo y el poco avance realizado, se acordó enfocarse directamente en el env $Pendulum$ de Gymnasium \cite{gym}.  \newline & 
 	 	2 horas \\
 	 	\hline
 	\end{tabularx}
@@ -85,18 +91,20 @@
 		
 	 	% ***************************************************************
 	 	04/04/2024 & 
-	 	$\mathbf{4}.$ Pruebas con entorno $CartPole$ para implementación de CUDA. &
-	 	$a)$ Se hicieron pruebas de funcionamiento con CUDA en Windows resultado erroneo. \newline & 
-	 	5 horas \\
+	 	$\mathbf{5}.$ Pruebas con entorno $CartPole$ y $Pendulum$ para implementación de CUDA. &
+	 	$a)$ Por recomendación del profesor asesor, la implementación se mudó a Ubuntu/Linux para meyor control y referencia. \newline
+	 	$b)$ Instalación y creación de nuevos $environments$ mediante la herramienta $micro\, mamba$. \newline & 
+	 	6 horas \\
 	 	% ***************************************************************
 	 	05/04/2024 & 
-	 	$\mathbf{5}.$ Revisión del código original para $DQN$ \cite{DQNCart}. &
-	 	$a)$ El código referencia se encuentra bien ordenado y comentado en secciones importantes, muestra potencial. \newline & 
+	 	$\mathbf{6}.$ Estudio de las implicaciones de variación en el algoritmo $DQN$ \cite{DQNCart} de dos salidas discretas ($CartPole$) a una salida continua ($Pendulum$). &
+	 	$a)$ Se identificaron los puntos clave a remplazar o modificar para el manejo de variables continuas. \newline
+	 	$b)$ Las primeras pruebas de modificación apuntan a una necesidad de discretización del rango de torque ($[-2.0, \,\, 2.0]$) para adaptar el modelo al env $Pendulum$. \newline & 
 	 	4 horas \\
 	 	% ***************************************************************
 	 	
 	 	\hline
-		\multicolumn{3}{|r|}{Total de horas de trabajo:} & 21 horas \\ 
+		\multicolumn{3}{|r|}{Total de horas de trabajo:} & 24 horas \\ 
 	 	\hline                 
 	\end{tabularx}
 \end{minipage}
@@ -108,9 +116,32 @@
 % *****************************************************************************
 % *****************************************************************************
 
-\section*{Contenidos de actividades}
+\section*{Discusión}
 
-AAA \cite{DQNCart}.
+\subsection*{Código referencia a método $DQN$ \cite{DQNCart}}
+
+El código de implementación de control al env $CartPole$ de Gymnasium mediante $DQN$ presente mucho potencial para su adaptación al env $Pendulum$, en primera instancia y luego para experimentación previa al PAMH. Se encuentra debidamente comentado y su estructura esta clara y sencilla.
+
+Luego de la reunión de seguimiento con el profesor asesor, se acordó saltar directamente a las pruebas con $Pendulum$ dados los problemas de tiempo del proyecto. Además, se detallaron puntos importantes al respecto como la diferenciación entre los tipos de $action space$ que presentan cada uno de los envs en cuestión, donde $CartPole$ implementa 
+\[Discrete(2)\]
+donde las dos posibles opciones son el $0$ para mover el carro base a la izquierda y $1$ para mover el carro base a la derecha.
+
+Por otro lado, $Pendulum$ utiliza la estructura
+\[Box(-2.0,\,\, 2.0,\,\, (1,),\,\, float32)\]
+referente a un solo valor de acción posible de tipo decimal y en el rango permitido de $[-2.0,\,\, 2.0]$.
+
+Lo anterior apunta a la necesidad de una manipulación superficial de la red neuronal base (capa de salida) y la función $select_action()$, función directamente asociada a la estructura de la red neuronal y puente para el $step()$ del env Gymnasium.
+
+
+\subsection*{Errores de implementación $CUDA$ y $Pytorch$}
+
+El código de referencia \cite{DQNCart} cuenta con la opción para utilizar CUDA con GPU y optimzar el tiempo de entrenamiento, con valores definidos claramente de $600$ episodios con GPU y $50$ episodios con CPU, donde ya el segundo demuestra la necesidad del uso de CUDA.
+
+Sin embargo, las pruebas realizadas para su utilización arrojan varios errores referentes, en principio, a las versiones de todos los paquetes implicados; CUDA ($11.8$, $12.1$, $12.4$), $Pytorch$ ($2.1.2$, $2.2.2$) y el controlador de la GPU en Ubuntu (versión $535$). 
+
+Todas las pruebas de env realizadas se evidencian con el comando
+\[print(torch.cuda.is\_ available())\]
+donde una respuesta de $False$ demuestra el problema de incongruencia entre versiones y en ocasiones tampoco se determina bien las razones del error. En proceso de resolución.
 
 %\begin{figure}[h]
 %	\centering

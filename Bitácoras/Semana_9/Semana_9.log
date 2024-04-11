@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.9)  10 APR 2024 16:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.9)  10 APR 2024 16:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**Semana_8.tex
-(./Semana_8.tex
+**Semana_9.tex
+(./Semana_9.tex
 LaTeX2e <2022-06-01> patch level 5
 L3 programming layer <2022-08-05>
 (c:/texlive/2022/texmf-dist/tex/latex/base/article.cls
@@ -739,8 +739,8 @@ File: l3backend-pdftex.def 2022-08-05 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count332
 \l__pdf_internal_box=\box119
 )
-(./Semana_8.aux)
-\openout1 = `Semana_8.aux'.
+(./Semana_9.aux)
+\openout1 = `Semana_9.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
 LaTeX Font Info:    ... okay on input line 28.
@@ -793,10 +793,10 @@ Package: ltcaption 2021/01/08 v1.4c longtable captions (AR)
 )
 Package caption Info: End \AtBeginDocument code.
 Package hyperref Info: Link coloring OFF on input line 28.
- (./Semana_8.out)
-(./Semana_8.out)
+ (./Semana_9.out)
+(./Semana_9.out)
 \@outlinefile=\write5
-\openout5 = `Semana_8.out'.
+\openout5 = `Semana_9.out'.
 
 \c@lstlisting=\count339
 LaTeX Font Info:    Trying to load font information for U+msa on input line 34.
@@ -815,154 +815,107 @@ Overfull \hbox (206.51926pt too wide) in paragraph at lines 34--42
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
+Underfull \hbox (badness 10000) in paragraph at lines 81--81
 []|\OT1/cmr/bx/n/12 Horas
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 82--82
-[]|\OT1/cmr/m/n/12 01/04/2024| 
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
+[]|\OT1/cmr/m/n/12 08/04/2024| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-[]|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Iden-ti-fi-caci^^Son de la
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
+[]|\OT1/cmr/m/n/12 09/04/2024| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-\OT1/cmr/m/n/12 es-truc-tura del c^^Sodigo
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
+[]|\OT1/cmr/m/n/12 09/04/2024| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-\OT1/cmr/m/n/12 ya fa-cil-i-tada ($\OML/cmm/m/it/12 Imports$\OT1/cmr/m/n/12 ,
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
+[]|\OT1/cmr/m/n/12 10/04/2024| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-\OML/cmm/m/it/12 Memory$\OT1/cmr/m/n/12 , $\OML/cmm/m/it/12 DQN  Algorithm$
+Underfull \hbox (badness 3965) in paragraph at lines 81--81
+\OML/cmm/m/it/12 b\OT1/cmr/m/n/12 )$ Dado el fac-tor tiempo
  []
 
 
-Underfull \hbox (badness 2073) in paragraph at lines 82--82
-\OT1/cmr/m/n/12 y $\OML/cmm/m/it/12 Training$\OT1/cmr/m/n/12 ) y sub eta-pas
+Underfull \hbox (badness 1184) in paragraph at lines 81--81
+\OT1/cmr/m/n/12 avance re-al-izado, se acord^^So
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 82--82
-[]|\OT1/cmr/m/n/12 02/04/2024| 
+Underfull \hbox (badness 1701) in paragraph at lines 81--81
+\OT1/cmr/m/n/12 env $\OML/cmm/m/it/12 Pendulum$ \OT1/cmr/m/n/12 de Gym-na-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-[]|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Es-tu-dio de las fun-
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 107--107
+[]|\OT1/cmr/m/n/12 11/04/2024| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-\OT1/cmr/m/n/12 ciones de op-ti-mizaci^^Son
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-\OT1/cmr/m/n/12 ($\OML/cmm/m/it/12 optimize[]model\OT1/cmr/m/n/12 ()$) y
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-\OT1/cmr/m/n/12 se-lecci^^Son de ac-ciones
- []
-
-
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 82--82
-[]|\OT1/cmr/m/n/12 02/04/2024| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 82--82
-\OT1/cmr/m/n/12 CUDA en env ana-conda
- []
-
-
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 82--82
-[]|\OT1/cmr/m/n/12 03/04/2024| 
- []
-
-
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 109--109
-[]|\OT1/cmr/m/n/12 04/04/2024| 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 109--109
-[]|$\OT1/cmr/bx/n/12 5\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Prue-bas con en-torno
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
+[]|$\OT1/cmr/bx/n/12 4\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Prue-bas con en-torno
 
  []
 
 
-Underfull \hbox (badness 4981) in paragraph at lines 109--109
+Underfull \hbox (badness 4981) in paragraph at lines 107--107
 []|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Por re-comen-daci^^Son del
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--109
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
 \OT1/cmr/m/n/12 pro-fe-sor as-esor, la im-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--109
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
 \OT1/cmr/m/n/12 ple-mentaci^^Son se mud^^So a
  []
 
 
-Underfull \hbox (badness 7308) in paragraph at lines 109--109
+Underfull \hbox (badness 7308) in paragraph at lines 107--107
 \OT1/cmr/m/n/12 Ubun-tu/Linux para meyor
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--109
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
 \OML/cmm/m/it/12 b\OT1/cmr/m/n/12 )$ In-sta-laci^^Son y creaci^^Son
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--109
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
 \OT1/cmr/m/n/12 de nuevos $\OML/cmm/m/it/12 environments$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 109--109
+Underfull \hbox (badness 10000) in paragraph at lines 107--107
 \OT1/cmr/m/n/12 me-di-ante la her-ramienta
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 109--109
-[]|\OT1/cmr/m/n/12 05/04/2024| 
- []
-
-
-Underfull \hbox (badness 1990) in paragraph at lines 109--109
-[]|$\OT1/cmr/bx/n/12 6\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Es-tu-dio de las im-p
-li-ca-
- []
-
-
-Underfull \hbox (badness 1184) in paragraph at lines 109--109
-\OT1/cmr/m/n/12 disc-re-tas ($\OML/cmm/m/it/12 CartPole$\OT1/cmr/m/n/12 ) a una
-
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 107--107
+[]|\OT1/cmr/m/n/12 12/04/2024| 
  []
 
 [1
 
-{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
-(./Semana_8.bbl
-Underfull \hbox (badness 2189) in paragraph at lines 29--31
+{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+(./Semana_9.bbl
+Underfull \hbox (badness 2189) in paragraph at lines 25--27
 []\OT1/cmr/m/n/12 T. F. Foun-da-tion, ``Gym-na-sium doc-u-men-ta-tion,'' []$htt
 ps : / / gymnasium . farama . org /
  []
 
-) [4] (./Semana_8.aux)
-Package rerunfilecheck Info: File `Semana_8.out' has not changed.
+) [3] (./Semana_9.aux)
+Package rerunfilecheck Info: File `Semana_9.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  )
 (\end occurred inside a group at level 1)
@@ -970,23 +923,21 @@ Package rerunfilecheck Info: File `Semana_8.out' has not changed.
 ### semi simple group (level 1) entered at line 6 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 23317 strings out of 477678
- 429756 string characters out of 5833468
+ 23299 strings out of 477678
+ 429535 string characters out of 5833468
  719137 words of memory out of 5000000
- 41718 multiletter control sequences out of 15000+600000
- 479309 words of font info for 66 fonts, out of 8000000 for 9000
+ 41705 multiletter control sequences out of 15000+600000
+ 476092 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,16n,89p,405b,19363s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,14n,89p,405b,19361s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c
-:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/
-2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2022/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Semana_8.pdf (4 pages, 85582 bytes).
+:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/
+2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on Semana_9.pdf (3 pages, 61532 bytes).
 PDF statistics:
- 85 PDF objects out of 1000 (max. 8388607)
- 58 compressed objects within 1 object stream
- 13 named destinations out of 1000 (max. 500000)
+ 61 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
+ 10 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
