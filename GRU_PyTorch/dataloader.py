@@ -39,7 +39,8 @@ class PAHMDataset(Dataset):
                root_dir,
                normalize_angles=True,
                min_angle=-120,max_angle=120,
-               extension=None):
+               extension=None,
+               verbose=False):
     """
     Args:
       root_dir (str): Path to the directory containing CSV files.
@@ -63,7 +64,8 @@ class PAHMDataset(Dataset):
     # Read data from CSV files
     for filename in os.listdir(root_dir):
       datafile=os.path.join(root_dir, filename)
-      print(f"Reading file '{datafile}'")
+      if verbose:
+        print(f"Reading file '{datafile}'")
       data = pd.read_csv(datafile)
       pwm = np.concatenate((prepadding, data.values[:, 2]))
 
