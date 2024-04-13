@@ -21,9 +21,25 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{gym}
-T.~F. Foundation, ``Gymnasium documentation,''
-  \url{https://gymnasium.farama.org/environments/classic_control/}, 2024.
+\bibitem{PAlvaradoMDP1}
+\BIBentryALTinterwordspacing
+J.~P.~A. Moya, ``{EL5857 Lección 25: Aprendizaje Reforzado (1/4): MDP},''
+  2021, [Vídeo de YouTube]. [Online]. Available:
+  \url{{https://www.youtube.com/watch?v=FBaoss_Pb5Q}}
+\BIBentrySTDinterwordspacing
+
+\bibitem{PAlvaradoDQN1}
+\BIBentryALTinterwordspacing
+------, ``{EL5857 Lección 27: Aprendizaje Reforzado (3/4): DQN y
+  Q-Learning},'' 2021, [Vídeo de YouTube]. [Online]. Available:
+  \url{{https://www.youtube.com/watch?v=oXnNRSCe5T4}}
+\BIBentrySTDinterwordspacing
+
+\bibitem{CartPoleRLcrtl1}
+S.~Israilov, L.~Fu, J.~Sánchez-Rodríguez, F.~Fusco, G.~Allibert, C.~Raufaste,
+  and M.~Argentina, ``Reinforcement learning approach to control an inverted
+  pendulum: A general framework for educational purposes,'' \emph{PLoS ONE},
+  2023.
 
 \bibitem{DQNCart}
 A.~Paszke and M.~Towers, ``Reinforcement learning (dqn) tutorial,''

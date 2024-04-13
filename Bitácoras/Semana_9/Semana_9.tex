@@ -75,7 +75,7 @@
 	 	10/04/2024 & 
 	 	$\mathbf{3}.$ Reunión de seguimiento con el asesor del proyecto. & 
 	 	$a)$ Revisión de avance en el código y errores de forma.  \newline
-	 	$b)$ Dado el factor tiempo para el proyecto y el poco avance realizado, se acordó enfocarse directamente en el env $Pendulum$ de Gymnasium \cite{gym}.  \newline & 
+	 	$b)$ Se acordó realizar entrenamientos con diferentes formatos de indicación del $target\_angle$.  \newline & 
 	 	2 horas \\
 	 	\hline
 	\end{tabularx}
@@ -90,14 +90,27 @@
 		
 	 	% ***************************************************************
 	 	11/04/2024 & 
-	 	$\mathbf{4}.$ Pruebas con entorno $CartPole$ y $Pendulum$ para implementación de CUDA. &
-	 	$a)$ Por recomendación del profesor asesor, la implementación se mudó a Ubuntu/Linux para meyor control y referencia. \newline
-	 	$b)$ Instalación y creación de nuevos $environments$ mediante la herramienta $micro\, mamba$. \newline & 
-	 	5 horas \\
+	 	$\mathbf{4}.$ Corrección de potenciales errores en el código $PendulumDQN$ señalados por asesor. &
+	 	$a)$ Replanteo de función de recompensa $calculate\_ reward()$ para evitar salto. \newline
+	 	$b)$ Adición de lógica para guardado de $checkpoints$ al entrenamiento y corrección del guardado del modelo. \newline & 
+	 	6 horas \\
 	 	% ***************************************************************
 	 	12/04/2024 & 
-	 	$\mathbf{5}.$ Revisión del código original para $DQN$ \cite{DQNCart}. &
-	 	$a)$ ADADA. \newline & 
+	 	$\mathbf{5}.$ Continuación de corrección de errores potenciales en el código. &
+	 	$a)$ Replanteo de función $select\_ action()$; cambio de acción aleatoria en exploración a adición de ruido a la opción elegida. \newline & 
+	 	4 horas \\
+	 	% ***************************************************************
+	 	12/04/2024 & 
+	 	$\mathbf{6}.$ Estudio de conceptos $MDP$ \cite{PAlvaradoMDP1} y $DQN$ \cite{PAlvaradoDQN1} . &
+	 	$a)$ Revisión de aplicación mediante $MDP$ dada la mensión en una fuente en línea donde se utiliza \cite{CartPoleRLcrtl1}. \newline
+	 	$b)$ Estudio de teoría $DQN$ para mejor comprensión de la lógica de la función $optimize\_ model()$ del código original \cite{DQNCart} y su adaptación a $Pendulum$. \newline & 
+	 	4 horas \\
+	 	% ***************************************************************
+	 	12/04/2024 & 
+	 	$\mathbf{5}.$ Pruebas de entrenamiento de modelos $CartPole$ y $Pendulum$. &
+	 	$a)$ Se crearon los cuadernos $ctrlCartPoleDQN.ipynb$ y $ctrlPendulumDQN.ipynb$ para pruebas de carga de modelos. \newline
+	 	$b)$ Entrenamiento del modelo $Pendulum\_1000eps.pth$. \newline
+	 	$c)$ Se descubrió un error grave en $select\_action()$, corrección en proceso. \newline & 
 	 	4 horas \\
 	 	% ***************************************************************
 	 	
