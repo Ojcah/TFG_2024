@@ -57,22 +57,28 @@
 		\textbf{Anotaciones} & 
 		\textbf{Horas dedicadas} \\ \hline
 		% ***************************************************************
-	 	08/04/2024 & 
-	 	$\mathbf{1}.$ AAA. & 
-	 	$a)$ DDDDDDD \newline & 
+	 	15/04/2024 & 
+	 	$\mathbf{1}.$ Redefinición de la conversión del código para valores discretos ($CartPole$) a valores continuos ($Pendulum$). & 
+	 	$a)$ El error en $select\_ action()$ se corrigió pero desconfiguró parte de la función $optimize\_ model()$. \newline
+	 	$b)$ Corrección del error en $optimize\_ model()$. \newline & 
+	 	6 horas \\
+	 	% ***************************************************************
+	 	15/04/2024 & 
+	 	$\mathbf{2}.$ Pruebas de entrenamiento del modelo ($Pendulum$). & 
+	 	$a)$ Se entrenaron cuatro modelos diferentes a $600$ episodios para comparar el efecto de cuatro propuestas de redes neuronales artificiales (ANN). \newline & 
 	 	6 horas \\
 		% ***************************************************************
-		09/04/2024 & 
+		16/04/2024 & 
 	 	$\mathbf{2}.$ Pruebas de implementación $CUDA$ en Windows. &
 	 	$a)$ SASASASAS. \newline & 
 	 	4 horas \\
 	 	% ***************************************************************
-		09/04/2024 & 
+		17/04/2024 & 
 	 	$\mathbf{2}.$ Pruebas de entrenamiento del modelo $Pendulum\, DQN$. &
 	 	$a)$ SASASASAS. \newline & 
 	 	4 horas \\
 	 	% ***************************************************************
-	 	10/04/2024 & 
+	 	18/04/2024 & 
 	 	$\mathbf{3}.$ Reunión de seguimiento con el asesor del proyecto. & 
 	 	$a)$ Revisión de avance en el código y errores de forma.  \newline
 	 	$b)$ Se acordó realizar entrenamientos con diferentes formatos de indicación del $target\_angle$.  \newline & 
@@ -89,29 +95,11 @@
 		\hline		
 		
 	 	% ***************************************************************
-	 	11/04/2024 & 
+	 	19/04/2024 & 
 	 	$\mathbf{4}.$ Corrección de potenciales errores en el código $PendulumDQN$ señalados por asesor. &
 	 	$a)$ Replanteo de función de recompensa $calculate\_ reward()$ para evitar salto. \newline
 	 	$b)$ Adición de lógica para guardado de $checkpoints$ al entrenamiento y corrección del guardado del modelo. \newline & 
 	 	6 horas \\
-	 	% ***************************************************************
-	 	12/04/2024 & 
-	 	$\mathbf{5}.$ Continuación de corrección de errores potenciales en el código. &
-	 	$a)$ Replanteo de función $select\_ action()$; cambio de acción aleatoria en exploración a adición de ruido a la opción elegida. \newline & 
-	 	4 horas \\
-	 	% ***************************************************************
-	 	12/04/2024 & 
-	 	$\mathbf{6}.$ Estudio de conceptos $MDP$ \cite{PAlvaradoMDP1} y $DQN$ \cite{PAlvaradoDQN1} . &
-	 	$a)$ Revisión de aplicación mediante $MDP$ dada la mensión en una fuente en línea donde se utiliza \cite{CartPoleRLcrtl1}. \newline
-	 	$b)$ Estudio de teoría $DQN$ para mejor comprensión de la lógica de la función $optimize\_ model()$ del código original \cite{DQNCart} y su adaptación a $Pendulum$. \newline & 
-	 	4 horas \\
-	 	% ***************************************************************
-	 	12/04/2024 & 
-	 	$\mathbf{5}.$ Pruebas de entrenamiento de modelos $CartPole$ y $Pendulum$. &
-	 	$a)$ Se crearon los cuadernos $ctrlCartPoleDQN.ipynb$ y $ctrlPendulumDQN.ipynb$ para pruebas de carga de modelos. \newline
-	 	$b)$ Entrenamiento del modelo $Pendulum\_1000eps.pth$. \newline
-	 	$c)$ Se descubrió un error grave en $select_action()$, corrección en proceso. \newline & 
-	 	4 horas \\
 	 	% ***************************************************************
 	 	
 	 	\hline
