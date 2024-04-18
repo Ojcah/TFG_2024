@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.9)  13 APR 2024 12:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.9)  16 APR 2024 00:44
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -815,162 +815,183 @@ Overfull \hbox (206.51926pt too wide) in paragraph at lines 34--42
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 81--81
+Underfull \hbox (badness 10000) in paragraph at lines 83--83
 []|\OT1/cmr/bx/n/12 Horas
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 83--83
 []|\OT1/cmr/m/n/12 08/04/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
+Underfull \hbox (badness 3343) in paragraph at lines 83--83
+\OT1/cmr/m/n/12 c^^Sodigo $\OML/cmm/m/it/12 CartPoleDQN:ipynb$
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 83--83
 []|\OT1/cmr/m/n/12 09/04/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
+Underfull \hbox (badness 1902) in paragraph at lines 83--83
+[]|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Re-in-sta-laci^^Son de pa-que-
+ []
+
+
+Underfull \hbox (badness 1005) in paragraph at lines 83--83
+\OT1/cmr/m/n/12 ter^^S^^Pa $\OML/cmm/m/it/12 CUDA  \OT1/cmr/m/n/12 12\OML/cmm/m
+/it/12 :\OT1/cmr/m/n/12 1$ y li-brer^^S^^Pa
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 83--83
 []|\OT1/cmr/m/n/12 09/04/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
+Underfull \hbox (badness 2680) in paragraph at lines 83--83
+\OML/cmm/m/it/12 b\OT1/cmr/m/n/12 )$ En-tre-namiento de mod-
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 83--83
 []|\OT1/cmr/m/n/12 10/04/2024| 
  []
 
 
-Underfull \hbox (badness 4819) in paragraph at lines 81--81
+Underfull \hbox (badness 4819) in paragraph at lines 83--83
 \OML/cmm/m/it/12 b\OT1/cmr/m/n/12 )$ Se acord^^So re-alizar en-
  []
 
 
-Underfull \hbox (badness 2990) in paragraph at lines 81--81
+Underfull \hbox (badness 2990) in paragraph at lines 83--83
 \OT1/cmr/m/n/12 tre-namien-tos con difer-entes
  []
 
 
-Underfull \hbox (badness 2922) in paragraph at lines 81--81
+Underfull \hbox (badness 2922) in paragraph at lines 83--83
 \OT1/cmr/m/n/12 for-matos de in-di-caci^^Son del
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 120--120
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 122--122
 []|\OT1/cmr/m/n/12 11/04/2024| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--120
-[]|$\OT1/cmr/bx/n/12 4\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Cor-recci^^Son de po-
+Underfull \hbox (badness 10000) in paragraph at lines 122--122
+[]|$\OT1/cmr/bx/n/12 5\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Cor-recci^^Son de po-
 ten-
  []
 
 
-Underfull \hbox (badness 2302) in paragraph at lines 120--120
+Underfull \hbox (badness 2302) in paragraph at lines 122--122
 \OT1/cmr/m/n/12 ciales er-rores en el c^^Sodigo
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--120
+Underfull \hbox (badness 10000) in paragraph at lines 122--122
 \OML/cmm/m/it/12 PendulumDQN$ \OT1/cmr/m/n/12 se~nalados
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--120
+Underfull \hbox (badness 10000) in paragraph at lines 122--122
 []|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Re-planteo de
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--120
+Underfull \hbox (badness 10000) in paragraph at lines 122--122
 \OT1/cmr/m/n/12 funci^^Son de rec-om-pensa
  []
 
 
-Underfull \hbox (badness 2970) in paragraph at lines 120--120
+Underfull \hbox (badness 2970) in paragraph at lines 122--122
 \OML/cmm/m/it/12 b\OT1/cmr/m/n/12 )$ Adici^^Son de l^^Sogica para
  []
 
 
-Underfull \hbox (badness 4819) in paragraph at lines 120--120
+Underfull \hbox (badness 4819) in paragraph at lines 122--122
 \OT1/cmr/m/n/12 en-tre-namiento y cor-recci^^Son
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 120--120
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 122--122
 []|\OT1/cmr/m/n/12 12/04/2024| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--120
+Underfull \hbox (badness 10000) in paragraph at lines 122--122
 []|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Re-planteo de funci^^Son
  []
 
 
-Underfull \hbox (badness 5741) in paragraph at lines 120--120
+Underfull \hbox (badness 5741) in paragraph at lines 122--122
 \OML/cmm/m/it/12 select[]action\OT1/cmr/m/n/12 ()$; cam-bio de
  []
 
 
-Underfull \hbox (badness 5302) in paragraph at lines 120--120
+Underfull \hbox (badness 5302) in paragraph at lines 122--122
 \OT1/cmr/m/n/12 acci^^Son aleato-ria en ex-plo-
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 120--120
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 122--122
 []|\OT1/cmr/m/n/12 12/04/2024| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--120
-[]|$\OT1/cmr/bx/n/12 6\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Es-tu-dio de con-cep-
+Underfull \hbox (badness 10000) in paragraph at lines 122--122
+[]|$\OT1/cmr/bx/n/12 7\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Es-tu-dio de con-cep-
 tos
  []
 
 
-Underfull \hbox (badness 1052) in paragraph at lines 120--120
+Underfull \hbox (badness 1052) in paragraph at lines 122--122
 \OML/cmm/m/it/12 b\OT1/cmr/m/n/12 )$ Es-tu-dio de teor^^S^^Pa $\OML/cmm/m/it/12
  DQN$
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--120
+Underfull \hbox (badness 10000) in paragraph at lines 122--122
 \OT1/cmr/m/n/12 para mejor com-prensi^^Son
  []
 
 
-Underfull \hbox (badness 1603) in paragraph at lines 120--120
+Underfull \hbox (badness 1603) in paragraph at lines 122--122
 \OT1/cmr/m/n/12 de la l^^Sogica de la funci^^Son
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 120--120
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 122--122
 []|\OT1/cmr/m/n/12 12/04/2024| 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 120--120
+Underfull \hbox (badness 10000) in paragraph at lines 122--122
 \OT1/cmr/m/n/12 de mod-e-los $\OML/cmm/m/it/12 CartPole$ \OT1/cmr/m/n/12 y
  []
 
 
-Underfull \hbox (badness 3375) in paragraph at lines 120--120
+Underfull \hbox (badness 3375) in paragraph at lines 122--122
 []|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Se crearon los cuader-
  []
 
 
-Underfull \hbox (badness 7451) in paragraph at lines 120--120
+Underfull \hbox (badness 7451) in paragraph at lines 122--122
 \OT1/cmr/m/n/12 y $\OML/cmm/m/it/12 ctrlPendulumDQN:ipynb$
  []
 
 
-Underfull \hbox (badness 2753) in paragraph at lines 120--120
+Underfull \hbox (badness 2753) in paragraph at lines 122--122
 \OT1/cmr/m/n/12 para prue-bas de carga de
  []
 
 [1
 
-{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-(./Semana_9.bbl) [3] (./Semana_9.aux)
+{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+(./Semana_9.bbl) [4] (./Semana_9.aux)
 Package rerunfilecheck Info: File `Semana_9.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  )
@@ -979,21 +1000,22 @@ Package rerunfilecheck Info: File `Semana_9.out' has not changed.
 ### semi simple group (level 1) entered at line 6 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 23303 strings out of 477678
- 429625 string characters out of 5833468
- 717219 words of memory out of 5000000
- 41707 multiletter control sequences out of 15000+600000
- 476092 words of font info for 53 fonts, out of 8000000 for 9000
+ 23321 strings out of 477678
+ 429846 string characters out of 5833468
+ 721217 words of memory out of 5000000
+ 41720 multiletter control sequences out of 15000+600000
+ 479309 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,16n,89p,405b,19361s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,16n,89p,491b,19365s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c
 :/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/
-2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Semana_9.pdf (3 pages, 69053 bytes).
+2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on Semana_9.pdf (4 pages, 80098 bytes).
 PDF statistics:
- 70 PDF objects out of 1000 (max. 8388607)
- 48 compressed objects within 1 object stream
- 12 named destinations out of 1000 (max. 500000)
+ 84 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
+ 15 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
