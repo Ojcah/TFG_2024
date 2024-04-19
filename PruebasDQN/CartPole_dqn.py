@@ -10,6 +10,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
+import numpy as np
 
 # *******************************************************************************************
 # *******************************************************************************************
@@ -17,7 +18,6 @@ import torch.nn.functional as F
 
 env = gym.make("CartPole-v1")
 #env = gym.make("CartPole-v1", render_mode="human")
-
 
 # set up matplotlib
 is_ipython = 'inline' in matplotlib.get_backend()
@@ -74,7 +74,7 @@ class DQN(nn.Module):
         x = F.relu(self.layer1(x))
         x = F.relu(self.layer2(x))
         return self.layer3(x)
-
+    
 
 # *******************************************************************************************
 # *******************************************************************************************
@@ -157,20 +157,11 @@ def plot_durations(show_result=False):
             display.display(plt.gcf())
 
 
-# *******************************************************************************************
-# *******************************************************************************************
-# *******************************************************************************************
 
 
-def calculate_reward(pole_angle):
-    """
-    Calculate the reward based on the pole angle.
-    """
-    angle = 5.0
-    if -angle <= pole_angle <= angle:
-        return torch.tensor([1.0], dtype=torch.float32, device=device)
-    else:
-        return torch.tensor([0.0], dtype=torch.float32, device=device)
+# *******************************************************************************************
+# *******************************************************************************************
+# *******************************************************************************************
 
 def optimize_model():
     if len(memory) < BATCH_SIZE:
@@ -195,7 +186,7 @@ def optimize_model():
     # columns of actions taken. These are the actions which would've been taken
     # for each batch state according to policy_net
     state_action_values = policy_net(state_batch).gather(1, action_batch)
-
+    
     # Compute V(s_{t+1}) for all next states.
     # Expected values of actions for non_final_next_states are computed based
     # on the "older" target_net; selecting their best reward with max(1).values
@@ -224,29 +215,31 @@ def optimize_model():
 # *******************************************************************************************
 
 if torch.cuda.is_available():
-    num_episodes = 600
+    #num_episodes = 600
+    num_episodes = 100
 else:
-    num_episodes = 50
+    #num_episodes = 50
+    num_episodes = 20
     
 for i_episode in range(num_episodes):
     # Initialize the environment and get its state
     state, info = env.reset()
     state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
+    print("Episode >> ", i_episode)
     for t in count():
         action = select_action(state)
         observation, reward, terminated, truncated, _ = env.step(action.item())
         reward = torch.tensor([reward], device=device)
         done = terminated or truncated
 
-        ## ***************************
-        print(reward)
+        ## *********************************************************************************
+        ## *********************************************************************************
         pole_angle = math.degrees(observation[2])
-        reward = calculate_reward(pole_angle)
 
-        print(pole_angle)
-        print(reward)
+        print(np.array([pole_angle, observation[0], action.item(), reward.item()]))
 
-        ## ***************************
+        ## *********************************************************************************
+        ## *********************************************************************************
 
         if terminated:
             next_state = None
@@ -274,6 +267,11 @@ for i_episode in range(num_episodes):
             episode_durations.append(t + 1)
             plot_durations()
             break
+
+## ***********************************************SAVE & LOAD models*******************************************
+# Guardar el modelo
+torch.save(policy_net.state_dict(), f"models/CartPole_{num_episodes}eps.pth")
+## ************************************************************************************************************
 
 print('Complete')
 plot_durations(show_result=True)
