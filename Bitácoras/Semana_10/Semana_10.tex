@@ -60,7 +60,8 @@
 	 	15/04/2024 & 
 	 	$\mathbf{1}.$ Redefinición de la conversión del código para valores discretos ($CartPole$) a valores continuos ($Pendulum$). & 
 	 	$a)$ El error en $select\_ action()$ se corrigió pero desconfiguró parte de la función $optimize\_ model()$. \newline
-	 	$b)$ Corrección del error en $optimize\_ model()$. \newline & 
+	 	$b)$ Corrección del error en $optimize\_ model()$. \newline
+	 	$c)$ Persisten los problemas de indexado y proceso. \newline & 
 	 	6 horas \\
 	 	% ***************************************************************
 	 	15/04/2024 & 
@@ -69,20 +70,28 @@
 	 	6 horas \\
 		% ***************************************************************
 		16/04/2024 & 
-	 	$\mathbf{2}.$ Pruebas de implementación $CUDA$ en Windows. &
+	 	$\mathbf{2}.$ Búsqueda de la teoría de los métodos $PPO$ y $actor-critic$ dada la necesidad del manejo del \textit{action space} con valores continuos. &
 	 	$a)$ SASASASAS. \newline & 
+	 	4 horas \\
+	 	% ***************************************************************
+	 	17/04/2024 & 
+	 	$\mathbf{3}.$ Reunión de seguimiento con el asesor del proyecto. & 
+	 	$a)$ Revisión de avance en el código y errores de forma.  \newline
+	 	$b)$ Se acordó continuar con el interés en los métodos como $PPO$ como opción para el control.  \newline & 
+	 	2 horas \\
+		% ***************************************************************
+		17/04/2024 & 
+	 	$\mathbf{2}.$ Búsqueda de métodos para el manejo de valores continuos en $DQN$. &
+	 	$a)$ Aparece el $DDPG$. \newline
+	 	$b)$ Opción de discretizar el action space. \newline & 
 	 	4 horas \\
 	 	% ***************************************************************
 		17/04/2024 & 
-	 	$\mathbf{2}.$ Pruebas de entrenamiento del modelo $Pendulum\, DQN$. &
-	 	$a)$ SASASASAS. \newline & 
+	 	$\mathbf{2}.$ Prueba de discretización del \textit{action space} del env $Pendulum$. &
+	 	$a)$ Se logró adaptar el código del $PendulumDQN$ a una versión discretizada $PendulumDQN_discrete$, depende principalmente de la resolución seleccionada ($n_actions$). \newline
+	 	$b)$ Pruebas de entrenamiento de hasta $100$ episodios. \newline & 
 	 	4 horas \\
 	 	% ***************************************************************
-	 	18/04/2024 & 
-	 	$\mathbf{3}.$ Reunión de seguimiento con el asesor del proyecto. & 
-	 	$a)$ Revisión de avance en el código y errores de forma.  \newline
-	 	$b)$ Se acordó realizar entrenamientos con diferentes formatos de indicación del $target\_angle$.  \newline & 
-	 	2 horas \\
 	 	\hline
 	\end{tabularx}
 \end{minipage}	 	
