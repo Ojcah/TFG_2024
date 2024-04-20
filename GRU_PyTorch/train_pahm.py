@@ -46,6 +46,8 @@ class Trainer:
                             help='Feature extension (none,one,zero,past) (default "none": no extension.')
         parser.add_argument('--keep_angles', action='store_true',
                             help='Set this flag to not normalize angles.')
+        parser.add_argument('--offset', action='store_true',
+                            help='Set this flag to use an internal offset for the hidden state.')
         self.args = parser.parse_args()
 
         # Parse hidden_size
@@ -196,13 +198,26 @@ if __name__ == "__main__":
     input_size = wholeset.features()  # Number of features in the input
     hidden_size = trainer.args.hidden_size  # Dimension of the hidden state
     output_size = 1  # Number of features in the output
+    use_offset = trainer.args.offset
 
+    print(f"Input size  : {input_size}")
 
+    if isinstance(trainer.args.hidden_size, int):       
+        print(f"Hidden state: {hidden_size}")
+    else:
+        print(f"Hidden state: {hidden_size[0]}")
+    
+        print("  Other layers: ",', '.join(map(str,hidden_size[1:])))
+
+    print(f"Output size : {output_size}")
+    print(f"Hidden offset: {use_offset}")
+
+    
     if trainer.args.load_model:
         model = PAHMModel.load_model(trainer.args.load_model,device=device)
     else:
         # Initialize model
-        model = PAHMModel(input_size, hidden_size, output_size)
+        model = PAHMModel(input_size, hidden_size, output_size, use_offset=use_offset)
 
     print("Inicio de entrenamiento...")
         

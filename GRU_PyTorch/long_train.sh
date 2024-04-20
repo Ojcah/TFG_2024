@@ -1,24 +1,33 @@
 #!/bin/bash
 
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [4,4] --model_name gru_mse_simple_b1_h4-4_10 --wandb_run gru_mse_simple_b1_h4-4_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [8,4] --model_name gru_mse_simple_b1_h8-4_10 --wandb_run gru_mse_simple_b1_h8-4_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [32,4] --model_name gru_mse_simple_b1_h32-4_10 --wandb_run gru_mse_simple_b1_h32-4_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [48,4] --model_name gru_mse_simple_b1_h48-4_10 --wandb_run gru_mse_simple_b1_h48-4_10
+python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --offset --hidden_size [8,4] --model_name gru_mse_simple_b1_h8-4_offset_11 
+#python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --offset --hidden_size [8,4] --model_name gru_mse_simple_b1_h8-4_offset_11 --wandb_run gru_mse_simple_b1_h8-4_offset_11
 
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [4,8] --model_name gru_mse_simple_b1_h4-8_10 --wandb_run gru_mse_simple_b1_h4-8_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [8,8] --model_name gru_mse_simple_b1_h8-8_10 --wandb_run gru_mse_simple_b1_h8-8_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [32,8] --model_name gru_mse_simple_b1_h32-8_10 --wandb_run gru_mse_simple_b1_h32-8_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [48,8] --model_name gru_mse_simple_b1_h48-8_10 --wandb_run gru_mse_simple_b1_h48-8_10
 
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [4,32] --model_name gru_mse_simple_b1_h4-32_10 --wandb_run gru_mse_simple_b1_h4-32_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [8,32] --model_name gru_mse_simple_b1_h8-32_10 --wandb_run gru_mse_simple_b1_h8-32_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [32,32] --model_name gru_mse_simple_b1_h32-32_10 --wandb_run gru_mse_simple_b1_h32-32_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [48,32] --model_name gru_mse_simple_b1_h48-32_10 --wandb_run gru_mse_simple_b1_h48-32_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [8,48] --model_name gru_mse_simple_b1_h8-48_10 --wandb_run gru_mse_simple_b1_h8-48_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [32,48] --model_name gru_mse_simple_b1_h32-48_10 --wandb_run gru_mse_simple_b1_h32-48_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [48,48] --model_name gru_mse_simple_b1_h48-48_10 --wandb_run gru_mse_simple_b1_h48-48_10
 
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [4,48] --model_name gru_mse_simple_b1_h4-48_10 --wandb_run gru_mse_simple_b1_h4-48_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [8,48] --model_name gru_mse_simple_b1_h8-48_10 --wandb_run gru_mse_simple_b1_h8-48_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [32,48] --model_name gru_mse_simple_b1_h32-48_10 --wandb_run gru_mse_simple_b1_h32-48_10
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [48,48] --model_name gru_mse_simple_b1_h48-48_10 --wandb_run gru_mse_simple_b1_h48-48_10
+
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [4,4] --model_name gru_mse_simple_b1_h4-4_10 --wandb_run gru_mse_simple_b1_h4-4_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [8,4] --model_name gru_mse_simple_b1_h8-4_10 --wandb_run gru_mse_simple_b1_h8-4_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [32,4] --model_name gru_mse_simple_b1_h32-4_10 --wandb_run gru_mse_simple_b1_h32-4_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [48,4] --model_name gru_mse_simple_b1_h48-4_10 --wandb_run gru_mse_simple_b1_h48-4_10
+
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [4,8] --model_name gru_mse_simple_b1_h4-8_10 --wandb_run gru_mse_simple_b1_h4-8_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [8,8] --model_name gru_mse_simple_b1_h8-8_10 --wandb_run gru_mse_simple_b1_h8-8_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [32,8] --model_name gru_mse_simple_b1_h32-8_10 --wandb_run gru_mse_simple_b1_h32-8_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [48,8] --model_name gru_mse_simple_b1_h48-8_10 --wandb_run gru_mse_simple_b1_h48-8_10
+
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [4,32] --model_name gru_mse_simple_b1_h4-32_10 --wandb_run gru_mse_simple_b1_h4-32_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [8,32] --model_name gru_mse_simple_b1_h8-32_10 --wandb_run gru_mse_simple_b1_h8-32_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [32,32] --model_name gru_mse_simple_b1_h32-32_10 --wandb_run gru_mse_simple_b1_h32-32_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [48,32] --model_name gru_mse_simple_b1_h48-32_10 --wandb_run gru_mse_simple_b1_h48-32_10
+
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [4,48] --model_name gru_mse_simple_b1_h4-48_10 --wandb_run gru_mse_simple_b1_h4-48_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [8,48] --model_name gru_mse_simple_b1_h8-48_10 --wandb_run gru_mse_simple_b1_h8-48_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [32,48] --model_name gru_mse_simple_b1_h32-48_10 --wandb_run gru_mse_simple_b1_h32-48_10
+# python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [48,48] --model_name gru_mse_simple_b1_h48-48_10 --wandb_run gru_mse_simple_b1_h48-48_10
 
 
 
