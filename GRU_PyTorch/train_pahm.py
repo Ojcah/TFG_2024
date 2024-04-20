@@ -91,7 +91,7 @@ class Trainer:
                 "extension": self.args.extension,
                 "normalize_angles": not self.args.keep_angles,
                 "hidden_state_offset": self.args.offset,
-                "lambda_state_offset": self.lambda_offset
+                "lambda_state_offset": self.args.lambda_offset
             })
 
     def create_mask(self,lengths, max_length,prepadding=1500):
@@ -206,6 +206,8 @@ if __name__ == "__main__":
     root_dir = "../Datos_Recolectados/"
     device = "cuda" if torch.cuda.is_available() else "cpu"
     train_loader, val_loader, _, wholeset = get_dataloaders(root_dir,
+                                                            train_split=0.85,
+                                                            val_split=0.1,
                                                             extension=trainer.args.extension,
                                                             normalize_angles=not trainer.args.keep_angles,
                                                             batch_size=trainer.args.batch_size)
