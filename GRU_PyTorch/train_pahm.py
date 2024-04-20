@@ -48,6 +48,9 @@ class Trainer:
                             help='Set this flag to not normalize angles.')
         parser.add_argument('--offset', action='store_true',
                             help='Set this flag to use an internal offset for the hidden state.')
+        parser.add_argument('--lambda_offset',type=float,
+                            default=0.01,
+                            help='Weight for the loss term related to the hidden state offset')
         self.args = parser.parse_args()
 
         # Parse hidden_size
@@ -86,7 +89,9 @@ class Trainer:
                 "hidden_size": self.args.hidden_size,
                 "learning_rate": 0.001,
                 "extension": self.args.extension,
-                "normalize_angles": not self.args.keep_angles
+                "normalize_angles": not self.args.keep_angles,
+                "hidden_state_offset": self.args.offset,
+                "lambda_state_offset": self.lambda_offset
             })
 
     def create_mask(self,lengths, max_length,prepadding=1500):
@@ -101,6 +106,7 @@ class Trainer:
     def train_model(self, model, train_loader, val_loader):
         # Define loss function and optimizer
         criterion = torch.nn.MSELoss() if self.args.loss_type == 'mse' else torch.nn.L1Loss()
+        offset_loss = torch.nn.L1Loss()
         optimizer = torch.optim.Adam(model.parameters())
 
         model = model.to(device)        
@@ -125,8 +131,13 @@ class Trainer:
                 # Apply the mask to the outputs and angle
                 masked_outputs = outputs * mask.unsqueeze(-1)
                 masked_angle = angle * mask.unsqueeze(-1)
+
+                if model.use_hidden_offset:
+                    hidden_offset_loss = torch.norm(model.hidden_offset,1)
+                else:
+                    hidden_offset_loss = 0
                 
-                loss = criterion(masked_outputs, masked_angle)
+                loss = criterion(masked_outputs, masked_angle)+self.args.lambda_offset*hidden_offset_loss
 
                 # Backward pass and optimization
                 optimizer.zero_grad()
@@ -139,6 +150,11 @@ class Trainer:
             model.eval()
             with torch.no_grad():
                 val_loss = 0
+                if model.use_hidden_offset:
+                    hidden_offset_loss = torch.norm(model.hidden_offset,1)
+                else:
+                    hidden_offset_loss = 0
+
                 for pwm, lengths, angle in val_loader:
                     # Initialize hidden state
                     model.reset(batch_size=pwm.size(0))
@@ -155,7 +171,7 @@ class Trainer:
                     masked_outputs = outputs * mask.unsqueeze(-1)
                     masked_angle = angle * mask.unsqueeze(-1)
                     
-                    loss = criterion(masked_outputs, masked_angle)
+                    loss = criterion(masked_outputs, masked_angle)+self.args.lambda_offset*hidden_offset_loss
                     val_loss += loss.item()
 
             print(f'Epoch {epoch+1}/{self.args.epochs}, '

@@ -111,8 +111,8 @@ class PAHMModel(nn.Module):
         else:
             activation = nn.PReLU
 
-        if 'offset' in checkpoint:
-            offset = checkpoint['offset']
+        if 'use_hidden_offset' in checkpoint:
+            offset = checkpoint['use_hidden_offset']
         else:
             offset = False
             

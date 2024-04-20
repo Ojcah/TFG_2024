@@ -66,7 +66,12 @@ def main():
             if args.verbose:
                 print(f"Testing sequence {index}: ({prediction.shape[0]})")
 
+
+    if model.use_hidden_offset and args.verbose:
+        print("Offset for hidden state: ",model.hidden_offset.cpu().detach().numpy())
+                
     show_results(pwm_values, predictions, ground_truths,hide_fig=args.no_fig)
+
 
 def show_results(pwm_values,
                  predictions,
