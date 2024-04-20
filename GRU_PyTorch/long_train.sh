@@ -1,8 +1,18 @@
 #!/bin/bash
 
-python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --offset --hidden_size [48,8] --model_name gru_mse_simple_b1_h48-8_offset_12 --wandb_run gru_mse_simple_b1_h48-8_offset_12
 lastmodel=`ls -1 gru_mse_simple_b1_h48-8_offset_12_*`
-python train_pahm.py --epochs 1500 --loss_type mae --batch_size 1 --offset --hidden_size [48,8] --model_name gru_mae_simple_b1_h48-8_offset_12 --wandb_run gru_mae_simple_b1_h48-8_offset_12 --load_model $lastmodel
+python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --offset --hidden_size [48,8] --model_name gru_mse_simple_b1_h48-8_offset_13 --wandb_run gru_mse_simple_b1_h48-8_offset_13 --load_model $lastmodel
+lastmodel=`ls -1 gru_mse_simple_b1_h48-8_offset_13_*`
+python train_pahm.py --epochs 1500 --loss_type mae --batch_size 1 --offset --hidden_size [48,8] --model_name gru_mae_simple_b1_h48-8_offset_13 --wandb_run gru_mae_simple_b1_h48-8_offset_13 --load_model $lastmodel
+
+python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --hidden_size [48,8] --model_name gru_mse_simple_b1_h48-8_14 --wandb_run gru_mse_simple_b1_h48-8_14
+lastmodel=`ls -1 gru_mse_simple_b1_h48-8_14_*`
+python train_pahm.py --epochs 1500 --loss_type mae --batch_size 1 --hidden_size [48,8] --model_name gru_mae_simple_b1_h48-8_14 --wandb_run gru_mae_simple_b1_h48-8_14 --load_model $lastmodel
+
+
+
+
+
 
 #python train_pahm.py --epochs 750 --loss_type mse --batch_size 1 --offset --hidden_size [8,4] --model_name gru_mse_simple_b1_h8-4_offset_11 --wandb_run gru_mse_simple_b1_h8-4_offset_11
 #python train_pahm.py --epochs 1500 --loss_type mae --batch_size 1 --offset --hidden_size [8,4] --model_name gru_mae_simple_b1_h8-4_offset_11 --wandb_run gru_mae_simple_b1_h8-4_offset_11 --load_model gru_mse_simple_b1_h8-4_offset_11_20240419_203155.pth

@@ -57,7 +57,8 @@ class PAHMDataset(Dataset):
     self.angle_norm_intercept = 1 - self.angle_norm_slope*self.max_angle
 
     self.num_features=[]
-
+    self.file_names = []  # This list stores the filename for each data point
+    
     prepadding = np.zeros(1500)
 
 
@@ -99,6 +100,7 @@ class PAHMDataset(Dataset):
       angle = torch.tensor(angle, dtype=torch.float32)
 
       self.data.append((pwm,angle))
+      self.file_names.append(filename)  # Store the filename for this data point
 
 
   def norm(self,data):
@@ -124,7 +126,8 @@ def get_dataloaders(root_dir,
                     min_angle=-120,
                     max_angle=120,
                     batch_size=1,
-                    extension=None):
+                    extension=None,
+                    verbose=False):
   """Creates training, validation, and testing dataloaders without
      randomization."""
 
@@ -132,7 +135,8 @@ def get_dataloaders(root_dir,
                         normalize_angles=normalize_angles,
                         min_angle=min_angle,
                         max_angle=max_angle,
-                        extension=extension)
+                        extension=extension,
+                        verbose=verbose)
   total_len = len(dataset)
 
   train_len = int(train_split * total_len)
@@ -141,9 +145,38 @@ def get_dataloaders(root_dir,
 
   # Randomly split the dataset
   generator = torch.Generator().manual_seed(425)
-  train_data, val_data, test_data = random_split(dataset=dataset,
-                                                 lengths=[train_len, val_len, test_len],
-                                                 generator=generator)
+  indices = list(range(total_len))
+  random_split(indices, lengths=[train_len, val_len, test_len], generator=generator)
+
+  train_idx = indices[:train_len]
+  val_idx   = indices[train_len:train_len+val_len]
+  test_idx  = indices[train_len+val_len:]
+
+  # Create data splits with filenames
+  train_data = [dataset[i] for i in train_idx]
+
+  if verbose:
+      print("Train data uses the following files:")
+      for num,i in enumerate(train_idx):
+          print(f"{num+1}: {dataset.file_names[i]}")
+      print()
+  
+  val_data = [dataset[i] for i in val_idx]
+
+  if verbose:
+      print("Validation data uses the following files:")
+      for num,i in enumerate(val_idx):
+          print(f"{num+1}: {dataset.file_names[i]}")
+      print()
+
+  test_data = [dataset[i] for i in test_idx]
+
+  if verbose:
+      print("Testing data uses the following files:")
+      for num,i in enumerate(test_idx):
+          print(f"{num+1}: {dataset.file_names[i]}")
+      print()
+
   
   train_dataloader = DataLoader(train_data, batch_size=batch_size, shuffle=True,collate_fn=collate_fn)
   val_dataloader = DataLoader(val_data, batch_size=1, shuffle=False,collate_fn=collate_fn)

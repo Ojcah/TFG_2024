@@ -21,7 +21,7 @@ def plot_all_sequences(dataloaders):
   fig_base = 1
   for loader in dataloaders: 
     # We'll plot a pair of figures for each dataloader
-    print(f"Plotting set {(fig_base+1)/2}")
+    print(f"Plotting set {int((fig_base+1)/2)}")
     pwms = []
     angles = []
 
@@ -65,13 +65,13 @@ def plot_all_sequences(dataloaders):
     # Set labels and legends for PWM plot
     plt.figure(fig_base)
     plt.xlabel("Index")
-    plt.ylabel(f"PWM Value {(fig_base+1)/2}")
+    plt.ylabel(f"PWM Value {int((fig_base+1)/2)}")
     plt.grid(True)
 
     # Set labels and legends for angle plot
     plt.figure(fig_base+1)
     plt.xlabel("Index")
-    plt.ylabel(f"Angle (degrees) {(fig_base+1)/2}")
+    plt.ylabel(f"Angle (degrees) {int((fig_base+1)/2)}")
     plt.grid(True)
 
     fig_base = fig_base + 2
@@ -91,6 +91,6 @@ if __name__ == "__main__":
     exit()  # Exit the script if the directory is missing
  
   print("Loading data...")
-  train_loader, val_loader, test_loader, _ = get_dataloaders(root_dir,extension="zero")
+  train_loader, val_loader, test_loader, _ = get_dataloaders(root_dir,extension="zero",verbose=True)
 
   plot_all_sequences((train_loader, val_loader, test_loader))
