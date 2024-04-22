@@ -240,8 +240,8 @@ class PPO:
 				# obs, rew, done, _ = selv.env.step(action)					# Gym version
 				obs, rew, terminated, truncated, _ = self.env.step(action)		
 
-				done = terminated or truncated								# For Gymnasium version
-				
+				done = terminated or truncated or (np.absolute(action)>2)								# For Gymnasium version
+
 				rew = self.calculate_reward(obs, action, math.radians(target_angle))
 
 				# Track recent reward, action, and action log probability
@@ -451,7 +451,7 @@ class PPO:
 		plt.title("Time for iteration (seg)")
 		plt.grid(True)
 		plt.subplot(2, 2, 4)
-		plt.plot(timesteps_sofar, average_len, color="blue")
+		plt.plot(timesteps_sofar, average_len, color="purple")
 		plt.title("Average Episodic Length")
 		plt.grid(True)
 		plt.pause(0.01)
