@@ -11,48 +11,46 @@ Database file #1: references.bib
 -- IEEEtran.bst version 1.14 (2015/08/26) by Michael Shell.
 -- http://www.michaelshell.org/tex/ieeetran/bibtex/
 -- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
-Warning--empty year in DQNCart
 
 Done.
 You've used 1 entry,
             4087 wiz_defined-function locations,
-            827 strings with 7460 characters,
-and the built_in function-call counts, 472 in all, are:
-= -- 25
-> -- 9
+            827 strings with 7390 characters,
+and the built_in function-call counts, 451 in all, are:
+= -- 28
+> -- 4
 < -- 0
-+ -- 4
-- -- 2
-* -- 36
-:= -- 92
++ -- 2
+- -- 1
+* -- 31
+:= -- 98
 add.period$ -- 2
 call.type$ -- 1
 change.case$ -- 1
 chr.to.int$ -- 0
-cite$ -- 2
-duplicate$ -- 35
-empty$ -- 37
-format.name$ -- 3
-if$ -- 83
+cite$ -- 1
+duplicate$ -- 33
+empty$ -- 36
+format.name$ -- 1
+if$ -- 79
 int.to.chr$ -- 0
 int.to.str$ -- 1
-missing$ -- 6
+missing$ -- 5
 newline$ -- 26
 num.names$ -- 1
-pop$ -- 19
+pop$ -- 13
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 2
-skip$ -- 27
+skip$ -- 28
 stack$ -- 0
 substring$ -- 1
-swap$ -- 17
+swap$ -- 16
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 5
 type$ -- 1
-warning$ -- 1
+warning$ -- 0
 while$ -- 1
 width$ -- 2
-write$ -- 29
-(There was 1 warning)
+write$ -- 30

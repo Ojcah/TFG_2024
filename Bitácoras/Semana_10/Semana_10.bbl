@@ -21,8 +21,8 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{DQNCart}
-A.~Paszke and M.~Towers, ``Reinforcement learning (dqn) tutorial,''
-  \emph{PyTorch}.
+\bibitem{PPObeginners}
+E.~Yang-Yu, ``Coding ppo from scratch with pytorch (part 1/4),'' \emph{Medium},
+  2020.
 
 \end{thebibliography}
