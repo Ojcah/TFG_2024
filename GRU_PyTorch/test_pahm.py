@@ -22,11 +22,18 @@ def main():
                         help='Feature extension (none,one,zero,past) (default "none": no extension.')
     parser.add_argument('--keep_angles', action='store_true',
                         help='Set this flag to not normalize angles.')
+    parser.add_argument('--no_fig', action='store_true',
+                        help='Set this flag to hide the figure.')
+    parser.add_argument('--verbose', action='store_true',
+                        help='Show detailed information.')
 
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
+    print(f"Model name: '{args.model_name}'")
+
+    
     model = PAHMModel.load_model(args.model_name)
     model = model.to(device)
 
@@ -55,63 +62,35 @@ def main():
             pwm_values.append(pwm.squeeze().cpu().numpy())
 
             index += 1
-            print(f"Testing sequence {index}: ({prediction.shape[0]})")
 
-    plot_results(pwm_values, predictions, ground_truths)
+            if args.verbose:
+                print(f"Testing sequence {index}: ({prediction.shape[0]})")
 
-def plot_results(pwm_values, predictions, ground_truths,prepadding=1500):
+
+    if model.use_hidden_offset and args.verbose:
+        print("Offset for hidden state: ",model.hidden_offset.cpu().detach().numpy())
+                
+    show_results(pwm_values, predictions, ground_truths,hide_fig=args.no_fig)
+
+
+def show_results(pwm_values,
+                 predictions,
+                 ground_truths,
+                 prepadding=1500,
+                 hide_fig=False):
     num_sequences = len(predictions)
-    colors = matplotlib.colormaps.get_cmap('tab20').colors  # Get a colormap with 20 colors
+
+    # Get a colormap with 20 colors
+    colors = matplotlib.colormaps.get_cmap('tab20').colors  
 
     # Concatenate all predictions and ground truths
     all_predictions = np.concatenate(predictions)
     all_ground_truths = np.concatenate(ground_truths)
 
-    
-    plt.figure(1,figsize=(15, 6))
-    start_index=0
-    for i in range(num_sequences):
-        end_index = start_index + predictions[i].shape[0]
-        plt.plot(
-            range(start_index, end_index),
-            all_predictions[start_index:end_index],
-            color=colors[i % len(colors)],
-            label="",
-            linewidth=2
-        )
-        plt.plot(
-            range(start_index, end_index),
-            all_ground_truths[start_index:end_index],
-            color=colors[i % len(colors)],
-            linestyle="--",
-            label=""
-        )
-        start_index=end_index
-
-    plt.xlabel("Timesteps (concatenated sequences)")
-    plt.ylabel("Angle")
-    plt.title("Predictions and Ground Truth (concatenated)")
-
     # Calculate differences
     differences = all_predictions - all_ground_truths
     differences[0:prepadding]=0
-    plt.figure(2,figsize=(15, 6))
-    start_index=0
-    for i in range(num_sequences):
-        end_index = start_index + predictions[i].shape[0]
-        plt.plot(
-            range(start_index, end_index),
-            differences[start_index:end_index],
-            color=colors[i],
-            label="",
-            linewidth=2
-        )
-        start_index=end_index
-        
-    plt.xlabel("Timesteps (concatenated sequences)")
-    plt.ylabel("Difference (Prediction - Ground Truth)")
-    plt.title("Differences between Predictions and Ground Truth (concatenated)")
-
+   
     # Use numpy functions for MSE, MAE, and RMSE calculation
     mse = np.mean(differences**2)
     mae = np.mean(np.abs(differences))
@@ -121,7 +100,51 @@ def plot_results(pwm_values, predictions, ground_truths,prepadding=1500):
     print("MAE:", mae)
     print("RMSE:", rmse)
 
-    plt.show()
+
+    if not hide_fig:
+        plt.figure(1,figsize=(15, 6))
+        start_index=0
+        for i in range(num_sequences):
+            end_index = start_index + predictions[i].shape[0]
+            plt.plot(
+                range(start_index, end_index),
+                all_predictions[start_index:end_index],
+                color=colors[i % len(colors)],
+                label="",
+                linewidth=2
+            )
+            plt.plot(
+                range(start_index, end_index),
+                all_ground_truths[start_index:end_index],
+                color=colors[i % len(colors)],
+                linestyle="--",
+                label=""
+            )
+            start_index=end_index
+
+        plt.xlabel("Timesteps (concatenated sequences)")
+        plt.ylabel("Angle")
+        plt.title("Predictions and Ground Truth (concatenated)")
+
+        plt.figure(2,figsize=(15, 6))
+        start_index=0
+        for i in range(num_sequences):
+            end_index = start_index + predictions[i].shape[0]
+            plt.plot(
+                range(start_index, end_index),
+                differences[start_index:end_index],
+                color=colors[i],
+                label="",
+                linewidth=2
+            )
+            start_index=end_index
+
+        plt.xlabel("Timesteps (concatenated sequences)")
+        plt.ylabel("Difference (Prediction - Ground Truth)")
+        plt.title("Differences between Predictions and Ground Truth (concatenated)")
+
+        plt.show()
+
 
 if __name__ == "__main__":
     main()
