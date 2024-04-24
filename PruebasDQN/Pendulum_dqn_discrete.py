@@ -14,8 +14,8 @@ import torch.optim as optim
 import torch.nn.functional as F
 import numpy as np
 
-#env = gym.make("Pendulum-v1", render_mode="rgb_array", g=9.81)
-env = gym.make("Pendulum-v1", render_mode="human", g=9.81)
+env = gym.make("Pendulum-v1", render_mode="rgb_array", g=9.81)
+#env = gym.make("Pendulum-v1", render_mode="human", g=9.81)
 
 # set up matplotlib
 is_ipython = 'inline' in matplotlib.get_backend()
@@ -118,14 +118,15 @@ n_actions = 10
 
 saved_checkpoint = False        # Si se encuentra algun checkpoint guardado y se desea cargar
 
-target_angle = -120
-changing_target = False
-targets_options = np.array([0, 30, 60, 90, 120, 150, 180, -150, -120, -90, -60, -30])
+target_angle = 135
+changing_target = True
+#targets_options = np.array([0, 30, 60, 90, 120, 150, 180, -150, -120, -90, -60, -30])
+targets_options = np.array([-135, 45, -45, 135])
 
 # ****************************************************************************
 if torch.cuda.is_available():
     #num_episodes = 1000
-    num_episodes = 50
+    num_episodes = 1000
 else:
     #num_episodes = 50
     num_episodes = 10
@@ -271,7 +272,7 @@ for i_episode in range(start_episode, num_episodes):
         target_angle = targets_options[u_option]
         u_option += 1
         i_target = 1
-        print("Target angle >> ", target_angle)
+        print("\n Target angle >> ", target_angle)
     else:
         i_target += 1
 
@@ -280,7 +281,7 @@ for i_episode in range(start_episode, num_episodes):
     # Initialize the environment and get its state
     state, info = env.reset()
     state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
-    print("Episode >> ", i_episode)
+    print("\n Episode >> ", i_episode)
     for t in count():
         action = select_action(state, n_actions)
         action_step = undiscretize_action(action.cpu().detach().numpy(), n_actions)
@@ -295,7 +296,7 @@ for i_episode in range(start_episode, num_episodes):
 
         ## *********************************************************************************
         pole_angle = math.degrees(math.atan2(observation[1],observation[0]))
-        print(np.array([pole_angle, action_step.item(), reward.item()]))
+        print(f"\r{np.array([pole_angle, action_step.item(), reward.item()])}", end="")
         new_rewards.append(reward.item())
         ## *********************************************************************************
 

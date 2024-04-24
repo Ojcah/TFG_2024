@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 import math
 from torch.optim import Adam
 from torch.distributions import MultivariateNormal
+from torch.utils.tensorboard import SummaryWriter
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -30,6 +31,8 @@ is_ipython = 'inline' in matplotlib.get_backend()
 if is_ipython:
     from IPython import display
 plt.ion()
+
+writer = SummaryWriter('runsPPO/run_1')
 
 class PPO:
 	"""
@@ -97,7 +100,7 @@ class PPO:
 		else:
 			reward_n = -costs
 		# reward_n = -costs
-		return reward_n
+		return reward_n.item()
 
 	def learn(self, total_timesteps, target_angle):
 		"""
@@ -431,33 +434,33 @@ class PPO:
 		time_for_iteration.append(float(delta_t))
 		average_len.append(float(avg_ep_lens))
 
-		print(f" >> Iteration #{i_so_far}")
+		print(f" >> Iteration #{i_so_far} >> Average reward: {avg_ep_rews}")
 
-		plt.figure(figsize=(10, 10))
+		# plt.figure(figsize=(10, 10))
 
-		# Clear previous plot
-		plt.clf()
+		# # Clear previous plot
+		# plt.clf()
 
-		plt.subplot(2, 2, 1)
-		plt.plot(timesteps_sofar, average_reward, color="blue")
-		plt.title("Training rewards (average)")
-		plt.grid(True)
-		plt.subplot(2, 2, 2)
-		plt.plot(timesteps_sofar, average_loss, color="green")
-		plt.title("Average Loss")
-		plt.grid(True)
-		plt.subplot(2, 2, 3)
-		plt.plot(timesteps_sofar, time_for_iteration, color="red")
-		plt.title("Time for iteration (seg)")
-		plt.grid(True)
-		plt.subplot(2, 2, 4)
-		plt.plot(timesteps_sofar, average_len, color="purple")
-		plt.title("Average Episodic Length")
-		plt.grid(True)
-		plt.pause(0.01)
-		if is_ipython and (t_so_far < total_timesteps):
-			display.display(plt.gcf())
-			display.clear_output(wait=True)
+		# plt.subplot(2, 2, 1)
+		# plt.plot(timesteps_sofar, average_reward, color="blue")
+		# plt.title("Training rewards (average)")
+		# plt.grid(True)
+		# plt.subplot(2, 2, 2)
+		# plt.plot(timesteps_sofar, average_loss, color="green")
+		# plt.title("Average Loss")
+		# plt.grid(True)
+		# plt.subplot(2, 2, 3)
+		# plt.plot(timesteps_sofar, time_for_iteration, color="red")
+		# plt.title("Time for iteration (seg)")
+		# plt.grid(True)
+		# plt.subplot(2, 2, 4)
+		# plt.plot(timesteps_sofar, average_len, color="purple")
+		# plt.title("Average Episodic Length")
+		# plt.grid(True)
+		# plt.pause(0.01)
+		# if is_ipython and (t_so_far < total_timesteps):
+		# 	display.display(plt.gcf())
+		# 	display.clear_output(wait=True)
 
 
 		# # Print logging statements
@@ -470,6 +473,11 @@ class PPO:
 		# print(f"Iteration took: {delta_t} secs", flush=True)
 		# print(f"------------------------------------------------------", flush=True)
 		# print(flush=True)
+  
+		writer.add_scalar("Average Reward", float(avg_ep_rews), float(t_so_far))
+		writer.add_scalar("Average Loss", float(avg_actor_loss), float(t_so_far))
+		writer.add_scalar("Time for iteration (seg)", float(delta_t), float(t_so_far))
+		writer.add_scalar("Average Episodic Length", float(avg_ep_lens), float(t_so_far))
 
 		# Reset batch-specific logging data
 		self.logger['batch_lens'] = []

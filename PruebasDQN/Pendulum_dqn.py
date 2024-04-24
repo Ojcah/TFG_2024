@@ -17,6 +17,35 @@ import numpy as np
 # *******************************************************************************************
 # *******************************************************************************************
 
+import matplotlib.pyplot as plt
+from matplotlib.widgets import Slider, Button
+import numpy as np  # Import NumPy
+
+
+fig, ax = plt.subplots(figsize=[9, 3])
+
+valorslider = 0.0
+
+def update(val):
+    plt.draw()
+    return val
+
+def send(event):
+    print(slider.val)
+
+slider = Slider(ax, "Target Angle", -180, 180, valinit=0.0)
+
+valorslider = slider.on_changed(update)
+
+buttonsend = fig.add_axes([0.5, 0.2, 0.3, 0.05])
+button = Button(buttonsend, "Send Target", hovercolor="0.975")
+
+
+button.on_clicked(send)
+
+
+plt.show()
+
 
 
 # *******************************************************************************************
