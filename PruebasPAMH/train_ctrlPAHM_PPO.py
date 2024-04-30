@@ -1,14 +1,28 @@
 
+import argparse
 import gymnasium as gym
 from PAHM.learned_pahm import LearnedPAHM
 import numpy as np
 import sys
+
 import torch
 from PPO.ppo_pahm import PPO
 from torch import nn
+from datetime import datetime
 import torch.nn.functional as F
 
 import wandb
+
+today = datetime.today()
+today = today.strftime("%y%m%d_%H%M")
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--run_name', type=str, default=('run_'+today), dest='run_name')
+parser.add_argument('--run_id', type=str, default=('run_v1_'+today), dest='run_id')
+parser.add_argument('--description', type=str, default='', dest='description')	
+
+args = parser.parse_args()
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 #device = torch.device("cpu" if torch.cuda.is_available() else "cuda")
@@ -63,7 +77,7 @@ class FeedForwardNN(nn.Module):
 		return output
 ## **************************************************************************************
 ## **************************************************************************************
-def train(env, hyperparameters, target_angle, change_angle, actor_model, critic_model):
+def train(env, hyperparameters, actor_model, critic_model):
 	"""
 		Trains the model.
 
@@ -98,26 +112,46 @@ def train(env, hyperparameters, target_angle, change_angle, actor_model, critic_
 	# you can kill the process whenever you feel like PPO is converging
 	#model.learn(total_timesteps=200_000_000, target_angle=target_angle)
 	#model.learn(total_timesteps=1_000_000, target_angle=target_angle)
-	model.learn(total_timesteps=150_000, target_angle=target_angle, change_angle=change_angle)
+	model.learn(total_timesteps=wandb.config['total_timesteps'])
 	
 ## **************************************************************************************
 ## **************************************************************************************
 
-hyperparameters = {
-				'timesteps_per_batch': 2048, 
-				'max_timesteps_per_episode': 200, 
-				'gamma': 0.99, 
-				'n_updates_per_iteration': 10,
-				'lr': 3e-4, 
-				'clip': 0.2,
-				'render': True,
-				'render_every_i': 10
-			  }
+wandb.login(key="0005da299924ab3d8473fa6a5f120b46a82a6a7a")
 
-target_angle = 80
 
-env = LearnedPAHM(render_mode="human")
+wandb.init(project = "PAMH_PPO", 
+           name = args.run_name,
+           #resume = 'Allow',
+		   #monitor_gym=True,
+		   reinit=True,
+           id = args.run_id,
+		   notes="""Timesteps: ### || Target angle: ### || Change angle: ###
+		   || """
+		   )
 
-train(env=env, hyperparameters=hyperparameters, target_angle=target_angle, change_angle=False, actor_model='', critic_model='')
+wandb.config = {
+    'timesteps_per_batch': 2048, 
+	'max_timesteps_per_episode': 200, 
+	'gamma': 0.99, 
+	'n_updates_per_iteration': 10,
+	'lr': 1e-4, 
+	'clip': 0.2,
+	'render': True,
+	'render_every_i': 10,
+	# *****************
+	'total_timesteps': 500_000,
+	'target_angle': 70,
+	'change_angle': False,
+	'change_dev_std': False
+}
 
+wandb.run.notes = f"""Timesteps: {wandb.config['total_timesteps']} || Target angle: {wandb.config['target_angle']} || Change angle: {wandb.config['change_angle']} || """ + args.description
+
+# env = LearnedPAHM(render_mode="human")
+env = LearnedPAHM(render_mode="rgb_array")
+
+train(env=env, hyperparameters=wandb.config, actor_model='', critic_model='')
+
+wandb.finish()
 env.close()
