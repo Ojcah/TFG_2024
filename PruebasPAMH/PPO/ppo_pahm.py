@@ -16,6 +16,9 @@ import matplotlib.pyplot as plt
 import math
 from torch.optim import Adam
 from torch.distributions import MultivariateNormal
+from torch.distributions.normal import Normal
+
+import wandb
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -30,6 +33,7 @@ is_ipython = 'inline' in matplotlib.get_backend()
 if is_ipython:
     from IPython import display
 plt.ion()
+
 
 class PPO:
 	"""
@@ -69,7 +73,10 @@ class PPO:
 
 		# Initialize the covariance matrix used to query the actor for actions
 		self.cov_var = torch.full(size=(self.act_dim,), fill_value=0.5, device=device)
+		#self.cov_var = torch.full(size=(self.act_dim,), fill_value=0.1, device=device)
 		self.cov_mat = torch.diag(self.cov_var)
+
+		self.dev_std = 0.7071
 
 		# This logger will help us with printing out summaries of each iteration
 		self.logger = {
@@ -100,7 +107,7 @@ class PPO:
 		# reward_n = -costs
 		return reward_n.item()
 
-	def learn(self, total_timesteps, target_angle, change_angle):
+	def learn(self, total_timesteps):
 		"""
 			Train the actor and critic networks. Here is where the main PPO algorithm resides.
 
@@ -114,27 +121,31 @@ class PPO:
 		print(f"{self.timesteps_per_batch} timesteps per batch for a total of {total_timesteps} timesteps")
 		t_so_far = 0 # Timesteps simulated so far
 		i_so_far = 0 # Iterations ran so far
-		angle_list = np.array([target_angle, 60, 90, 30, 60])
-		angle_time = total_timesteps//5
+		angle_list = np.array([self.target_angle, 60, 90, 30, 60])
+		#angle_time = total_timesteps//5
+		angle_time = (total_timesteps/2)//5
 		#angle_time = 30_000
 		angle_t = 0
 		angle_index = 0
+		# variance_t = 0
+		# variance_value = 0.5
+		dev_std_t = 0
 		while t_so_far < total_timesteps:                                                                       # ALG STEP 2
 			
-			if change_angle and (angle_t >= angle_time):
+			if self.change_angle and (angle_t >= angle_time):
 				if angle_index > len(angle_list):
 					angle_index = 0
 				else:
 					angle_index += 1
-				target_angle = angle_list[angle_index]
+				self.target_angle = angle_list[angle_index]
 				angle_t = 1
-				print(f">> Target angle: {target_angle}")
+				print(f">> Target angle: {self.target_angle}")
 			else:
-				target_angle = angle_list[angle_index]
+				self.target_angle = angle_list[angle_index]
 
 			
 			# Autobots, roll out (just kidding, we're collecting our batch simulations here)
-			batch_obs, batch_acts, batch_log_probs, batch_rtgs, batch_lens = self.rollout(target_angle)                     # ALG STEP 3
+			batch_obs, batch_acts, batch_log_probs, batch_rtgs, batch_lens = self.rollout()                     # ALG STEP 3
 
 			# Calculate how many timesteps we collected this batch
 			t_so_far += np.sum(batch_lens)
@@ -148,7 +159,8 @@ class PPO:
 			self.logger['i_so_far'] = i_so_far
 
 			# Calculate advantage at k-th iteration
-			V, _ = self.evaluate(batch_obs, batch_acts)
+			# V, _ = self.evaluate(batch_obs, batch_acts)
+			V, curr_log_probs, entropy = self.evaluateV2(batch_obs, batch_acts)
 			A_k = batch_rtgs - V.detach()                                                                       # ALG STEP 5
 
 			# One of the only tricks I use that isn't in the pseudocode. Normalizing advantages
@@ -160,7 +172,8 @@ class PPO:
 			# This is the loop where we update our network for some n epochs
 			for _ in range(self.n_updates_per_iteration):                                                       # ALG STEP 6 & 7
 				# Calculate V_phi and pi_theta(a_t | s_t)
-				V, curr_log_probs = self.evaluate(batch_obs, batch_acts)
+				# V, curr_log_probs = self.evaluate(batch_obs, batch_acts)
+				V, curr_log_probs, entropy = self.evaluateV2(batch_obs, batch_acts)
 
 				# Calculate the ratio pi_theta(a_t | s_t) / pi_theta_k(a_t | s_t)
 				# NOTE: we just subtract the logs, which is the same as
@@ -192,20 +205,41 @@ class PPO:
 				critic_loss.backward()
 				self.critic_optim.step()
 
+				loss = 0.5 * critic_loss + actor_loss - 0.001 * entropy
+
 				# Log actor loss
-				self.logger['actor_losses'].append(actor_loss.detach())
+				# self.logger['actor_losses'].append(actor_loss.detach())
+				self.logger['actor_losses'].append(loss.detach())
+
+			if (dev_std_t >= angle_time) and self.change_dev_std:
+				self.dev_std = self.dev_std*0.8
+				dev_std_t = 1
+				if angle_t == 2*angle_time:
+					self.dev_std = 0.7071
+				print("Cambio de desviación estándar a >> ", self.dev_std)
+			else:
+				dev_std_t += np.sum(batch_lens)
+
+			# if variance_t >= angle_time:
+			# 	variance_value = self.cov_var.item()*0.8
+			# 	self.cov_var = torch.full(size=(self.act_dim,), fill_value=variance_value, device=device)
+			# 	self.cov_mat = torch.diag(self.cov_var)
+			# 	variance_t = 1
+			# 	print("Cambio de varianza a >> ", variance_value)
+			# else:
+			# 	variance_t += np.sum(batch_lens)
+   			
 
 			# Print a summary of our training so far
-			self._log_summary(total_timesteps, target_angle)
+			self._log_summary(total_timesteps)
 
 			# Save our model if it's time
 			if i_so_far % self.save_freq == 0:
 				torch.save(self.actor.state_dict(), './actor-critic/ppo_actor.pth')
 				torch.save(self.critic.state_dict(), './actor-critic/ppo_critic.pth')
 		print(" >> Complete <<")
-		plt.show(block=True)
 
-	def rollout(self, target_angle):
+	def rollout(self):
 		"""
 			Too many transformers references, I'm sorry. This is where we collect the batch of data
 			from simulation. Since this is an on-policy algorithm, we'll need to collect a fresh batch
@@ -258,14 +292,17 @@ class PPO:
 
 				# Calculate action and make a step in the env. 
 				# Note that rew is short for reward.
-				action, log_prob = self.get_action(obs)
+				# action, log_prob = self.get_action(obs)
+				action, log_prob = self.get_actionV2(obs)
+
+
 				# obs, rew, done, _ = selv.env.step(action)					# Gym version
 				obs, rew, terminated, truncated, _ = self.env.step(action)		
 
 				#done = terminated or truncated or (np.absolute(action)>1)								# For Gymnasium version
 				done = terminated or truncated or (action>2.0) or (action<-0.5)								# For Gymnasium version
 
-				rew = self.calculate_reward(obs, action, math.radians(target_angle))
+				rew = self.calculate_reward(obs, action, math.radians(self.target_angle))
 
 				# Track recent reward, action, and action log probability
 				ep_rews.append(rew)
@@ -342,14 +379,38 @@ class PPO:
 		dist = MultivariateNormal(mean, self.cov_mat)
 
 		# Sample an action from the distribution
-		# action = dist.sample()
-		action = torch.clamp(dist.sample(), min=0)
+		action = dist.sample()
+		# action = torch.clamp(dist.sample(), min=0)
 
 		# Calculate the log probability for that action
 		log_prob = dist.log_prob(action)
 
 		# Return the sampled action and the log probability of that action in our distribution
 		return action.detach().cpu().numpy(), log_prob.detach()
+
+	def get_actionV2(self, obs):
+		mean = self.actor(obs)
+
+		dist = Normal(mean, self.dev_std)
+
+		action = torch.clamp(dist.sample(), min=0)
+
+		log_probs = dist.log_prob(action)
+
+		return action.detach().cpu().numpy(), log_probs.detach()
+
+	def evaluateV2(self, batch_obs, batch_acts):
+		V = self.critic(batch_obs).squeeze()
+
+		mean = self.actor(batch_obs)
+
+		dist = Normal(mean, self.dev_std)
+
+		entropy = dist.entropy().mean()
+
+		new_log_probs = dist.log_prob(mean)
+
+		return V, new_log_probs, entropy
 
 	def evaluate(self, batch_obs, batch_acts):
 		"""
@@ -374,6 +435,9 @@ class PPO:
 		# This segment of code is similar to that in get_action()
 		mean = self.actor(batch_obs)
 		dist = MultivariateNormal(mean, self.cov_mat)
+
+		#dist = torch.clamp(dist, min=0)
+
 		log_probs = dist.log_prob(batch_acts)
 
 		# Return the value vector V of each observation in the batch
@@ -419,7 +483,7 @@ class PPO:
 			torch.manual_seed(self.seed)
 			print(f"Successfully set seed to {self.seed}")
 
-	def _log_summary(self, total_timesteps, target_angle):
+	def _log_summary(self, total_timesteps):
 		"""
 			Print to stdout what we've logged so far in the most recent batch.
 
@@ -455,34 +519,35 @@ class PPO:
 		time_for_iteration.append(float(delta_t))
 		average_len.append(float(avg_ep_lens))
 
-		print(f" >> Iteration #{i_so_far} >> Average reward: {avg_ep_rews} >> Target angle: {target_angle}")
+		print(f" >> Iteration #{i_so_far} >> Timesteps: {t_so_far}/{total_timesteps} >> Target angle: {self.target_angle}")
 
-		plt.figure(1,figsize=(10, 10))
+		# plt.figure(1,figsize=(10, 10))
 
-		# Clear previous plot
-		plt.clf()
+		# # Clear previous plot
+		# plt.clf()
 
-		plt.subplot(2, 2, 1)
-		plt.plot(timesteps_sofar, average_reward, color="blue")
-		plt.title("Training rewards (average)")
-		plt.grid(True)
-		plt.subplot(2, 2, 2)
-		plt.plot(timesteps_sofar, average_loss, color="green")
-		plt.title("Average Loss")
-		plt.grid(True)
-		plt.subplot(2, 2, 3)
-		plt.plot(timesteps_sofar, time_for_iteration, color="red")
-		plt.title("Time for iteration (seg)")
-		plt.grid(True)
-		plt.subplot(2, 2, 4)
-		plt.plot(timesteps_sofar, average_len, color="purple")
-		plt.title("Average Batch Length")
-		plt.grid(True)
-		plt.pause(0.01)
-		if is_ipython and (t_so_far < total_timesteps):
-			display.display(plt.gcf())
-			display.clear_output(wait=True)
+		# plt.subplot(2, 2, 1)
+		# plt.plot(timesteps_sofar, average_reward, color="blue")
+		# plt.title("Training rewards (average)")
+		# plt.grid(True)
+		# plt.subplot(2, 2, 2)
+		# plt.plot(timesteps_sofar, average_loss, color="green")
+		# plt.title("Average Loss")
+		# plt.grid(True)
+		# plt.subplot(2, 2, 3)
+		# plt.plot(timesteps_sofar, time_for_iteration, color="red")
+		# plt.title("Time for iteration (seg)")
+		# plt.grid(True)
+		# plt.subplot(2, 2, 4)
+		# plt.plot(timesteps_sofar, average_len, color="purple")
+		# plt.title("Average Batch Length")
+		# plt.grid(True)
+		# plt.pause(0.01)
+		# if is_ipython and (t_so_far < total_timesteps):
+		# 	display.display(plt.gcf())
+		# 	display.clear_output(wait=True)
 
+		wandb.log({"Average Reward": float(avg_ep_rews), "Average Loss": float(avg_actor_loss), "Iteration/Epoch took": float(delta_t), "Average Batch Length": float(avg_ep_lens)})
 		# # Print logging statements
 		# print(flush=True)
 		# print(f"-------------------- Iteration #{i_so_far} --------------------", flush=True)
