@@ -5,7 +5,6 @@
 """
 
 import gymnasium as gym
-import time
 
 import numpy as np
 import time
@@ -14,6 +13,7 @@ import torch.nn as nn
 import matplotlib
 import matplotlib.pyplot as plt
 import math
+from gymnasium.wrappers.monitoring import video_recorder
 from torch.optim import Adam
 from torch.distributions import MultivariateNormal
 from torch.distributions.normal import Normal
@@ -60,8 +60,8 @@ class PPO:
 
 		# Extract environment information
 		self.env = env
-		self.obs_dim = env.observation_space.shape[0]
-		self.act_dim = env.action_space.shape[0]
+		self.obs_dim = env.observation_space.shape[0] + 3
+		self.act_dim = env.action_space.shape[0] 
 
 		 # Initialize actor and critic networks
 		self.actor = policy_class(self.obs_dim, self.act_dim).to(device)                                                   # ALG STEP 1
@@ -77,6 +77,11 @@ class PPO:
 		self.cov_mat = torch.diag(self.cov_var)
 
 		self.dev_std = 0.7071
+		self.last_noise = np.array([0.1])
+		self.noise_suppressor = False
+		self.sigma_x0_noise = 0.7629
+		self.noise_threshold = 4
+		self.theta_good = 0.0
 
 		# This logger will help us with printing out summaries of each iteration
 		self.logger = {
@@ -86,25 +91,68 @@ class PPO:
 			'batch_lens': [],       # episodic lengths in batch
 			'batch_rews': [],       # episodic returns in batch
 			'actor_losses': [],     # losses of actor network in current iteration
+			'critic_losses': [],     # losses of critic network in current iteration
 		}
 
-	def calculate_reward(self, observ, pwm, target_angle): # Todos los valores estan en radianes
-		theta = observ.item()
+	def calculate_reward(self, observ, pwm, target_angle, batch_len): # Todos los valores estan en radianes
+		theta = observ[0]
+		theta_dot = observ[1]
 		
 		theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
 
 		theta_error = np.abs(theta_n - target_angle)
-		
-		if pwm < 0.0 or pwm > 1.0:
-			costs = theta_error**2 + (10**(np.absolute(pwm - 1.0)))
-		else:
-			costs = theta_error**2
+		# theta_error_cost = theta_error ** 2
+		theta_error_cost = 5 * theta_error
 
-		if theta_error <= 0.1745: # ~ 10°
-			reward_n = -costs + math.exp(-(6*theta_error)**2)
+		velocity_cost = 0.1 * (theta_dot ** 2)
+		
+		if pwm < 0.0 or pwm > 0.5:
+			costs = theta_error_cost + velocity_cost + (10**(np.absolute(pwm - 0.5)))
 		else:
-			reward_n = -costs
-		# reward_n = -costs
+			costs = theta_error_cost + velocity_cost
+
+		
+		if theta_error <= 0.0873: # 0.1745 ~ 10° # 0.0873 ~ 5°
+			#reward_n = -costs + math.exp(-(6*theta_error)**2)
+			reward_n = -costs + 1.8*math.exp(-(10*theta_error)**2)
+		else:
+			reward_n = -costs 
+
+		if batch_len >= 100:
+			batch_len_cost = 1.05 ** (batch_len - 200)
+			reward_n = reward_n + batch_len_cost
+
+		return reward_n.item()
+	
+	def calculate_rewardV2(self, observ, pwm, target_angle): # Todos los valores estan en radianes
+		theta = observ[0]
+		theta_dot = observ[1]
+		
+		theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
+
+		theta_error = np.abs(theta_n - target_angle)
+
+		theta_error_cost = (theta_error ** 2)
+		velocity_cost = (theta_dot ** 2)
+
+		if theta_error <= 0.1745: # 0.1745 ~ 10° # 0.0873 ~ 5°
+			if self.theta_good < 0.0:
+				self.theta_good = 0.0
+			else:
+				self.theta_good += 1.0
+		else:
+			if self.theta_good > 0.0:
+				self.theta_good = 0.0
+			else:
+				self.theta_good -= 1.0
+
+		if pwm < 0.0 or pwm > 0.5:
+			extra_cost = 10 ** np.absolute(pwm - 0.5)
+		else:
+			extra_cost = 0.0
+  
+		reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost]) + self.theta_good
+
 		return reward_n.item()
 
 	def learn(self, total_timesteps):
@@ -121,15 +169,13 @@ class PPO:
 		print(f"{self.timesteps_per_batch} timesteps per batch for a total of {total_timesteps} timesteps")
 		t_so_far = 0 # Timesteps simulated so far
 		i_so_far = 0 # Iterations ran so far
-		angle_list = np.array([self.target_angle, 60, 90, 30, 60])
-		#angle_time = total_timesteps//5
-		angle_time = (total_timesteps/2)//5
-		#angle_time = 30_000
+		angle_list = np.array([self.target_angle, 60, 90, 60, 30, 20, 45, 70])
+		noise_time = (total_timesteps/2)//6
+		angle_time = (total_timesteps/2)//10
 		angle_t = 0
+		noise_t = 0
 		angle_index = 0
-		# variance_t = 0
-		# variance_value = 0.5
-		dev_std_t = 0
+		
 		while t_so_far < total_timesteps:                                                                       # ALG STEP 2
 			
 			if self.change_angle and (angle_t >= angle_time):
@@ -159,8 +205,8 @@ class PPO:
 			self.logger['i_so_far'] = i_so_far
 
 			# Calculate advantage at k-th iteration
-			# V, _ = self.evaluate(batch_obs, batch_acts)
-			V, curr_log_probs, entropy = self.evaluateV2(batch_obs, batch_acts)
+			V, _ = self.evaluate(batch_obs, batch_acts)
+			# V, curr_log_probs, entropy = self.evaluateV2(batch_obs, batch_acts)
 			A_k = batch_rtgs - V.detach()                                                                       # ALG STEP 5
 
 			# One of the only tricks I use that isn't in the pseudocode. Normalizing advantages
@@ -172,8 +218,8 @@ class PPO:
 			# This is the loop where we update our network for some n epochs
 			for _ in range(self.n_updates_per_iteration):                                                       # ALG STEP 6 & 7
 				# Calculate V_phi and pi_theta(a_t | s_t)
-				# V, curr_log_probs = self.evaluate(batch_obs, batch_acts)
-				V, curr_log_probs, entropy = self.evaluateV2(batch_obs, batch_acts)
+				V, curr_log_probs = self.evaluate(batch_obs, batch_acts)
+				# V, curr_log_probs, entropy = self.evaluateV2(batch_obs, batch_acts)
 
 				# Calculate the ratio pi_theta(a_t | s_t) / pi_theta_k(a_t | s_t)
 				# NOTE: we just subtract the logs, which is the same as
@@ -205,36 +251,24 @@ class PPO:
 				critic_loss.backward()
 				self.critic_optim.step()
 
-				loss = 0.5 * critic_loss + actor_loss - 0.001 * entropy
+				# loss = 0.5 * critic_loss + actor_loss - 0.001 * entropy
 
 				# Log actor loss
-				# self.logger['actor_losses'].append(actor_loss.detach())
-				self.logger['actor_losses'].append(loss.detach())
+				self.logger['actor_losses'].append(actor_loss.detach())
+				self.logger['critic_losses'].append(critic_loss.detach())
+				# self.logger['actor_losses'].append(loss.detach())
 
-			if (dev_std_t >= angle_time) and self.change_dev_std:
-				self.dev_std = self.dev_std*0.8
-				dev_std_t = 1
-				if angle_t == 2*angle_time:
-					self.dev_std = 0.7071
-				print("Cambio de desviación estándar a >> ", self.dev_std)
+			if (noise_t >= noise_time):
+				self.noise_suppressor = True
+				noise_t = 1
 			else:
-				dev_std_t += np.sum(batch_lens)
-
-			# if variance_t >= angle_time:
-			# 	variance_value = self.cov_var.item()*0.8
-			# 	self.cov_var = torch.full(size=(self.act_dim,), fill_value=variance_value, device=device)
-			# 	self.cov_mat = torch.diag(self.cov_var)
-			# 	variance_t = 1
-			# 	print("Cambio de varianza a >> ", variance_value)
-			# else:
-			# 	variance_t += np.sum(batch_lens)
-   			
+				noise_t += np.sum(batch_lens)
 
 			# Print a summary of our training so far
 			self._log_summary(total_timesteps)
 
 			# Save our model if it's time
-			if i_so_far % self.save_freq == 0:
+			if (i_so_far % self.save_freq == 0) or (t_so_far >= total_timesteps):
 				torch.save(self.actor.state_dict(), './actor-critic/ppo_actor.pth')
 				torch.save(self.critic.state_dict(), './actor-critic/ppo_critic.pth')
 		print(" >> Complete <<")
@@ -267,15 +301,34 @@ class PPO:
 		# upon each new episode
 		ep_rews = []
 
+		last_obs = 0.0
+		theta_dot = 0.0
+
+		last_vel = 0.0
+		theta_ddot = 0.0
+
+		#self.theta_good = 0
+
 		t = 0 # Keeps track of how many timesteps we've run so far this batch
 
 		# Keep simulating until we've run more than or equal to specified timesteps per batch
 		while t < self.timesteps_per_batch:
 			ep_rews = [] # rewards collected per episode
 
+			self.theta_good = 0
+
 			# Reset the environment. sNote that obs is short for observation. 
 			obs, _ = self.env.reset(seed=123)
 			done = False
+
+			obs_n = np.array([obs.item(), 0.0, 0.0, math.radians(self.target_angle)])
+
+			# Example usage:
+   			# self.ou_process(self, dt, theta, sigma, x0, T, beta)
+			# dt: Time step (1/50) || theta: Mean reversion rate || sigma: Noise strength || x0: Initial state
+			# T: Total simulation time || 
+			beta = (0.01) ** (1/25) # reach 0.01 after 25 steps
+			self.last_noise = self.ou_process(0.02, 1, self.sigma_x0_noise, self.sigma_x0_noise, 200, beta)
 
 			# Run an episode for a maximum of max_timesteps_per_episode timesteps
 			for ep_t in range(self.max_timesteps_per_episode):
@@ -286,28 +339,53 @@ class PPO:
 				t += 1 # Increment timesteps ran this batch so far
 
 				# Track observations in this batch
-				batch_obs.append(obs)
+				batch_obs.append(obs_n)
+				#batch_obs.append(obs)
 				#batch_obs = np.array(batch_obs)
 				#batch_obs = np.array([obs.numpy() for obs in batch_obs])
 
 				# Calculate action and make a step in the env. 
 				# Note that rew is short for reward.
 				# action, log_prob = self.get_action(obs)
-				action, log_prob = self.get_actionV2(obs)
+				# action, log_prob = self.get_actionV2(obs)
+				action, log_prob = self.get_actionV3(obs_n)
 
+				last_obs = obs.item()
+				last_vel = obs_n[1]
 
-				# obs, rew, done, _ = selv.env.step(action)					# Gym version
 				obs, rew, terminated, truncated, _ = self.env.step(action)		
 
-				#done = terminated or truncated or (np.absolute(action)>1)								# For Gymnasium version
-				done = terminated or truncated or (action>2.0) or (action<-0.5)								# For Gymnasium version
+				obs_n[0] = obs.item()
+				theta_dot = obs_n[0] - last_obs
+				obs_n[1] = theta_dot
+				theta_ddot = obs_n[1] - last_vel
+				obs_n[2] = theta_ddot
 
-				rew = self.calculate_reward(obs, action, math.radians(self.target_angle))
+				#done = terminated or truncated or (np.absolute(action)>1)								# For Gymnasium version
+				done = terminated or truncated or (action>1.5) or (action<-0.5)								# For Gymnasium version
+
+				#rew = self.calculate_reward(obs_n, action, math.radians(self.target_angle), ep_t)
+				rew = self.calculate_rewardV2(obs_n, action.item(), math.radians(self.target_angle))
 
 				# Track recent reward, action, and action log probability
 				ep_rews.append(rew)
 				batch_acts.append(action)
 				batch_log_probs.append(log_prob)
+
+				if self.noise_suppressor:
+					self.sigma_x0_noise = self.sigma_x0_noise * 0.8
+					if self.noise_threshold > 2:
+						self.sigma_x0_noise = 0.7629
+						self.noise_threshold -= 1
+					elif self.noise_threshold <= 2 and self.noise_threshold > 0:
+						self.sigma_x0_noise = 0.488256
+						self.noise_threshold -= 1
+					elif self.noise_threshold == 0:
+						self.noise_threshold -= 1
+						print(" Manejo del ruido - normal")
+					self.last_noise = self.ou_process(0.02, 1, self.sigma_x0_noise, self.sigma_x0_noise, 200, beta)
+					self.noise_suppressor = False
+					print(" Factor sigma / x0 >>", self.sigma_x0_noise)
 
 				# If the environment tells us the episode is terminated, break
 				if done:
@@ -372,15 +450,19 @@ class PPO:
 		"""
 		# Query the actor network for a mean action
 		mean = self.actor(obs)
-
+		beta = 0.99
+		
 		# Create a distribution with the mean action and std from the covariance matrix above.
 		# For more information on how this distribution works, check out Andrew Ng's lecture on it:
 		# https://www.youtube.com/watch?v=JjB58InuTqM
-		dist = MultivariateNormal(mean, self.cov_mat)
-
+		dist = MultivariateNormal(mean*0, self.cov_mat)
+		noise = dist.sample()
+		self.last_noise = self.last_noise * beta + (1.0 - beta)*noise
 		# Sample an action from the distribution
-		action = dist.sample()
-		# action = torch.clamp(dist.sample(), min=0)
+		# action = dist.sample()
+		#action = torch.clamp(dist.sample(), min=0, max=2)
+
+		action = torch.clamp(mean + self.last_noise, min=0, max=2)
 
 		# Calculate the log probability for that action
 		log_prob = dist.log_prob(action)
@@ -393,11 +475,46 @@ class PPO:
 
 		dist = Normal(mean, self.dev_std)
 
-		action = torch.clamp(dist.sample(), min=0)
+		action = torch.clamp(dist.sample(), min=0, max=1)
 
 		log_probs = dist.log_prob(action)
 
 		return action.detach().cpu().numpy(), log_probs.detach()
+	
+	def ou_process(self, dt, theta, sigma, x0, T, beta):
+		# Number of steps
+		# N = np.floor(T / dt)
+		N = int(T/dt)
+
+		# Initialize process output
+		x = np.zeros(N)
+		x[0] = x0
+
+		y = x
+		
+		k1 = np.exp(-theta*dt)
+		k2 = sigma*np.sqrt(dt)
+		
+		# Generate OU process
+		for i in range(1, N):
+			# Update state using Euler-Maruyama method
+			x[i] = x[i-1] * k1 + k2 * np.random.randn(1); # original
+			y[i] = beta * y[i-1] + (1-beta) * x[i]; # smoothed
+		return y
+
+	def get_actionV3(self, obs):
+
+		mean = self.actor(obs)
+		
+		dist = MultivariateNormal(mean, self.cov_mat)
+
+		noise = np.random.choice(self.last_noise)
+
+		action = torch.clamp(mean + noise, min=0, max=2)
+
+		log_prob = dist.log_prob(action)
+
+		return action.detach().cpu().numpy(), log_prob.detach()
 
 	def evaluateV2(self, batch_obs, batch_acts):
 		V = self.critic(batch_obs).squeeze()
@@ -504,14 +621,18 @@ class PPO:
 		t_so_far = self.logger['t_so_far']
 		i_so_far = self.logger['i_so_far']
 		avg_ep_lens = np.mean(self.logger['batch_lens'])
+
 		avg_ep_rews = np.mean([np.sum(ep_rews) for ep_rews in self.logger['batch_rews']])
+
 		#avg_actor_loss = np.mean([losses.float().mean() for losses in self.logger['actor_losses']])
 		avg_actor_loss = np.mean([losses.float().cpu().mean().numpy() for losses in self.logger['actor_losses']])
+		avg_critic_loss = np.mean([losses.float().cpu().mean().numpy() for losses in self.logger['critic_losses']])
 
 		# Round decimal places for more aesthetic logging messages
 		avg_ep_lens = str(round(avg_ep_lens, 2))
 		avg_ep_rews = str(round(avg_ep_rews, 2))
-		avg_actor_loss = str(round(avg_actor_loss, 5))
+		#avg_actor_loss = str(round(avg_actor_loss, 5))
+		#avg_critic_loss = str(round(avg_critic_loss, 5))
 
 		average_reward.append(float(avg_ep_rews))
 		average_loss.append(float(avg_actor_loss))
@@ -547,17 +668,15 @@ class PPO:
 		# 	display.display(plt.gcf())
 		# 	display.clear_output(wait=True)
 
-		wandb.log({"Average Reward": float(avg_ep_rews), "Average Loss": float(avg_actor_loss), "Iteration/Epoch took": float(delta_t), "Average Batch Length": float(avg_ep_lens)})
-		# # Print logging statements
-		# print(flush=True)
-		# print(f"-------------------- Iteration #{i_so_far} --------------------", flush=True)
-		# print(f"Average Episodic Length: {avg_ep_lens}", flush=True)
-		# print(f"Average Episodic Return: {avg_ep_rews}", flush=True)
-		# print(f"Average Loss: {avg_actor_loss}", flush=True)
-		# print(f"Timesteps So Far: {t_so_far}", flush=True)
-		# print(f"Iteration took: {delta_t} secs", flush=True)
-		# print(f"------------------------------------------------------", flush=True)
-		# print(flush=True)
+		wandb.log({"Average Reward": float(avg_ep_rews), 
+			 "Average Actor Loss": float(avg_actor_loss),
+			 "Average Critic Loss": float(avg_critic_loss), 
+			 "Iteration/Epoch took": float(delta_t), 
+			 "Average Batch Length": float(avg_ep_lens),
+			 "Last Noise": float(self.last_noise.mean())})
+		
+		# path_to_video = "video/ppo_pahm.mp4"
+		# wandb.log({"Video": wandb.Video(path_to_video, fps=4, format="gif")})
 
 		# Reset batch-specific logging data
 		self.logger['batch_lens'] = []

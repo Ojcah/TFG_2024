@@ -72,7 +72,6 @@ class FeedForwardNN(nn.Module):
 		activation1 = F.relu(self.layer1(obs))
 		activation2 = F.relu(self.layer2(activation1))
 		output = self.layer3(activation2)
-		# output = torch.clamp(self.layer3(activation2), min=0.0, max=2.0)
 
 		return output
 ## **************************************************************************************
@@ -141,17 +140,19 @@ wandb.config = {
 	'render_every_i': 10,
 	# *****************
 	'total_timesteps': 500_000,
-	'target_angle': 70,
+	'target_angle': 30,
 	'change_angle': False,
 	'change_dev_std': False
 }
 
 wandb.run.notes = f"""Timesteps: {wandb.config['total_timesteps']} || Target angle: {wandb.config['target_angle']} || Change angle: {wandb.config['change_angle']} || """ + args.description
 
-# env = LearnedPAHM(render_mode="human")
+#env = LearnedPAHM(render_mode="human")
 env = LearnedPAHM(render_mode="rgb_array")
 
 train(env=env, hyperparameters=wandb.config, actor_model='', critic_model='')
+
+
 
 wandb.finish()
 env.close()
