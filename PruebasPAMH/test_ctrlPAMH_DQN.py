@@ -6,13 +6,13 @@ import numpy as np
 import sys
 
 import torch
-import PPO.test_ppo_pahm as testModel
+import DQN.test_dqn_discrete_pahm as testModel
 from torch import nn
 import torch.nn.functional as F
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--actor_name', type=str, default='./actor-critic/ppo_actor.pth', dest='actor_name')
+parser.add_argument('--actor_name', type=str, default='./actor-critic/dqn_actor.pth', dest='actor_name')
 parser.add_argument('--target_angle', type=int, default=60, dest='target_angle')
 
 args = parser.parse_args()
@@ -28,45 +28,28 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 	define our actor and critic networks in PPO.
 """
 class FeedForwardNN(nn.Module):
+    """
+		A standard in_dim-128-128-out_dim Feed Forward Neural Network.
 	"""
-		A standard in_dim-64-64-out_dim Feed Forward Neural Network.
-	"""
-	def __init__(self, in_dim, out_dim):
-		"""
-			Initialize the network and set up the layers.
-
-			Parameters:
-				in_dim - input dimensions as an int
-				out_dim - output dimensions as an int
-
-			Return:
-				None
-		"""
-		super(FeedForwardNN, self).__init__()
-
-		self.layer1 = nn.Linear(in_dim, 64)
-		self.layer2 = nn.Linear(64, 64)
-		self.layer3 = nn.Linear(64, out_dim)
-
-	def forward(self, obs):
-		"""
-			Runs a forward pass on the neural network.
-
-			Parameters:
-				obs - observation to pass as input
-
-			Return:
-				output - the output of our forward pass
-		"""
-		# Convert observation to tensor if it's a numpy array
-		if isinstance(obs, np.ndarray):
-			obs = torch.tensor(obs, dtype=torch.float, device=device)
-
-		activation1 = F.relu(self.layer1(obs))
-		activation2 = F.relu(self.layer2(activation1))
-		output = self.layer3(activation2)
-
-		return output
+    def __init__(self, n_observations, n_actions):
+        super(FeedForwardNN, self).__init__()
+        self.layer1 = nn.Linear(n_observations, 128)
+        self.activation1 = nn.Sigmoid()
+        self.layer2 = nn.Linear(128, 128)
+        self.activation2 = nn.Sigmoid()
+        self.output_layer = nn.Linear(128, n_actions)
+    def forward(self, x):
+        x = self.layer1(x)
+        x = self.activation1(x)
+        x = self.layer2(x)
+        x = self.activation2(x)
+        # x = F.sigmoid(self.layer1(x))
+        # x = F.sigmoid(self.layer2(x))
+        # x = F.relu(self.layer1(x))
+        # x = F.relu(self.layer2(x))
+        # return self.output_layer(x)
+        return torch.round(9 * self.output_layer(x))
+    
 ## **************************************************************************************
 ## **************************************************************************************
 def test(env, target_angle, actor_model):
@@ -89,7 +72,8 @@ def test(env, target_angle, actor_model):
 
 	# Extract out dimensions of observation and action spaces
 	obs_dim = env.observation_space.shape[0] + 3
-	act_dim = env.action_space.shape[0]
+	act_dim = 10
+ 
 
 	# Build our policy the same way we build our actor model in PPO
 	policy = FeedForwardNN(obs_dim, act_dim).to(device)
