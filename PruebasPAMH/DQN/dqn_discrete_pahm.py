@@ -3,6 +3,7 @@
 import gymnasium as gym
 import math
 import random
+import time
 import wandb
 from collections import namedtuple, deque
 from itertools import count
@@ -16,7 +17,7 @@ import numpy as np
 
 # if GPU is to be used
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+#device = torch.device("cpu")
 
 
 Transition = namedtuple('Transition',
@@ -57,8 +58,9 @@ class DQN:
 
         # Extract environment information
         self.env = env
-        self.obs_dim = env.observation_space.shape[0]
-        self.act_dim = env.action_space.shape[0]
+        self.obs_dim = env.observation_space.shape[0] + 3
+        #self.act_dim = env.action_space.shape[0]
+        self.act_dim = self.num_intervals
 
 		 # Initialize actor and critic networks
         self.policy_net = policy_class(self.obs_dim, self.act_dim).to(device)
@@ -69,37 +71,86 @@ class DQN:
         self.memory_obj = ReplayMemory(10000)
 
         self.steps_done = 0
-        self.avg_rewards = []
-        self.avg_loss = []
+        self.theta_good = 0
+
+        # This logger will help us with printing out summaries of each iteration
+        self.logger = {
+			'delta_t': time.time_ns(),
+			'rews': [],       # episodic rewards
+            'noise': [],
+			'losses': [],     # losses of actor network in current iteration
+		}
 
 
     def calculate_reward(self, observ, pwm, target_angle):
         """
             AAAAAA
         """
-        
-        theta = observ.item()
-        theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
-        theta_error = np.abs(theta_n - target_angle)
+        theta = observ[0]
+        theta_dot = observ[1]
 		
-        if pwm < 0.0 or pwm > 1.0:
-            costs = theta_error**2 + (10**(np.absolute(pwm - 1.0)))
+        theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
+
+        theta_error = np.abs(theta_n - target_angle)
+		# theta_error_cost = theta_error ** 2
+        theta_error_cost = 5 * theta_error
+        
+        velocity_cost = 0.1 * (theta_dot ** 2)
+
+        if pwm < 0.0 or pwm > 0.5:
+            costs = theta_error_cost + velocity_cost + (10**(np.absolute(pwm - 0.5)))
         else:
-            costs = theta_error**2
-        if theta_error <= 0.1745: # ~ 10°
-            reward_n = -costs + math.exp(-(6*theta_error)**2)
+            costs = theta_error_cost + velocity_cost
+
+        if theta_error <= 0.0873: # 0.1745 ~ 10° # 0.0873 ~ 5°
+			#reward_n = -costs + math.exp(-(6*theta_error)**2)
+            reward_n = -costs + 1.8*math.exp(-(10*theta_error)**2)
         else:
-            reward_n = -costs
-		# reward_n = -costs
-        return torch.tensor(np.array([reward_n]), device=device)
+            reward_n = -costs 
+
+        return torch.tensor([reward_n], device=device)
+    
+    def calculate_rewardV2(self, observ, pwm, target_angle): # Todos los valores estan en radianes
+        theta = observ[0]
+        theta_dot = observ[1]
+        
+        theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
+        
+        theta_error = np.abs(theta_n - target_angle)
+        
+        theta_error_cost = (theta_error ** 2)
+        
+        velocity_cost = (theta_dot ** 2)
+        
+        if theta_error <= 0.0873: # 0.1745 ~ 10° # 0.0873 ~ 5°
+            if self.theta_good < 0.0:
+                self.theta_good = 0.0
+            else:
+                self.theta_good += 1.0
+        else:
+            if self.theta_good > 0.0:
+                self.theta_good = 0.0
+            else:
+                self.theta_good -= 1.0
+
+        if pwm < 0.0 or pwm > 0.5:
+            extra_cost = 10 ** np.absolute(pwm - 0.5)
+        else:
+            extra_cost = 0.0
+            
+        reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost]) + self.theta_good
+        
+        return torch.tensor([reward_n.item()], device=device)
+    
 
     def discretize_action(self, action):
         """
             AAAAAAA
         """
         # Calcula el índice de la acción discreta
-        discrete_action = int(action * self.num_intervals)
-        return np.clip(discrete_action, 0, self.num_intervals-1)
+        discrete_action = int(action.item() * self.num_intervals)
+        #return np.clip(discrete_action, 0, self.num_intervals-1)
+        return torch.clamp(torch.tensor(discrete_action, device=device), min=0, max=self.num_intervals-1)
     
     def undiscretize_action(self, discrete_action):
         """
@@ -125,7 +176,6 @@ class DQN:
         u_option = 0
 
         ep_rews = []
-        ep_loss = []
 
         for i_episode in range(self.num_episodes):
 
@@ -141,42 +191,62 @@ class DQN:
             ## ************************************************************************************************
 
             # Initialize the environment and get its state
-            state, info = self.env.reset()
-            state = torch.tensor(state, dtype=torch.float32, device=device).unsqueeze(0)
+            last_obs = 0.0
+            theta_dot = 0.0
+
+            last_vel = 0.0
+            theta_ddot = 0.0
+
+            self.theta_good = 0.0
+
+            obs, info = self.env.reset()
+            obs_n = np.array([obs.item(), 0.0, 0.0, math.radians(self.target_angle)])
+            obs_n = torch.tensor(obs_n, dtype=torch.float32, device=device).unsqueeze(0)
 
             for t in count():
-                action = self.select_action(state)
+                action = self.select_action(obs_n)
 
                 action_step = self.undiscretize_action(action.cpu().detach().numpy())
 
-                observation, reward, terminated, truncated, _ = self.env.step(action_step)
+                last_obs = obs.item()
+                last_vel = obs_n[0, 1].item()
+
+                obs, reward, terminated, truncated, _ = self.env.step(action_step[0])
+
+                obs_n[0, 0] = obs.item()
+                theta_dot = obs.item() - last_obs
+                obs_n[0, 1] = theta_dot
+                theta_ddot = theta_dot - last_vel
+                obs_n[0, 2] = theta_ddot
 
                 # ///////////////////////////////////////////////////////////
                 #reward = torch.tensor([reward], device=device) # Pendulum original target: theta=0°
-                reward = self.calculate_reward(observation, action.item(), math.radians(self.target_angle))
+                #reward = self.calculate_reward(obs_n[0].cpu().detach().numpy(), action.item(), math.radians(self.target_angle))
+                reward = self.calculate_rewardV2(obs_n[0].cpu().detach().numpy(), action.item(), math.radians(self.target_angle))
 
                 # ///////////////////////////////////////////////////////////
 
-                done = terminated or truncated
+                done = terminated or truncated or (t==200)
                 #done = terminated or truncated or (np.absolute(action.item())>2)
 
-               
-                ep_rews.append(reward)
+                ep_rews.append(reward[0].item())
+                reward = torch.tensor([reward], device=device)
                 ## *********************************************************************************
 
                 if terminated:
                     next_state = None
                 else:
-                    next_state = torch.tensor(observation, dtype=torch.float32, device=device).unsqueeze(0)
+                    #next_state = torch.tensor(obs_n, dtype=torch.float32, device=device)
+                    next_state = obs_n.clone().detach()
 
                 # Store the transition in memory
-                self.memory_obj.push(state, action, next_state, reward)
+                self.memory_obj.push(obs_n, action, next_state, reward)
 
                 # Move to the next state
-                state = next_state
+                obs_n = next_state
 
                 # Perform one step of the optimization (on the policy network)
-                self.optimize_model(ep_loss)
+                self.optimize_model()
                 
                 # Soft update of the target network's weights
                 # θ′ ← τ θ + (1 −τ )θ′
@@ -187,25 +257,21 @@ class DQN:
                 self.target_net.load_state_dict(target_net_state_dict)
 
                 if done:
-                    self.avg_rewards = self.avg_rewards + ep_rews
-                    self.avg_loss = self.avg_loss + ep_loss
+                    self.logger['rews'].append(ep_rews)
                     ep_rews = []
-                    ep_loss = []
-                    self._log_summary(i_episode, math.degrees(observation.item()))
                     break
-
+            
+            self._log_summary(i_episode)
             ## ***********************************************SAVE CHECKPOINTS*********************************************
-            if epoch == epoch_save_checkspoints:
+            if (epoch == epoch_save_checkspoints) or ((i_episode+1) == self.num_episodes):
                 epoch = 1
                 # Guardar el modelo
-                torch.save(self.policy_net.state_dict(), f"actor-critic/Pendulum_{i_episode}eps_DQN_discrete.pth")
+                torch.save(self.policy_net.state_dict(), f"actor-critic/dqn_actor.pth")
             else:
                 epoch += 1
 
         
-
-
-    def optimize_model(self, ep_loss):
+    def optimize_model(self):
         if len(self.memory_obj) < self.batch_size:
             return
         transitions = self.memory_obj.sample(self.batch_size)
@@ -216,57 +282,36 @@ class DQN:
 
         # Compute a mask of non-final states and concatenate the batch elements
         # (a final state would've been the one after which simulation ended)
-        # non_final_mask = torch.tensor(tuple(map(lambda s: s is not None, batch.next_state)), device=device, dtype=torch.bool)
-        # non_final_next_states = torch.cat([s for s in batch.next_state if s is not None])
-        
-        #////////////////////////////
-        # Filter out terminated experiences before creating the mask
-        non_terminal_states = [state for state in batch.next_state if state is not None]
-
-        # Create the mask using the filtered states
-        non_final_mask = torch.tensor(tuple(map(lambda s: True, non_terminal_states)), device=device, dtype=torch.bool)
-
-        # Rest of your code using non_final_mask and non_terminal_states...
-        non_final_next_states = torch.cat(non_terminal_states)
-
-        #////////////////////////////
-
-        state_batch = torch.cat([state for state in batch.state if state is not None])
-        action_batch = torch.cat([action for action, state in zip(batch.action, batch.state) if state is not None]).unsqueeze(1)
-        reward_batch = torch.cat([reward for reward, state in zip(batch.reward, batch.state) if state is not None])
-        
-        
-        # state_batch = torch.cat(batch.state)
-        # action_batch = torch.cat(batch.action).unsqueeze(1)
-        # reward_batch = torch.cat(batch.reward)
-        # Use non_terminal_states (filtered list from previous step)
+        non_final_mask = torch.tensor(tuple(map(lambda s: s is not None, batch.next_state)), device=device, dtype=torch.bool)
+        non_final_next_states = torch.cat([s for s in batch.next_state if s is not None])
         
 
-
-        #///////////////////////////
-
+        state_batch = torch.cat(batch.state)
+        #action_batch = torch.cat(batch.action).unsqueeze(1)
+        action_batch = torch.cat(batch.action)
+        reward_batch = torch.cat(batch.reward)
+     
         # Compute Q(s_t, a) - the model computes Q(s_t), then we select the
         # columns of actions taken. These are the actions which would've been taken
         # for each batch state according to policy_net
         
-        state_action_values = self.policy_net(state_batch).gather(1,action_batch)
+        state_action_values = self.policy_net(state_batch).gather(1, action_batch)
 
         # Compute V(s_{t+1}) for all next states.
         # Expected values of actions for non_final_next_states are computed based
         # on the "older" target_net; selecting their best reward with max(1).values
         # This is merged based on the mask, such that we'll have either the expected
         # state value or 0 in case the state was final.
-        # next_state_values = torch.zeros(self.batch_size, dtype=torch.float32, device=device)
-
-        # Use the length of non_terminal_states for the size
-        next_state_values = torch.zeros(len(non_terminal_states), dtype=torch.float32, device=device)
+        next_state_values = torch.zeros(self.batch_size, dtype=torch.float32, device=device)
 
 
         with torch.no_grad():
-            actions_target = self.target_net(non_final_next_states)
-            actions_index = actions_target.argmax(dim=1)
-            print(non_final_mask.shape, non_final_next_states.shape)
-            next_state_values[non_final_mask] = actions_target[non_final_mask, actions_index]  # ERROR ACA
+            next_state_values[non_final_mask] = self.target_net(non_final_next_states).max(1).values
+
+
+        # next_state_batch = torch.cat(batch.next_state)
+        # with torch.no_grad():
+        #     next_state_values = self.target_net(next_state_batch).max(1)[0].detach()
 
 
         # Compute the expected Q values
@@ -275,11 +320,13 @@ class DQN:
         # Compute Huber loss
         criterion = nn.SmoothL1Loss()
         loss = criterion(state_action_values, expected_state_action_values.unsqueeze(1))
-        print(loss)
-        ep_loss.append(loss.item())
         # Optimize the model
         self.optimizer.zero_grad()
         loss.backward()
+
+        # Log actor loss
+        self.logger['losses'].append(loss.detach())
+
         # In-place gradient clipping
         torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 100)
         self.optimizer.step()
@@ -298,20 +345,25 @@ class DQN:
         self.steps_done += 1
         # *************************************************************************
         with torch.no_grad():
+            #value_discrete = self.policy_net(state).item()
             value_discrete = self.policy_net(state).max(1).indices.view(1, 1)
         if sample > eps_threshold:
-            newvalue = value_discrete
+            newvalue = torch.clamp(value_discrete, min=0, max=self.num_intervals-1)
+            self.logger['noise'].append(0.0)
+
         else:
-            #noise = np.random.normal(0, 0.3, size=None)
-            #value_noise = undiscretize_action(value_discrete, n_actions) + noise
-            #newvalue = discretize_action(value_noise, n_actions)
-            newvalue = self.discretize_action(self.env.action_space.sample().item())
+            # noise = np.random.normal(0, 0.3, size=None)
+            # self.logger['noise'].append(noise)
+            # value_noise = self.undiscretize_action(value_discrete) + noise
+            # newvalue = self.discretize_action(value_noise)
+            newvalue = self.discretize_action(self.env.action_space.sample())
+            self.logger['noise'].append(1.0)
         
         # *************************************************************************
         if newvalue == 0:
-            return torch.tensor([0], dtype=torch.long, device=device)
+            return torch.tensor([[0]], dtype=torch.long, device=device)
         else:
-            return torch.tensor([newvalue], dtype=torch.long, device=device)
+            return torch.tensor([[newvalue]], dtype=torch.long, device=device)
  
 
     def _init_hyperparameters(self, hyperparameters):
@@ -353,7 +405,7 @@ class DQN:
             torch.manual_seed(self.seed)
             print(f"Successfully set seed to {self.seed}")
 
-    def _log_summary(self, i_episode, pole_angle):
+    def _log_summary(self, i_episode):
         """
 			Print to stdout what we've logged so far in the most recent batch.
 
@@ -365,16 +417,37 @@ class DQN:
 		"""
         print(f" >> Episodio #{i_episode} / {self.num_episodes} >> Target angle: {self.target_angle}")
 
-        rewards_t = torch.tensor(self.avg_rewards, dtype=torch.float)
-        loss_t = torch.tensor(self.avg_loss, dtype=torch.float)
-        if len(rewards_t) >= 100:
-            rew_means = rewards_t.unfold(0, 100, 1).mean(1).view(-1)
-            rew_means = torch.cat((torch.zeros(99), rew_means))
-            # loss_means = loss_t.unfold(0, 100, 1).mean(1).view(-1)
-            # loss_means = torch.cat((torch.zeros(99), loss_means))
+        delta_t = self.logger['delta_t']
+        self.logger['delta_t'] = time.time_ns()
+        delta_t = (self.logger['delta_t'] - delta_t) / 1e9
+		
+
+        rewards = torch.tensor(self.logger['rews'], dtype=torch.float)
+        losses = torch.tensor(self.logger['losses'], dtype=torch.float)
+        noises = torch.tensor(self.logger['noise'], dtype=torch.float)
+
+        rew_means = torch.mean(rewards, dtype=float)
+        loss_means = torch.mean(losses, dtype=float)
+        noise_means = torch.mean(noises, dtype=float)
+
+
+
+        # rew_means = avg_rewards.unfold(0, 100, 1).mean(1).view(-1)
+        # rew_means = torch.cat((torch.zeros(99), rew_means))
+        # loss_means = avg_loss.unfold(0, 100, 1).mean(1).view(-1)
+        # loss_means = torch.cat((torch.zeros(99), loss_means))
+        # noise_means = avg_noise.unfold(0, 100, 1).mean(1).view(-1)
+        # noise_means = torch.cat((torch.zeros(99), noise_means))
         
-            # wandb.log({"Average Reward": rew_means.numpy(), "Average Loss": loss_means.numpy(), "Pole Angle": pole_angle})
-            wandb.log({"Average Reward": rew_means.numpy(), "Pole Angle": pole_angle})
+        # wandb.log({"Average Reward": rew_means.numpy(), "Average Loss": loss_means.numpy(), "Pole Angle": pole_angle})
+        wandb.log({"Average Reward": rew_means.item(),
+                       "Average Loss":  loss_means.item(),
+                       "Average Noise":  noise_means.item(),
+                       "Episode length": delta_t})
+            
+        self.logger['rews'] = []
+        self.logger['losses'] = []
+        self.logger['noise'] = []
 
         
 		

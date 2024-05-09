@@ -26,37 +26,6 @@ parser.add_argument('--description', type=str, default='', dest='description')
 
 args = parser.parse_args()
 
-
-wandb.login(key="0005da299924ab3d8473fa6a5f120b46a82a6a7a")
-
-
-wandb.init(project = "PAMH_DQN", 
-           name = args.run_name,
-           #resume = 'Allow',
-		   #monitor_gym=True,
-           reinit=True,
-           id = args.run_id,
-           notes="""Timesteps: ### || Target angle: ### || Change angle: ###
-		   || """
-           )
-
-wandb.config = {
-    'batch_size': 128,  # number of transitions sampled from the replay buffer
-	'gamma': 0.99,      # discount factor as mentioned in the previous section
-    'eps_start': 0.9,   # starting value of epsilon
-    'eps_end': 0.05,    # final value of epsilon
-    'eps_decay': 1000,  # controls the rate of exponential decay of epsilon, higher means a slower decay
-    'tau': 0.005,       # update rate of the target network
-    'lr': 1e-4,         # learning rate of the ``AdamW`` optimizer
-	# *****************
-	'num_episodes': 10,
-	'target_angle': 45,
-	'change_angle': False,
-    'num_intervals': 10
-}
-wandb.run.notes = f"""Timesteps: {wandb.config['num_episodes']} || Target angle: {wandb.config['target_angle']} || Change angle: {wandb.config['change_angle']} || """ + args.description
-
-
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 class FeedForwardNN(nn.Module):
@@ -66,20 +35,21 @@ class FeedForwardNN(nn.Module):
     def __init__(self, n_observations, n_actions):
         super(FeedForwardNN, self).__init__()
         self.layer1 = nn.Linear(n_observations, 128)
-        self.active1 = nn.PReLU(128, random.uniform(0.1, 0.5))    ##
+        self.activation1 = nn.Sigmoid()
         self.layer2 = nn.Linear(128, 128)
-        self.active2 = nn.PReLU(128, random.uniform(0.1, 0.5))    ##
+        self.activation2 = nn.Sigmoid()
         self.output_layer = nn.Linear(128, n_actions)
     def forward(self, x):
-        #x = F.prelu(self.norm1(self.layer1(x)), 0.5*torch.rand(1, dtype=torch.float32, device=device))
-        #x = F.prelu(self.norm2(self.layer2(x)), 0.5*torch.rand(1, dtype=torch.float32, device=device))
-        #x = F.relu(self.layer1(x))
-        #x = F.relu(self.layer2(x))
         x = self.layer1(x)
-        x = self.active1(x)
+        x = self.activation1(x)
         x = self.layer2(x)
-        x = self.active2(x)
-        return self.output_layer(x)
+        x = self.activation2(x)
+        # x = F.sigmoid(self.layer1(x))
+        # x = F.sigmoid(self.layer2(x))
+        # x = F.relu(self.layer1(x))
+        # x = F.relu(self.layer2(x))
+        # return self.output_layer(x)
+        return torch.round(9 * self.output_layer(x))
     
 
 def train(env, hyperparameters, policy_model, target_model):
@@ -112,6 +82,33 @@ def train(env, hyperparameters, policy_model, target_model):
 ## **************************************************************************************
 ## **************************************************************************************
 
+wandb.login(key="0005da299924ab3d8473fa6a5f120b46a82a6a7a")
+
+wandb.init(project = "PAMH_DQN", 
+           name = args.run_name,
+           #resume = 'Allow',
+		   #monitor_gym=True,
+           reinit=True,
+           id = args.run_id,
+           notes="""Timesteps: ### || Target angle: ### || Change angle: ###
+		   || """
+           )
+
+wandb.config = {
+    'batch_size': 128,  # number of transitions sampled from the replay buffer
+	'gamma': 0.99,      # discount factor as mentioned in the previous section
+    'eps_start': 0.9,   # starting value of epsilon
+    'eps_end': 0.05,    # final value of epsilon
+    'eps_decay': 1000,  # controls the rate of exponential decay of epsilon, higher means a slower decay
+    'tau': 0.005,       # update rate of the target network
+    'lr': 1e-4,         # learning rate of the ``AdamW`` optimizer
+	# *****************
+	'num_episodes': 600,
+	'target_angle': 30,
+	'change_angle': False,
+    'num_intervals': 10         # Si se cambia, se debe cambiar en la salida de la ANN
+}
+wandb.run.notes = f"""Timesteps: {wandb.config['num_episodes']} || Target angle: {wandb.config['target_angle']} || Change angle: {wandb.config['change_angle']} || """ + args.description
 
 #env = LearnedPAHM(render_mode="human")
 env = LearnedPAHM(render_mode="rgb_array")
