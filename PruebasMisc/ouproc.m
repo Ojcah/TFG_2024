@@ -1,8 +1,13 @@
 ## Ornstein-Uhlenbeck Process (OU Process)
 
 1;
+function prob = ou_prob_density(x, t, theta, sigma, x0)
+  mu = x0 * exp(-theta * t);
+  var = (sigma^2 / (2 * theta)) * (1 - exp(-2 * theta * t));
+  prob = (1 / sqrt(2 * pi * var)) * exp(-(x - mu)^2 / (2 * var));
+end
 
-function [x,y] = ou_process(dt, theta, sigma, x0, T, beta)
+function [x,y,p] = ou_process(dt, theta, sigma, x0, T, beta)
   % This function generates an Ornstein-Uhlenbeck process.
   % x is the original result of the OU process
   % y is a smoothed version
@@ -33,6 +38,11 @@ function [x,y] = ou_process(dt, theta, sigma, x0, T, beta)
     x(i) = x(i-1) * k1 + k2 * randn(1); # original
     y(i) = beta*y(i-1) + (1-beta)*x(i); # smoothed
   end
+
+  % Calculate probability density for each time point
+  i_values = 1:N;
+  p = arrayfun(@(i) log(ou_prob_density(x(i), (i-1)*dt, theta, sigma, x0)), i_values);
+    
 end
 
 % Example usage:
@@ -43,13 +53,14 @@ x0 = 0.5;   % Initial state
 T = 10;      % Total simulation time
 beta = power(0.01,1/25); % reach 0.01 after 25 steps
 
-% Generate OU process data
-[orig,smoothed] = ou_process(dt, theta, sigma, x0, T,beta);
+%% Generate OU process data
+[orig,smoothed,p] = ou_process(dt, theta, sigma, x0, T,beta);
 
-                                % Plot the generated data
+%% Plot the generated data
 t=linspace(0,T,length(orig));
 hold off;plot(t,orig,";OU original;","linewidth",2);
 hold on;plot(t,smoothed,";Filtered;","linewidth",2);
+plot(t, p,";Probability;","linewidth", 2);
 
 xlabel('Time');
 ylabel('Process Value');
