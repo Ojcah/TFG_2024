@@ -12,8 +12,9 @@ def discretize_action(action, num_intervals):
         AAAAAAA
     """
     # Calcula el índice de la acción discreta
-    discrete_action = int(action.item() * num_intervals)
-    #return np.clip(discrete_action, 0, self.num_intervals-1)
+    #discrete_action = int(action.item() * num_intervals)
+    #discrete_action = int(action.item() * 18)
+    discrete_action = int(action.item() * 36)
     return torch.clamp(torch.tensor(discrete_action, device=device), min=0, max=num_intervals-1)
     
 def undiscretize_action(discrete_action, num_intervals):
@@ -21,39 +22,41 @@ def undiscretize_action(discrete_action, num_intervals):
         BBBBBBB
     """
     # Calcula el valor normalizado dentro del rango [0, 1]
-    continuous_action = discrete_action / num_intervals
+    #continuous_action = discrete_action / 18
+    continuous_action = discrete_action / 36
     return continuous_action
 
 def calculate_reward(observ, pwm, target_angle, theta_good): # Todos los valores estan en radianes
-		theta = observ[0]
-		theta_dot = observ[1]
-		
-		theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
+        theta = observ[0]
+        theta_dot = observ[1]
+        
+        theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
+        
+        theta_error = np.abs(theta_n - target_angle)
+        
+        theta_error_cost = (theta_error ** 2)
+        
+        velocity_cost = 100 * (theta_dot ** 2)
+        
+        if theta_error <= 0.1745: # 0.1745 ~ 10° # 0.0873 ~ 5°
+            if theta_good < 0.0:
+                theta_good = 0.0
+            else:
+                theta_good += 0.2
+        else:
+            if theta_good > 0.0:
+                theta_good = 0.0
+            else:
+                theta_good -= 0.2
 
-		theta_error = np.abs(theta_n - target_angle)
-
-		theta_error_cost = (theta_error ** 2)
-		velocity_cost = (theta_dot ** 2)
-
-		if theta_error <= 0.1745: # 0.1745 ~ 10° # 0.0873 ~ 5°
-			if theta_good < 0.0:
-				theta_good = 0.0
-			else:
-				theta_good += 1.0
-		else:
-			if theta_good > 0.0:
-				theta_good = 0.0
-			else:
-				theta_good -= 1.0
-
-		if pwm < 0.0 or pwm > 0.5:
-			extra_cost = 10 ** np.absolute(pwm - 0.5)
-		else:
-			extra_cost = 0.0
-  
-		reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost]) + theta_good
-
-		return torch.tensor([reward_n.item()], device=device)
+        if pwm < 0.0 or pwm > 0.25:
+            extra_cost = 10 ** np.absolute(pwm - 0.25)
+        else:
+            extra_cost = 0.0
+            
+        reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost]) + theta_good
+        
+        return torch.tensor([reward_n.item()], device=device)
 
 def _log_summary(ep_rew, ep_num, target_angle):
 

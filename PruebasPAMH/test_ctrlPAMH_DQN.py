@@ -48,7 +48,8 @@ class FeedForwardNN(nn.Module):
         # x = F.relu(self.layer1(x))
         # x = F.relu(self.layer2(x))
         # return self.output_layer(x)
-        return torch.round(9 * self.output_layer(x))
+        #return torch.round(18 * self.output_layer(x))
+        return torch.round(36 * self.output_layer(x))
     
 ## **************************************************************************************
 ## **************************************************************************************

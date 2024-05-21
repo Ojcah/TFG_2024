@@ -73,12 +73,19 @@ class DQN:
         self.steps_done = 0
         self.theta_good = 0
 
+
         # This logger will help us with printing out summaries of each iteration
         self.logger = {
 			'delta_t': time.time_ns(),
 			'rews': [],       # episodic rewards
             'noise': [],
 			'losses': [],     # losses of actor network in current iteration
+            'pwm_signal': [],     # losses of actor network in current iteration
+
+            'theta_error_cost': [],
+			'velocity_cost': [],
+			'extra_cost': [],
+			'theta_good': [],
 		}
 
 
@@ -120,23 +127,28 @@ class DQN:
         
         theta_error_cost = (theta_error ** 2)
         
-        velocity_cost = (theta_dot ** 2)
+        velocity_cost = 100 * (theta_dot ** 2)
         
-        if theta_error <= 0.0873: # 0.1745 ~ 10° # 0.0873 ~ 5°
+        if theta_error <= 0.1745: # 0.1745 ~ 10° # 0.0873 ~ 5°
             if self.theta_good < 0.0:
                 self.theta_good = 0.0
             else:
-                self.theta_good += 1.0
+                self.theta_good += 0.2
         else:
             if self.theta_good > 0.0:
                 self.theta_good = 0.0
             else:
-                self.theta_good -= 1.0
+                self.theta_good -= 0.2
 
-        if pwm < 0.0 or pwm > 0.5:
-            extra_cost = 10 ** np.absolute(pwm - 0.5)
+        if pwm < 0.0 or pwm > 0.25:
+            extra_cost = 10 ** np.absolute(pwm - 0.25)
         else:
             extra_cost = 0.0
+
+        self.logger['theta_error_cost'].append(-theta_error_cost)
+        self.logger['velocity_cost'].append(-velocity_cost)
+        self.logger['extra_cost'].append(-extra_cost)
+        self.logger['theta_good'].append(self.theta_good)
             
         reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost]) + self.theta_good
         
@@ -148,16 +160,20 @@ class DQN:
             AAAAAAA
         """
         # Calcula el índice de la acción discreta
-        discrete_action = int(action.item() * self.num_intervals)
-        #return np.clip(discrete_action, 0, self.num_intervals-1)
-        return torch.clamp(torch.tensor(discrete_action, device=device), min=0, max=self.num_intervals-1)
+        #discrete_action = int(action.item() * self.num_intervals)
+        #discrete_action = int(action.item() * 18)
+        discrete_action = int(action.item() * 36)
+        #return torch.clamp(torch.tensor(discrete_action, device=device), min=0, max=self.num_intervals-1)
+        return torch.clamp(torch.tensor(discrete_action, device=device), min=0, max=9)
     
     def undiscretize_action(self, discrete_action):
         """
             BBBBBBB
         """
         # Calcula el valor normalizado dentro del rango [0, 1]
-        continuous_action = discrete_action / self.num_intervals
+        #continuous_action = discrete_action / self.num_intervals
+        #continuous_action = discrete_action / 18
+        continuous_action = discrete_action / 36
         return continuous_action
 
     def learn(self):
@@ -166,8 +182,7 @@ class DQN:
 			Return:
 				None
 		"""
-
-        targets_options = np.array([self.target_angle, 60, 90, 30, 60])
+        targets_options = np.array([self.target_angle, 60, 90, 60, 30, 20, 45, 70])
 
         epoch = 0
         epoch_save_checkspoints = self.num_episodes//5
@@ -207,6 +222,8 @@ class DQN:
                 action = self.select_action(obs_n)
 
                 action_step = self.undiscretize_action(action.cpu().detach().numpy())
+
+                self.logger['pwm_signal'].append(action_step[0])
 
                 last_obs = obs.item()
                 last_vel = obs_n[0, 1].item()
@@ -348,16 +365,23 @@ class DQN:
             #value_discrete = self.policy_net(state).item()
             value_discrete = self.policy_net(state).max(1).indices.view(1, 1)
         if sample > eps_threshold:
-            newvalue = torch.clamp(value_discrete, min=0, max=self.num_intervals-1)
+            #newvalue = torch.clamp(value_discrete, min=0, max=self.num_intervals-1)
+            newvalue = torch.clamp(value_discrete, min=0, max=9)
             self.logger['noise'].append(0.0)
 
         else:
-            # noise = np.random.normal(0, 0.3, size=None)
+            # noise = np.random.normal(0, 0.15, size=None)
             # self.logger['noise'].append(noise)
             # value_noise = self.undiscretize_action(value_discrete) + noise
             # newvalue = self.discretize_action(value_noise)
-            newvalue = self.discretize_action(self.env.action_space.sample())
-            self.logger['noise'].append(1.0)
+
+            noise = random.uniform(0.0, 1.0)
+            noise_val = self.undiscretize_action(value_discrete) - noise
+            self.logger['noise'].append(noise_val)
+            newvalue = self.discretize_action(torch.tensor([noise], dtype=float, device=device))
+
+            # newvalue = self.discretize_action(self.env.action_space.sample())
+            # self.logger['noise'].append(1.0)
         
         # *************************************************************************
         if newvalue == 0:
@@ -430,7 +454,12 @@ class DQN:
         loss_means = torch.mean(losses, dtype=float)
         noise_means = torch.mean(noises, dtype=float)
 
+        avg_pwm_signal = np.mean(self.logger['pwm_signal'])
 
+        avg_theta_error_cost = np.mean(self.logger['theta_error_cost'])
+        avg_velocity_cost = np.mean(self.logger['velocity_cost'])
+        avg_extra_cost = np.mean(self.logger['extra_cost'])
+        avg_theta_good = np.mean(self.logger['theta_good'])
 
         # rew_means = avg_rewards.unfold(0, 100, 1).mean(1).view(-1)
         # rew_means = torch.cat((torch.zeros(99), rew_means))
@@ -443,11 +472,24 @@ class DQN:
         wandb.log({"Average Reward": rew_means.item(),
                        "Average Loss":  loss_means.item(),
                        "Average Noise":  noise_means.item(),
-                       "Episode length": delta_t})
+                       "Episode length": delta_t,
+                       "Average PWM": avg_pwm_signal,
+                       
+                       "avg_theta_error_cost": avg_theta_error_cost,
+                       "avg_velocity_cost": avg_velocity_cost,
+                       "avg_extra_cost": avg_extra_cost,
+                       "avg_theta_good": avg_theta_good,
+                       })
             
         self.logger['rews'] = []
         self.logger['losses'] = []
         self.logger['noise'] = []
+        self.logger['pwm_signal'] = []
+
+        self.logger['theta_error_cost'] = []
+        self.logger['velocity_cost'] = []
+        self.logger['extra_cost'] = []
+        self.logger['theta_good'] = []
 
         
 		

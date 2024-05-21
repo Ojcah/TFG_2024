@@ -13,14 +13,19 @@ from datetime import datetime
 from PAHM.learned_pahm import LearnedPAHM
 from DQN.dqn_discrete_pahm import DQN
 
+try:
+  from google.colab import drive
+  plataform = "_google"
+except:
+  plataform = ""
 
 today = datetime.today()
 today = today.strftime("%y%m%d_%H%M")
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--run_name', type=str, default=('run_'+today), dest='run_name')
-parser.add_argument('--run_id', type=str, default=('run_v1_'+today), dest='run_id')
+parser.add_argument('--run_name', type=str, default=('run_'+today+plataform), dest='run_name')
+parser.add_argument('--run_id', type=str, default=('run_v1_'+today+plataform), dest='run_id')
 parser.add_argument('--description', type=str, default='', dest='description')	
 	
 
@@ -49,7 +54,8 @@ class FeedForwardNN(nn.Module):
         # x = F.relu(self.layer1(x))
         # x = F.relu(self.layer2(x))
         # return self.output_layer(x)
-        return torch.round(9 * self.output_layer(x))
+        #return torch.round(18 * self.output_layer(x))
+        return torch.round(36 * self.output_layer(x))
     
 
 def train(env, hyperparameters, policy_model, target_model):
@@ -103,9 +109,9 @@ wandb.config = {
     'tau': 0.005,       # update rate of the target network
     'lr': 1e-4,         # learning rate of the ``AdamW`` optimizer
 	# *****************
-	'num_episodes': 600,
-	'target_angle': 30,
-	'change_angle': False,
+	'num_episodes': 1000,
+	'target_angle': 45,
+	'change_angle': True,
     'num_intervals': 10         # Si se cambia, se debe cambiar en la salida de la ANN
 }
 wandb.run.notes = f"""Timesteps: {wandb.config['num_episodes']} || Target angle: {wandb.config['target_angle']} || Change angle: {wandb.config['change_angle']} || """ + args.description

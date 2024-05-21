@@ -13,13 +13,19 @@ import torch.nn.functional as F
 
 import wandb
 
+try:
+  from google.colab import drive
+  plataform = "_google"
+except:
+  plataform = ""
+
 today = datetime.today()
 today = today.strftime("%y%m%d_%H%M")
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--run_name', type=str, default=('run_'+today), dest='run_name')
-parser.add_argument('--run_id', type=str, default=('run_v1_'+today), dest='run_id')
+parser.add_argument('--run_name', type=str, default=('run_'+today+plataform), dest='run_name')
+parser.add_argument('--run_id', type=str, default=('run_v1_'+today+plataform), dest='run_id')
 parser.add_argument('--description', type=str, default='', dest='description')	
 
 args = parser.parse_args()
@@ -140,7 +146,7 @@ wandb.config = {
 	'render_every_i': 10,
 	# *****************
 	'total_timesteps': 500_000,
-	'target_angle': 30,
+	'target_angle': 60,
 	'change_angle': False,
 	'change_dev_std': False
 }

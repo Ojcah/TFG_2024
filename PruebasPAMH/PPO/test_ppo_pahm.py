@@ -84,21 +84,21 @@ def calculate_rewardV2(observ, pwm, target_angle, theta_good): # Todos los valor
 		theta_error = np.abs(theta_n - target_angle)
 
 		theta_error_cost = (theta_error ** 2)
-		velocity_cost = (theta_dot ** 2)
+		velocity_cost = 100 * (theta_dot ** 2)
 
 		if theta_error <= 0.1745: # 0.1745 ~ 10° # 0.0873 ~ 5°
 			if theta_good < 0.0:
 				theta_good = 0.0
 			else:
-				theta_good += 1.0
+				theta_good += 0.15
 		else:
 			if theta_good > 0.0:
 				theta_good = 0.0
 			else:
-				theta_good -= 1.0
+				theta_good -= 0.15
 
-		if pwm < 0.0 or pwm > 0.5:
-			extra_cost = 10 ** np.absolute(pwm - 0.5)
+		if pwm < 0.0 or pwm > 0.25:
+			extra_cost = 10 ** np.absolute(pwm - 0.25)
 		else:
 			extra_cost = 0.0
   
@@ -179,7 +179,8 @@ def rollout(policy, env, render, target_angle):
 				env.render()
 
 			# Query deterministic action from policy and run it
-			action = policy(obs_n).detach().cpu().numpy()
+			#action = policy(obs_n).detach().cpu().numpy()
+			action = np.clip(policy(obs_n).detach().cpu().numpy(), 0.0, 0.25)
 
 			last_obs = obs.item()
 			last_vel = obs_n[1]

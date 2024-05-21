@@ -78,7 +78,6 @@ class PPO:
 
 		self.dev_std = 0.7071
 		self.last_noise = np.array([0.1])
-		self.last_nprob = np.array([0.1])
 		self.noise_suppressor = False
 		self.sigma_x0_noise = 0.7629
 		self.noise_threshold = 4
@@ -146,15 +145,15 @@ class PPO:
 			if self.theta_good < 0.0:
 				self.theta_good = 0.0
 			else:
-				self.theta_good += 0.2
+				self.theta_good += 0.15
 		else:
 			if self.theta_good > 0.0:
 				self.theta_good = 0.0
 			else:
-				self.theta_good -= 0.2
+				self.theta_good -= 0.15
 
 		if pwm < 0.0 or pwm > 0.25:
-			extra_cost = 10 ** np.absolute(pwm - 0.25) - 0.25
+			extra_cost = 10 ** np.absolute(pwm - 0.15)
 		else:
 			extra_cost = 0.0
   
@@ -163,8 +162,7 @@ class PPO:
 		self.logger['extra_cost'].append(-extra_cost)
 		self.logger['theta_good'].append(self.theta_good)
 
-		#reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost]) + self.theta_good
-		reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost])
+		reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost]) + self.theta_good
 
 		return reward_n.item()
 
@@ -204,7 +202,7 @@ class PPO:
 
 			
 			# Autobots, roll out (just kidding, we're collecting our batch simulations here)
-			batch_obs, batch_acts, batch_log_probs, batch_rtgs, batch_lens= self.rollout()                     # ALG STEP 3
+			batch_obs, batch_acts, batch_log_probs, batch_rtgs, batch_lens = self.rollout()                     # ALG STEP 3
 
 			# Calculate how many timesteps we collected this batch
 			t_so_far += np.sum(batch_lens)
@@ -219,8 +217,7 @@ class PPO:
 
 			# Calculate advantage at k-th iteration
 			# V, _ = self.evaluate(batch_obs, batch_acts)
-			# V, _= self.evaluateV2(batch_obs, batch_acts)
-			V, _= self.evaluateV4(batch_obs, batch_acts, batch_lens)
+			V, _= self.evaluateV2(batch_obs, batch_acts)
 			A_k = batch_rtgs - V.detach()                                                                       # ALG STEP 5
 
 			# One of the only tricks I use that isn't in the pseudocode. Normalizing advantages
@@ -232,9 +229,8 @@ class PPO:
 			# This is the loop where we update our network for some n epochs
 			for _ in range(self.n_updates_per_iteration):                                                       # ALG STEP 6 & 7
 				# Calculate V_phi and pi_theta(a_t | s_t)
-				# V, curr_log_probs = self.evaluate(batch_obs, batch_acts)
+				V, curr_log_probs = self.evaluate(batch_obs, batch_acts)
 				# V, curr_log_probs = self.evaluateV2(batch_obs, batch_acts)
-				V, curr_log_probs = self.evaluateV4(batch_obs, batch_acts, batch_lens)
 
 				# Calculate the ratio pi_theta(a_t | s_t) / pi_theta_k(a_t | s_t)
 				# NOTE: we just subtract the logs, which is the same as
@@ -343,7 +339,7 @@ class PPO:
 			# dt: Time step (1/50) || theta: Mean reversion rate || sigma: Noise strength || x0: Initial state
 			# T: Total simulation time || 
 			beta = (0.01) ** (1/25) # reach 0.01 after 25 steps
-			self.last_noise, self.last_nprob = self.ou_process(0.02, 1, self.sigma_x0_noise, self.sigma_x0_noise, 200, beta)
+			self.last_noise = self.ou_process(0.02, 1, self.sigma_x0_noise, self.sigma_x0_noise, 200, beta)
 
 			# Run an episode for a maximum of max_timesteps_per_episode timesteps
 			for ep_t in range(self.max_timesteps_per_episode):
@@ -361,10 +357,9 @@ class PPO:
 
 				# Calculate action and make a step in the env. 
 				# Note that rew is short for reward.
-				# action, log_prob = self.get_action(obs_n)
+				action, log_prob = self.get_action(obs_n)
 				# action, log_prob = self.get_actionV2(obs_n)
 				#action, log_prob = self.get_actionV3(obs_n)
-				action, log_prob = self.get_actionV4(obs_n, ep_t)
 
 				self.logger['pwm_signal'].append(action.item())
 
@@ -417,7 +412,7 @@ class PPO:
 		batch_obs = torch.tensor(batch_obs, dtype=torch.float, device=device)
 		batch_acts = torch.tensor(batch_acts, dtype=torch.float, device=device)
 		batch_log_probs = torch.tensor(batch_log_probs, dtype=torch.float, device=device)
-		batch_rtgs = self.compute_rtgs(batch_rews)                                                        # ALG STEP 4
+		batch_rtgs = self.compute_rtgs(batch_rews)                                                              # ALG STEP 4
 
 		# Log the episodic returns and episodic lengths in this batch.
 		self.logger['batch_rews'] = batch_rews
@@ -467,57 +462,7 @@ class PPO:
 
 		log_prob = dist.log_prob(action)
 
-		return action.detach().cpu().numpy(), log_prob
-
-	def get_actionV4(self, obs, ep_t):
-		mean = self.actor(obs)
-
-		noise = self.last_noise[ep_t]
-		log_noise_prob = self.last_nprob[ep_t]
-
-		noise = torch.tensor(noise, dtype=float, device=device)
-
-		action = torch.clamp(mean + noise, min=0, max=0.25)
-
-		return action.detach().cpu().numpy(), torch.tensor(log_noise_prob, dtype=float, device=device)
-	
-	def ou_prob_density(self, x, t, theta, sigma, x0):
-		mu = x0 * np.exp(-theta*t)
-		var = ((sigma ** 2)/(2 * theta)) * (1 - np.exp(-2 * theta * t))
-		prob = (1/np.sqrt(2 * np.pi * var)) * np.exp(-((x - mu)**2)/(2 * var))
-		return prob
-
-	def ou_process(self, dt, theta, sigma, x0, T, beta):
-		# Number of steps
-		N = int(T/dt)
-
-		# Initialize process output
-		x = np.zeros(N)
-		y = np.zeros(N)
-		p = np.zeros(N)
-		x[0] = x0
-		y[0] = x0
-		
-		k1 = np.exp(-theta*dt)
-		k2 = sigma*np.sqrt(dt)
-
-		p[0] = np.log(1e-300)
-		
-		# Generate OU process
-		for i in range(1, N):
-			# Update state using Euler-Maruyama method
-			x[i] = x[i-1] * k1 + k2 * np.random.randn(1); # original
-			y[i] = beta * y[i-1] + (1-beta) * x[i]; # smoothed
-		
-			# Calculate probability density for each time point
-			t = i * dt
-			if t == 0:
-				p[i] = np.log(1e-300)
-			else:
-				p[i] = np.log(self.ou_prob_density(x[i], t, theta, sigma, x0))
-			# p[i] = np.max([p_prev, 1e-100])
-
-		return y, p
+		return action.detach().cpu().numpy(), log_prob.detach()
 
 	def get_actionV2(self, obs):
 
@@ -533,6 +478,26 @@ class PPO:
 		log_prob = torch.sum(dist.log_prob(action), dim=-1)
 
 		return action.detach().cpu().numpy(), log_prob.detach()
+	
+	def ou_process(self, dt, theta, sigma, x0, T, beta):
+		# Number of steps
+		N = int(T/dt)
+
+		# Initialize process output
+		x = np.zeros(N)
+		x[0] = x0
+
+		y = x
+		
+		k1 = np.exp(-theta*dt)
+		k2 = sigma*np.sqrt(dt)
+		
+		# Generate OU process
+		for i in range(1, N):
+			# Update state using Euler-Maruyama method
+			x[i] = x[i-1] * k1 + k2 * np.random.randn(1); # original
+			y[i] = beta * y[i-1] + (1-beta) * x[i]; # smoothed
+		return y
 
 	def get_action(self, obs):
 		"""
@@ -555,7 +520,7 @@ class PPO:
 
 		# Sample an action from the distribution
 		action = dist.sample()
-		action = torch.clamp(action, min=0, max=0.25)
+		action = torch.clamp(action, min=0, max=0.5)
 
 		# Calculate the log probability for that action
 		log_prob = dist.log_prob(action)
@@ -577,26 +542,6 @@ class PPO:
 		log_probs = torch.sum(dist.log_prob(batch_acts), dim=-1)
 
 		return V, log_probs
-
-	def evaluateV4(self, batch_obs, batch_acts, batch_lens):
-		V = self.critic(batch_obs).squeeze()
-		mean = self.actor(batch_obs)
-
-		noise = batch_acts - mean
-		#noise = noise.flatten().detach().cpu().numpy()
-
-		index = 0
-		#log_probs = np.zeros_like(noise)
-		log_probs = torch.zeros_like(noise)
-		for length in batch_lens:
-			for t in range(length):
-				if t == 0:
-					log_probs[t] = np.log(1e-100)
-				else:
-					log_probs[t] = np.log(self.ou_prob_density(noise[t], t, 1, self.sigma_x0_noise, self.sigma_x0_noise))
-				index += 1
-
-		return V, torch.tensor(log_probs, dtype=float, device=device)
 
 	def evaluate(self, batch_obs, batch_acts):
 		"""
@@ -620,7 +565,7 @@ class PPO:
 		# Calculate the log probabilities of batch actions using most recent actor network.
 		# This segment of code is similar to that in get_action()
 		mean = self.actor(batch_obs)
-		mean = torch.clamp(mean, min=0.0, max=0.25)
+		mean = torch.clamp(mean, min=0.0, max=0.5)
 
 		dist = MultivariateNormal(mean, self.cov_mat)
 

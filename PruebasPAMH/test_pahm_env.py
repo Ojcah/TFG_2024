@@ -45,7 +45,7 @@ while True:
         
             
         observation,reward,terminated,truncated,info = env.step(action)
-        print(np.rad2deg(observation), " $$ ", reward)
+        print(np.rad2deg(observation), " $$ ", action, end="\r")
         #print(env.action_space)
         if step%5==0:
             env.render() 
