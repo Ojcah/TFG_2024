@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.9)  29 APR 2024 23:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.9)  1 MAY 2024 22:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -815,66 +815,160 @@ Overfull \hbox (206.51926pt too wide) in paragraph at lines 34--42
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 73--73
+Underfull \hbox (badness 10000) in paragraph at lines 81--81
 []|\OT1/cmr/bx/n/12 Horas
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 73--73
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
 []|\OT1/cmr/m/n/12 24/04/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 73--73
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
 []|\OT1/cmr/m/n/12 26/04/2024| 
  []
 
 
-Underfull \hbox (badness 4328) in paragraph at lines 73--73
-[]|$\OT1/cmr/bx/n/12 3\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Prue-bas de mejora en
+Underfull \hbox (badness 4328) in paragraph at lines 81--81
+[]|$\OT1/cmr/bx/n/12 2\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Prue-bas de mejora en
 
  []
 
 
-Underfull \hbox (badness 3009) in paragraph at lines 73--73
+Underfull \hbox (badness 3009) in paragraph at lines 81--81
 \OT1/cmr/m/n/12 la funci^^Son $\OML/cmm/m/it/12 get[]action\OT1/cmr/m/n/12 ()$ 
 del
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 111--111
+Underfull \hbox (badness 1845) in paragraph at lines 81--81
+\OT1/cmr/m/n/12 re-specto al m^^Setodo de ex-
+ []
+
+
+Underfull \hbox (badness 1527) in paragraph at lines 81--81
+\OT1/cmr/m/n/12 plo-raci^^Son y ex-plotaci^^Son del
+ []
+
+
+Underfull \hbox (badness 1178) in paragraph at lines 81--81
+\OT1/cmr/m/n/12 de la ma-triz de co-var-i-anza
+ []
+
+
+Underfull \hbox (badness 1910) in paragraph at lines 81--81
+\OML/cmm/m/it/12 c\OT1/cmr/m/n/12 )$ Mon-taje de l^^Sogica para
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 81--81
 []|\OT1/cmr/m/n/12 27/04/2024| 
  []
 
 
-Underfull \hbox (badness 6978) in paragraph at lines 111--111
+Underfull \hbox (badness 1371) in paragraph at lines 81--81
+[]|$\OT1/cmr/bx/n/12 3\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Prueba del mon-taje d
+el
+ []
+
+
+Underfull \hbox (badness 6978) in paragraph at lines 81--81
 \OT1/cmr/m/n/12 m^^Setodo $\OML/cmm/m/it/12 DQN$ \OT1/cmr/m/n/12 dis-cretizado
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 111--111
+Underfull \hbox (badness 10000) in paragraph at lines 81--81
 \OT1/cmr/m/n/12 para el con-trol del env
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 111--111
+Underfull \hbox (badness 6608) in paragraph at lines 81--81
+[]|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Adaptaci^^Son del c^^Sodigo
+ []
+
+
+Underfull \hbox (badness 2635) in paragraph at lines 81--81
+\OT1/cmr/m/n/12 probado con $\OML/cmm/m/it/12 Pendulum$ \OT1/cmr/m/n/12 al
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 81--81
+\OT1/cmr/m/n/12 del mod-elo fal-l-i-das por
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 81--81
+\OT1/cmr/m/n/12 prob-le-mas en la funci^^Son
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 120--120
+[]|\OT1/cmr/m/n/12 27/04/2024| 
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 120--120
 []|\OT1/cmr/m/n/12 28/04/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 111--111
+Underfull \hbox (badness 2707) in paragraph at lines 120--120
+\OT1/cmr/m/n/12 con uso difer-entes de dis-
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 120--120
 []|\OT1/cmr/m/n/12 29/04/2024| 
  []
 
 
-Overfull \hbox (1.84389pt too wide) in paragraph at lines 111--111
+Underfull \hbox (badness 6284) in paragraph at lines 120--120
+[]|$\OML/cmm/m/it/12 a\OT1/cmr/m/n/12 )$ Se pro-baron difer-entes
+ []
+
+
+Underfull \hbox (badness 2680) in paragraph at lines 120--120
+\OML/cmm/m/it/12 b\OT1/cmr/m/n/12 )$ En-tre-namiento de mod-
+ []
+
+
+Underfull \hbox (badness 2027) in paragraph at lines 120--120
+\OT1/cmr/m/n/12 e-los con cada m^^Setodo con
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 120--120
+\OT1/cmr/m/n/12 aprox-i-mada-mente $150\OML/cmm/m/it/12 ; \OT1/cmr/m/n/12 000$
+ []
+
+
+Overfull \hbox (1.84389pt too wide) in paragraph at lines 120--120
 []|\OT1/cmr/m/n/12 30/04/2024| 
+ []
+
+
+Underfull \hbox (badness 5147) in paragraph at lines 120--120
+[]|$\OT1/cmr/bx/n/12 7\OML/cmm/m/it/12 :$ \OT1/cmr/m/n/12 Con-tin-uaci^^Son de 
+en-tre-
  []
 
 [1
 
-{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-(./Semana_11.bbl) [2] (./Semana_11.aux)
+{c:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
+<Fig/Captura_wandbPPO.png, id=25, 972.63374pt x 538.26094pt>
+File: Fig/Captura_wandbPPO.png Graphic file (type png)
+<use Fig/Captura_wandbPPO.png>
+Package pdftex.def Info: Fig/Captura_wandbPPO.png  used on input line 142.
+(pdftex.def)             Requested size: 389.0466pt x 215.30055pt.
+<Fig/Captura_wandbDQN.png, id=27, 621.07031pt x 411.78844pt>
+File: Fig/Captura_wandbDQN.png Graphic file (type png)
+<use Fig/Captura_wandbDQN.png>
+Package pdftex.def Info: Fig/Captura_wandbDQN.png  used on input line 149.
+(pdftex.def)             Requested size: 279.47905pt x 185.30307pt.
+ [3 <./Fig/Captura_wandbPPO.PNG> <./Fig/Captura_wandbDQN.PNG>] (./Semana_11.bbl
+) [4]
+(./Semana_11.aux)
 Package rerunfilecheck Info: File `Semana_11.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  )
@@ -883,21 +977,22 @@ Package rerunfilecheck Info: File `Semana_11.out' has not changed.
 ### semi simple group (level 1) entered at line 6 (\begingroup)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 23296 strings out of 477678
- 429547 string characters out of 5833468
- 718123 words of memory out of 5000000
- 41704 multiletter control sequences out of 15000+600000
+ 23324 strings out of 477678
+ 430137 string characters out of 5833468
+ 719304 words of memory out of 5000000
+ 41724 multiletter control sequences out of 15000+600000
  476092 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,16n,89p,406b,19361s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,16n,89p,406b,19368s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx
 12.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><c
 :/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/
-2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on Semana_11.pdf (2 pages, 61104 bytes).
+2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2022/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
+Output written on Semana_11.pdf (4 pages, 254876 bytes).
 PDF statistics:
- 48 PDF objects out of 1000 (max. 8388607)
- 35 compressed objects within 1 object stream
- 8 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 73 PDF objects out of 1000 (max. 8388607)
+ 52 compressed objects within 1 object stream
+ 12 named destinations out of 1000 (max. 500000)
+ 23 words of extra memory for PDF output out of 10000 (max. 10000000)
 

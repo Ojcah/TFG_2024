@@ -21,9 +21,14 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{Airdaldi2023}
-F.~Airaldi, A.~Bietti, A.~Casagrande, and A.~Bemporad, ``Learning model
-  predictive control with policy gradients,'' \emph{IEEE Transactions on
-  Automatic Control}, 2023.
+\bibitem{PPOimplementation}
+\BIBentryALTinterwordspacing
+S.~Huang, R.~F.~J. Dossa, A.~Raffin, A.~Kanervisto, and W.~Wang, ``The 37
+  implementation details of proximal policy optimization,'' in \emph{ICLR Blog
+  Track}, 2022,
+  https://iclr-blog-track.github.io/2022/03/25/ppo-implementation-details/.
+  [Online]. Available:
+  \url{https://iclr-blog-track.github.io/2022/03/25/ppo-implementation-details/}
+\BIBentrySTDinterwordspacing
 
 \end{thebibliography}
