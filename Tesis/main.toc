@@ -3,24 +3,15 @@
 \contentsline {chapter}{\'{I}ndice de tablas}{\es@scroman {iii}}{chapter*.7}%
 \contentsline {chapter}{Revisar}{\es@scroman {iv}}{chapter*.8}%
 \contentsline {chapter}{\numberline {1}Introducción}{2}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Entorno del proyecto}{2}{section.1.1}%
-\contentsline {section}{\numberline {1.2}Planteamiento del problema}{3}{section.1.2}%
-\contentsline {subsection}{\numberline {1.2.1}Generalidades}{3}{subsection.1.2.1}%
-\contentsline {subsection}{\numberline {1.2.2}Síntesis del problema}{4}{subsection.1.2.2}%
-\contentsline {section}{\numberline {1.3}Enfoque de la solución}{4}{section.1.3}%
-\contentsline {subsection}{\numberline {1.3.1}Solución 1}{5}{subsection.1.3.1}%
-\contentsline {subsection}{\numberline {1.3.2}Solución 2}{5}{subsection.1.3.2}%
-\contentsline {subsection}{\numberline {1.3.3}Solución 3}{6}{subsection.1.3.3}%
-\contentsline {subsection}{\numberline {1.3.4}Selección de la solución}{6}{subsection.1.3.4}%
-\contentsline {section}{\numberline {1.4}Objetivo General}{8}{section.1.4}%
-\contentsline {subsection}{\numberline {1.4.1}Objetivos específicos}{8}{subsection.1.4.1}%
-\contentsline {section}{\numberline {1.5}*************************************************}{8}{section.1.5}%
-\contentsline {chapter}{\numberline {2}Marco teórico}{9}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Péndulo amortiguado a hélice PAMH}{9}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Aprendizaje reforzado RL}{10}{section.2.2}%
-\contentsline {section}{\numberline {2.3}*************************************************}{11}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Solución propuesta}{12}{chapter.3}%
-\contentsline {chapter}{\numberline {4}Resultados y análisis}{13}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Conclusiones}{14}{chapter.5}%
-\contentsline {chapter}{Bibliografía}{15}{chapter*.16}%
-\contentsline {chapter}{\numberline {A}Demostración del teorema de Nyquist}{16}{appendix.Alph1}%
+\contentsline {section}{\numberline {1.1}*************************************************}{2}{section.1.1}%
+\contentsline {chapter}{\numberline {2}Marco teórico}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Péndulo amortiguado a hélice PAMH}{3}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Aprendizaje reforzado RL}{4}{section.2.2}%
+\contentsline {section}{\numberline {2.3}*************************************************}{5}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}DQN}{5}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}PPO}{6}{subsection.2.3.2}%
+\contentsline {chapter}{\numberline {3}Solución propuesta}{7}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Resultados y análisis}{8}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Conclusiones}{9}{chapter.5}%
+\contentsline {chapter}{Bibliografía}{10}{chapter*.13}%
+\contentsline {chapter}{\numberline {A}Demostración del teorema de Nyquist}{11}{appendix.Alph1}%

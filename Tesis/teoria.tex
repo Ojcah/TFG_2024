@@ -1,8 +1,9 @@
 \chapter{Marco teórico}
 \label{ch:marco}
 
+En
 
-\section{Péndulo amortiguado a hélice PAMH}
+\section{Péndulo amortiguado a hélice (PAMH)}
 
 El péndulo amortiguado a hélice corresponde a una planta de laboratorio compuesta de un motor con hélice controlado por torque, una masa pequeña, péndulo y soportes de aluminio de baja fricción. Un modelo simplificado del sistema se muestra en la Figura \ref{fig:modpen} \textcolor{SkyBlue}{PAMH1}.
 
@@ -26,7 +27,7 @@ De manera que al analizar el sistema con sumatoria de torques se obtiene la cons
 
 
 
-\section{Aprendizaje reforzado RL}
+\section{Aprendizaje reforzado (RL)}
 
 
 Al estudiar el concepto de aprendizaje reforzado y los diferentes métodos y algoritmos que corresponden a este tipo de aprendizaje automático, se obtiene el resumen de la Figura \ref{fig:teoriaRL}, en donde se muestra que las principales secciones son el RL basado en modelo y el libre de modelo. De igual forma se cuenta con el aprendizaje reforzado profundo (DRL), una combinación y reestructuración de métodos de cada subdivisión \textcolor{SkyBlue}{DataScience}.
@@ -42,26 +43,8 @@ Al estudiar el concepto de aprendizaje reforzado y los diferentes métodos y alg
 De igual manera, los avances en la investigación de diferentes métodos como las redes neuronales recurrentes (RNN), ejemplificado por Mamba \textcolor{SkyBlue}{Mamba}, ha mostrado la capacidad de optimización del desempeño de estas para llegar a competir con los modelos basados en \textit{Transformer}.
 
 
-\subsection*{Control predictivo del modelo (MPC)}
-
-La estructura de comunicación entre el sistema y el modelo de control mediante maching learning se efectua con base en funciones de optimización, donde se generan acciones controladas en cada paso para controlar alguna característica ($\mathbf{\hat{F}}$) y se toma la primera muestra de dicha acción ($\hat{x}_{k+1}$) para variar la respuesta del controlador enviada al sistema ($\mathbf{u}_j$), esto independiente y apllicable a sistemas lineales o no lineales. El proceso se simplifica en la Fig. \ref{fig:mpc}.
-
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[scale=0.35]{fig/MPC.png}
-	\caption{Esquemático del control predictivo del modelo (MPC) \textcolor{SkyBlue}{DataScience}.}
-	\label{fig:mpc}
-\end{figure}
-
-
-
-
-
-
-
-
 \begin{comment}
+
 
 %References
 
@@ -87,7 +70,42 @@ doi = {https://doi.org/10.48550/arXiv.2312.00752}
 
 
 
-\section{*************************************************}
+\subsection{DQN}
+
+DQN es un algoritmo de aprendizaje por refuerzo basado en valores introducido por DeepMind en 2013. Se diseñó específicamente para aprender a jugar a juegos de Atari directamente a partir de entradas de píxeles sin procesar3. Estos son los aspectos clave de DQN:
+
+Q-Learning y Diferencia Temporal:
+La "Q" en DQN significa "Q-Learning", que es un método de diferencia temporal fuera de política.
+DQN tiene en cuenta las recompensas futuras al actualizar la función de valor para un par estado-acción determinado.
+A diferencia de los métodos de gradiente de política (por ejemplo, REINFORCE), DQN no requiere esperar hasta el final de un episodio para calcular la recompensa final.
+Atari Games y Raw Pixels:
+DQN ganó popularidad al aprender con éxito a jugar a juegos de Atari utilizando datos de píxeles en bruto como entrada.
+El agente aprende a realizar acciones basándose en los valores de píxeles observados, sin ninguna característica creada a mano.
+La ecuación de Bellman guía las actualizaciones de la función de valor a medida que el agente interactúa con el entorno.
+Ejemplo de MountainCar-v0:
+Consideremos el entorno MountainCar-v0 de OpenAI Gym.
+En esta tarea, un coche con poca potencia debe subir una colina empinada cogiendo suficiente impulso.
+El agente recibe una recompensa de -1 por cada acción realizada hasta que alcanza la bandera (recompensa 0).
+El episodio termina si el agente no consigue alcanzar la montaña en 200 pasos.
+
+
+
+\subsection{PPO}
+
+
+
+Función objetivo:
+PPO utiliza una función objetivo sustituta para restringir el tamaño del paso durante las actualizaciones de la política. Esto garantiza un aprendizaje estable y eficaz.
+A diferencia de otros algoritmos, PPO no requiere esperar hasta el final de un episodio para calcular la recompensa final, sino que actualiza la función de valor de forma incremental a medida que el agente interactúa con el entorno.
+Estimación de ventaja generalizada (GAE):
+Aunque el documento original de la PPO hace abstracción de la estimación de ventajas en su objetivo, la aplicación real utiliza GAE.
+GAE ayuda a estimar las ventajas de diferentes acciones basándose en las recompensas y funciones de valor observadas.
+Normalización de ventajas:
+Después de calcular las ventajas utilizando GAE, PPO normaliza las ventajas restando la media y dividiendo por la desviación estándar.
+Cabe destacar que esta normalización se produce a nivel de minilotes, no a nivel de lotes completos2.
+
+
+AAAA \cite{PPO2017}
 
 
 
@@ -95,3 +113,8 @@ doi = {https://doi.org/10.48550/arXiv.2312.00752}
 
 
 
+\section{Métricas de evaluación}
+
+Función de recompensa: Especificar la señal de recompensa (por ejemplo, minimizar el consumo de energía, estabilizar el péndulo).
+
+Criterios de convergencia: Describa cuándo se considera que el algoritmo ha tenido éxito.
