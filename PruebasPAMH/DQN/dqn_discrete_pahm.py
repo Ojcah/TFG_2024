@@ -71,8 +71,7 @@ class DQN:
         self.memory_obj = ReplayMemory(10000)
 
         self.steps_done = 0
-        self.theta_good = 0
-
+        self.noise_amplitude = 6
 
         # This logger will help us with printing out summaries of each iteration
         self.logger = {
@@ -84,40 +83,10 @@ class DQN:
 
             'theta_error_cost': [],
 			'velocity_cost': [],
-			'extra_cost': [],
-			'theta_good': [],
+            'theta_good': [],
 		}
-
-
-    def calculate_reward(self, observ, pwm, target_angle):
-        """
-            AAAAAA
-        """
-        theta = observ[0]
-        theta_dot = observ[1]
-		
-        theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
-
-        theta_error = np.abs(theta_n - target_angle)
-		# theta_error_cost = theta_error ** 2
-        theta_error_cost = 5 * theta_error
-        
-        velocity_cost = 0.1 * (theta_dot ** 2)
-
-        if pwm < 0.0 or pwm > 0.5:
-            costs = theta_error_cost + velocity_cost + (10**(np.absolute(pwm - 0.5)))
-        else:
-            costs = theta_error_cost + velocity_cost
-
-        if theta_error <= 0.0873: # 0.1745 ~ 10° # 0.0873 ~ 5°
-			#reward_n = -costs + math.exp(-(6*theta_error)**2)
-            reward_n = -costs + 1.8*math.exp(-(10*theta_error)**2)
-        else:
-            reward_n = -costs 
-
-        return torch.tensor([reward_n], device=device)
     
-    def calculate_rewardV2(self, observ, pwm, target_angle): # Todos los valores estan en radianes
+    def calculate_reward(self, observ, target_angle): # Todos los valores estan en radianes
         theta = observ[0]
         theta_dot = observ[1]
         
@@ -128,29 +97,40 @@ class DQN:
         theta_error_cost = (theta_error ** 2)
         
         velocity_cost = 100 * (theta_dot ** 2)
-        
-        if theta_error <= 0.1745: # 0.1745 ~ 10° # 0.0873 ~ 5°
-            if self.theta_good < 0.0:
-                self.theta_good = 0.0
-            else:
-                self.theta_good += 0.2
-        else:
-            if self.theta_good > 0.0:
-                self.theta_good = 0.0
-            else:
-                self.theta_good -= 0.2
 
-        if pwm < 0.0 or pwm > 0.25:
-            extra_cost = 10 ** np.absolute(pwm - 0.25)
+        if theta_error <= 0.0873: # ~ 5°
+            theta_good = np.max([0.0, 1.0 - theta_error]) * (1.0 - np.abs(velocity_cost))
         else:
-            extra_cost = 0.0
+            theta_good = 0.0    
 
         self.logger['theta_error_cost'].append(-theta_error_cost)
         self.logger['velocity_cost'].append(-velocity_cost)
-        self.logger['extra_cost'].append(-extra_cost)
-        self.logger['theta_good'].append(self.theta_good)
-            
-        reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost]) + self.theta_good
+        self.logger['theta_good'].append(theta_good)
+
+        reward_n = np.min([-velocity_cost, -theta_error_cost]) + theta_good
+        #reward_n = theta_good
+        
+        return torch.tensor([reward_n.item()], device=device)
+    
+    def calculate_rewardV2(self, observ, target_angle): # Todos los valores estan en radianes
+        theta = observ[0]
+        theta_dot = observ[1]
+        
+        theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
+        
+        theta_error = np.abs(theta_n - target_angle)
+        
+        theta_error_cost = (theta_error ** 2)
+        
+        velocity_cost = 100 * (theta_dot ** 2)
+
+        theta_good = np.max([0.0, 1.0 - theta_error_cost]) * (1.0 - np.abs(velocity_cost))  
+
+        self.logger['theta_error_cost'].append(-theta_error_cost)
+        self.logger['velocity_cost'].append(-velocity_cost)
+        self.logger['theta_good'].append(theta_good)
+
+        reward_n = -theta_error_cost + theta_good
         
         return torch.tensor([reward_n.item()], device=device)
     
@@ -182,15 +162,17 @@ class DQN:
 			Return:
 				None
 		"""
-        targets_options = np.array([self.target_angle, 60, 90, 60, 30, 20, 45, 70])
+        targets_options = np.array([self.target_angle, 60, 90, 60, 30, 20, 45, 70, 90, 45])
 
         epoch = 0
         epoch_save_checkspoints = self.num_episodes//5
         target_step = self.num_episodes//len(targets_options)
         i_target = 0
-        u_option = 0
+        u_option = 1
 
         ep_rews = []
+
+        print(f" >> Máximo ruido agregado : {self.noise_amplitude}")
 
         for i_episode in range(self.num_episodes):
 
@@ -239,7 +221,7 @@ class DQN:
                 # ///////////////////////////////////////////////////////////
                 #reward = torch.tensor([reward], device=device) # Pendulum original target: theta=0°
                 #reward = self.calculate_reward(obs_n[0].cpu().detach().numpy(), action.item(), math.radians(self.target_angle))
-                reward = self.calculate_rewardV2(obs_n[0].cpu().detach().numpy(), action.item(), math.radians(self.target_angle))
+                reward = self.calculate_rewardV2(obs_n[0].cpu().detach().numpy(), math.radians(self.target_angle))
 
                 # ///////////////////////////////////////////////////////////
 
@@ -278,6 +260,13 @@ class DQN:
                     ep_rews = []
                     break
             
+            if i_episode == (self.num_episodes//2):
+                self.noise_amplitude = 4
+                print(f" >> Máximo ruido agregado : {self.noise_amplitude}")
+            elif i_episode == (3*self.num_episodes//4):
+                self.noise_amplitude = 2
+                print(f" >> Máximo ruido agregado : {self.noise_amplitude}")
+
             self._log_summary(i_episode)
             ## ***********************************************SAVE CHECKPOINTS*********************************************
             if (epoch == epoch_save_checkspoints) or ((i_episode+1) == self.num_episodes):
@@ -304,15 +293,16 @@ class DQN:
         
 
         state_batch = torch.cat(batch.state)
-        #action_batch = torch.cat(batch.action).unsqueeze(1)
         action_batch = torch.cat(batch.action)
         reward_batch = torch.cat(batch.reward)
      
         # Compute Q(s_t, a) - the model computes Q(s_t), then we select the
         # columns of actions taken. These are the actions which would've been taken
         # for each batch state according to policy_net
+        #state_action_values = self.policy_net(state_batch).gather(1, action_batch)
         
-        state_action_values = self.policy_net(state_batch).gather(1, action_batch)
+        q_values = self.policy_net(state_batch)
+        state_action_values = q_values.gather(1, action_batch)
 
         # Compute V(s_{t+1}) for all next states.
         # Expected values of actions for non_final_next_states are computed based
@@ -325,17 +315,14 @@ class DQN:
         with torch.no_grad():
             next_state_values[non_final_mask] = self.target_net(non_final_next_states).max(1).values
 
-
-        # next_state_batch = torch.cat(batch.next_state)
-        # with torch.no_grad():
-        #     next_state_values = self.target_net(next_state_batch).max(1)[0].detach()
-
-
+            #next_state_values[non_final_mask] = torch.argmax(self.target_net(non_final_next_states), dim=1)
+            
         # Compute the expected Q values
         expected_state_action_values = (next_state_values * self.gamma) + reward_batch
 
         # Compute Huber loss
         criterion = nn.SmoothL1Loss()
+        # criterion = nn.CrossEntropyLoss()
         loss = criterion(state_action_values, expected_state_action_values.unsqueeze(1))
         # Optimize the model
         self.optimizer.zero_grad()
@@ -362,23 +349,27 @@ class DQN:
         self.steps_done += 1
         # *************************************************************************
         with torch.no_grad():
-            #value_discrete = self.policy_net(state).item()
-            value_discrete = self.policy_net(state).max(1).indices.view(1, 1)
+            #value_discrete = self.policy_net(state).max(1).indices.view(1, 1)
+            value_discrete = torch.argmax(self.policy_net(state), dim=1)
         if sample > eps_threshold:
             #newvalue = torch.clamp(value_discrete, min=0, max=self.num_intervals-1)
             newvalue = torch.clamp(value_discrete, min=0, max=9)
             self.logger['noise'].append(0.0)
 
         else:
+            noise = random.randint(-self.noise_amplitude, self.noise_amplitude)
+            self.logger['noise'].append(noise)
+            newvalue = torch.clamp(value_discrete + noise, min=0, max=9)
+
             # noise = np.random.normal(0, 0.15, size=None)
             # self.logger['noise'].append(noise)
             # value_noise = self.undiscretize_action(value_discrete) + noise
             # newvalue = self.discretize_action(value_noise)
 
-            noise = random.uniform(0.0, 1.0)
-            noise_val = self.undiscretize_action(value_discrete) - noise
-            self.logger['noise'].append(noise_val)
-            newvalue = self.discretize_action(torch.tensor([noise], dtype=float, device=device))
+            # noise = random.uniform(0.0, 1.0)
+            # noise_val = self.undiscretize_action(value_discrete) - noise
+            # self.logger['noise'].append(noise_val)
+            # newvalue = self.discretize_action(torch.tensor([noise], dtype=float, device=device))
 
             # newvalue = self.discretize_action(self.env.action_space.sample())
             # self.logger['noise'].append(1.0)
@@ -458,7 +449,6 @@ class DQN:
 
         avg_theta_error_cost = np.mean(self.logger['theta_error_cost'])
         avg_velocity_cost = np.mean(self.logger['velocity_cost'])
-        avg_extra_cost = np.mean(self.logger['extra_cost'])
         avg_theta_good = np.mean(self.logger['theta_good'])
 
         # rew_means = avg_rewards.unfold(0, 100, 1).mean(1).view(-1)
@@ -477,7 +467,6 @@ class DQN:
                        
                        "avg_theta_error_cost": avg_theta_error_cost,
                        "avg_velocity_cost": avg_velocity_cost,
-                       "avg_extra_cost": avg_extra_cost,
                        "avg_theta_good": avg_theta_good,
                        })
             
@@ -488,7 +477,6 @@ class DQN:
 
         self.logger['theta_error_cost'] = []
         self.logger['velocity_cost'] = []
-        self.logger['extra_cost'] = []
         self.logger['theta_good'] = []
 
         

@@ -40,22 +40,16 @@ class FeedForwardNN(nn.Module):
     def __init__(self, n_observations, n_actions):
         super(FeedForwardNN, self).__init__()
         self.layer1 = nn.Linear(n_observations, 128)
-        self.activation1 = nn.Sigmoid()
+        self.activation1 = nn.ReLU()
         self.layer2 = nn.Linear(128, 128)
-        self.activation2 = nn.Sigmoid()
+        self.activation2 = nn.ReLU()
         self.output_layer = nn.Linear(128, n_actions)
     def forward(self, x):
         x = self.layer1(x)
         x = self.activation1(x)
         x = self.layer2(x)
         x = self.activation2(x)
-        # x = F.sigmoid(self.layer1(x))
-        # x = F.sigmoid(self.layer2(x))
-        # x = F.relu(self.layer1(x))
-        # x = F.relu(self.layer2(x))
-        # return self.output_layer(x)
-        #return torch.round(18 * self.output_layer(x))
-        return torch.round(36 * self.output_layer(x))
+        return self.output_layer(x)
     
 
 def train(env, hyperparameters, policy_model, target_model):
@@ -109,9 +103,9 @@ wandb.config = {
     'tau': 0.005,       # update rate of the target network
     'lr': 1e-4,         # learning rate of the ``AdamW`` optimizer
 	# *****************
-	'num_episodes': 1000,
+	'num_episodes': 600,
 	'target_angle': 45,
-	'change_angle': True,
+	'change_angle': False,
     'num_intervals': 10         # Si se cambia, se debe cambiar en la salida de la ANN
 }
 wandb.run.notes = f"""Timesteps: {wandb.config['num_episodes']} || Target angle: {wandb.config['target_angle']} || Change angle: {wandb.config['change_angle']} || """ + args.description

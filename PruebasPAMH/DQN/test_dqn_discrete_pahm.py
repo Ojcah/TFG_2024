@@ -26,7 +26,7 @@ def undiscretize_action(discrete_action, num_intervals):
     continuous_action = discrete_action / 36
     return continuous_action
 
-def calculate_reward(observ, pwm, target_angle, theta_good): # Todos los valores estan en radianes
+def calculate_rewardV2(observ, pwm, target_angle, theta_good): # Todos los valores estan en radianes
         theta = observ[0]
         theta_dot = observ[1]
         
@@ -38,16 +38,10 @@ def calculate_reward(observ, pwm, target_angle, theta_good): # Todos los valores
         
         velocity_cost = 100 * (theta_dot ** 2)
         
-        if theta_error <= 0.1745: # 0.1745 ~ 10° # 0.0873 ~ 5°
-            if theta_good < 0.0:
-                theta_good = 0.0
-            else:
-                theta_good += 0.2
+        if theta_error <= 0.0873: # 0.1745 ~ 10° # 0.0873 ~ 5°
+            theta_good = 0.3 * math.exp(-(20*theta_error) ** 2)
         else:
-            if theta_good > 0.0:
-                theta_good = 0.0
-            else:
-                theta_good -= 0.2
+            theta_good = 0.0
 
         if pwm < 0.0 or pwm > 0.25:
             extra_cost = 10 ** np.absolute(pwm - 0.25)
@@ -55,6 +49,29 @@ def calculate_reward(observ, pwm, target_angle, theta_good): # Todos los valores
             extra_cost = 0.0
             
         reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost]) + theta_good
+        #reward_n = np.min([-velocity_cost, -theta_error_cost, -extra_cost])
+        
+        return torch.tensor([reward_n.item()], device=device)
+
+def calculate_reward(observ, target_angle): # Todos los valores estan en radianes
+        theta = observ[0]
+        theta_dot = observ[1]
+        
+        theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
+        
+        theta_error = np.abs(theta_n - target_angle)
+        
+        theta_error_cost = (theta_error ** 2)
+        
+        velocity_cost = 100 * (theta_dot ** 2)
+
+        if theta_error <= 0.0873: # ~ 5°
+            theta_good = np.max([0.0, 1.0 - theta_error]) * (1.0 - np.abs(velocity_cost))
+        else:
+            theta_good = 0.0    
+
+        reward_n = np.min([-velocity_cost, -theta_error_cost]) + theta_good
+        #reward_n = theta_good
         
         return torch.tensor([reward_n.item()], device=device)
 
@@ -86,8 +103,6 @@ def rollout(policy_net, env, render, target_angle):
 		SSS
 	"""
 	num_intervals = 10
-
-	theta_good = 0
 	
 	last_obs = 0.0
 	theta_dot = 0.0
@@ -116,13 +131,13 @@ def rollout(policy_net, env, render, target_angle):
 				env.render()
 
 			# Query deterministic action from policy and run it
-			action_d = policy_net(obs_n).max(1).indices.view(1, 1)
-			action = undiscretize_action(action_d.cpu().detach().numpy(), num_intervals)
+			action = torch.argmax(policy_net(obs_n), dim=1)
+			action_step = undiscretize_action(action.cpu().detach().numpy(), num_intervals)
 
 			last_obs = obs.item()
 			last_vel = obs_n[0, 1].item()
 
-			obs, rew, terminated, truncated, _ = env.step(action[0])	# For Gymnasium version
+			obs, rew, terminated, truncated, _ = env.step(action_step)	# For Gymnasium version
 
 			obs_n[0, 0] = obs.item()
 			theta_dot = obs.item() - last_obs
@@ -132,12 +147,12 @@ def rollout(policy_net, env, render, target_angle):
 			done = terminated or truncated							# For Gymnasium
 
 			#rew = calculate_reward(obs_n, action, math.radians(target_angle), ep_len)
-			rew = calculate_reward(obs_n[0].cpu().detach().numpy(), action.item(), math.radians(target_angle), theta_good)
+			rew = calculate_reward(obs_n[0].cpu().detach().numpy(), math.radians(target_angle))
 
 			# Sum all episodic rewards as we go along
 			ep_ret += rew.item()
 
-			print(" >> Angle: ", math.degrees(obs_n[0, 0]), " >> PWM: ", action.item(), " >> Reward: ", rew.item(), end="\r")
+			print(" >> Angle: ", math.degrees(obs_n[0, 0]), " >> PWM: ", action_step.item(), " >> Reward: ", rew.item(), end="\r")
 			
 		# Track episodic length
 		ep_len = t
