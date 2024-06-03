@@ -71,10 +71,22 @@ class PPO:
 		self.actor_optim = Adam(self.actor.parameters(), lr=self.lr)
 		self.critic_optim = Adam(self.critic.parameters(), lr=self.lr)
 
+		self.variance = 0.01
+		#self.variance = 0.001
+
 		# Initialize the covariance matrix used to query the actor for actions
-		self.cov_var = torch.full(size=(self.act_dim,), fill_value=0.5, device=device)
+		self.cov_var = torch.full(size=(self.act_dim,), fill_value=self.variance, device=device)
 		#self.cov_var = torch.full(size=(self.act_dim,), fill_value=0.1, device=device)
 		self.cov_mat = torch.diag(self.cov_var)
+
+		self.dist = MultivariateNormal(torch.tensor([0.0], dtype=torch.float, device=device), self.cov_mat)
+		self.dist_sample_counter = 10
+		self.dist_sample_n = np.array([10, 9, 8, 7, 6, 5, 4, 3, 2, 1])
+		self.sample_counter = 0
+		self.sample_noise = torch.tensor([0.0], dtype=torch.float, device=device)
+		self.variance_rew = 0.005
+		
+		self.last_obs = np.array([0.0, 0.0, 0.0])
 
 		self.dev_std = 0.7071
 		self.last_noise = np.array([0.1])
@@ -94,6 +106,7 @@ class PPO:
 			'actor_losses': [],     # losses of actor network in current iteration
 			'critic_losses': [],     # losses of critic network in current iteration
 			'pwm_signal': [],
+			'noise_signal': [],
 
 			'theta_error_cost': [],
 			'velocity_cost': [],
@@ -168,6 +181,31 @@ class PPO:
 
 		return reward_n.item()
 
+	def calculate_rewardV3(self, observ, pwm, target_angle): # Todos los valores estan en radianes
+		theta = observ[0]
+		theta_dot = observ[1]
+		theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
+		theta_error = np.abs(theta_n - target_angle)
+		
+		theta_error_cost = (theta_error ** 2)
+		velocity_cost = 50 * (theta_dot ** 2)
+
+        #theta_good = np.max([0.0, 1.0 - theta_error_cost]) * (1.0 - np.abs(velocity_cost))  
+		theta_good = 2 * np.exp(- theta_error_cost/self.variance_rew) * (1.0 - np.abs(velocity_cost))  
+
+		if pwm < 0.0 or pwm > 0.25:
+			extra_cost = 20 ** np.absolute(pwm - 0.25)
+		else:
+			extra_cost = 0.0
+		
+		self.logger['theta_error_cost'].append(-theta_error_cost)
+		self.logger['velocity_cost'].append(-velocity_cost)
+		self.logger['extra_cost'].append(-extra_cost)
+		self.logger['theta_good'].append(theta_good)     
+		
+		reward_n = np.min([-theta_error_cost, -extra_cost]) + theta_good
+		return reward_n.item()
+
 	def learn(self, total_timesteps):
 		"""
 			Train the actor and critic networks. Here is where the main PPO algorithm resides.
@@ -188,6 +226,10 @@ class PPO:
 		angle_t = 0
 		noise_t = 0
 		angle_index = 0
+		variance_time = total_timesteps//(len(self.dist_sample_n)+2)
+		#variance_time = 300_000
+		variance_t = variance_time
+		sample_index = 0
 		
 		while t_so_far < total_timesteps:                                                                       # ALG STEP 2
 			
@@ -220,7 +262,8 @@ class PPO:
 			# Calculate advantage at k-th iteration
 			# V, _ = self.evaluate(batch_obs, batch_acts)
 			# V, _= self.evaluateV2(batch_obs, batch_acts)
-			V, _= self.evaluateV4(batch_obs, batch_acts, batch_lens)
+			# V, _= self.evaluateV4(batch_obs, batch_acts, batch_lens)
+			V, _= self.evaluateV5(batch_obs, batch_acts)
 			A_k = batch_rtgs - V.detach()                                                                       # ALG STEP 5
 
 			# One of the only tricks I use that isn't in the pseudocode. Normalizing advantages
@@ -234,7 +277,8 @@ class PPO:
 				# Calculate V_phi and pi_theta(a_t | s_t)
 				# V, curr_log_probs = self.evaluate(batch_obs, batch_acts)
 				# V, curr_log_probs = self.evaluateV2(batch_obs, batch_acts)
-				V, curr_log_probs = self.evaluateV4(batch_obs, batch_acts, batch_lens)
+				# V, curr_log_probs = self.evaluateV4(batch_obs, batch_acts, batch_lens)
+				V, curr_log_probs = self.evaluateV5(batch_obs, batch_acts)
 
 				# Calculate the ratio pi_theta(a_t | s_t) / pi_theta_k(a_t | s_t)
 				# NOTE: we just subtract the logs, which is the same as
@@ -273,11 +317,31 @@ class PPO:
 				self.logger['critic_losses'].append(critic_loss.detach())
 				# self.logger['actor_losses'].append(loss.detach())
 
-			if (noise_t >= noise_time):
-				self.noise_suppressor = True
-				noise_t = 1
-			else:
-				noise_t += np.sum(batch_lens)
+			# if (noise_t >= noise_time):
+			# 	self.noise_suppressor = True
+			# 	noise_t = 1
+			# else:
+			# 	noise_t += np.sum(batch_lens)
+			
+			if t_so_far >= variance_t:
+				# if self.variance == 0.1:
+				# 	self.variance = 0.05
+				# elif self.variance <= 0.05:
+				# 	self.variance = 0.01
+				# else:
+				# 	self.variance = round(self.variance - 0.1, 2)
+				if self.variance == 0.001:
+					self.variance = 0.001
+				else:
+					self.variance -= 0.001
+				print(f">> Varianza utilizada: {self.variance}")
+				self.dist = self.normal_dist_generator(torch.tensor([1.0], dtype=torch.float, device=device), self.variance)
+				variance_t += variance_time
+				if self.dist_sample_counter != 1:
+					self.dist_sample_counter = self.dist_sample_n[sample_index]
+				print(f">> Muestras estáticas: {self.dist_sample_counter}")
+				sample_index += 1
+
 
 			# Print a summary of our training so far
 			self._log_summary(total_timesteps)
@@ -342,8 +406,8 @@ class PPO:
    			# self.ou_process(self, dt, theta, sigma, x0, T, beta)
 			# dt: Time step (1/50) || theta: Mean reversion rate || sigma: Noise strength || x0: Initial state
 			# T: Total simulation time || 
-			beta = (0.01) ** (1/25) # reach 0.01 after 25 steps
-			self.last_noise, self.last_nprob = self.ou_process(0.02, 1, self.sigma_x0_noise, self.sigma_x0_noise, 200, beta)
+			#beta = (0.01) ** (1/25) # reach 0.01 after 25 steps
+			#self.last_noise, self.last_nprob = self.ou_process(0.02, 1, self.sigma_x0_noise, self.sigma_x0_noise, 200, beta)
 
 			# Run an episode for a maximum of max_timesteps_per_episode timesteps
 			for ep_t in range(self.max_timesteps_per_episode):
@@ -363,8 +427,9 @@ class PPO:
 				# Note that rew is short for reward.
 				# action, log_prob = self.get_action(obs_n)
 				# action, log_prob = self.get_actionV2(obs_n)
-				#action, log_prob = self.get_actionV3(obs_n)
-				action, log_prob = self.get_actionV4(obs_n, ep_t)
+				# action, log_prob = self.get_actionV3(obs_n)
+				# action, log_prob = self.get_actionV4(obs_n, ep_t)
+				action, log_prob = self.get_actionV5(obs_n)
 
 				self.logger['pwm_signal'].append(action.item())
 
@@ -380,30 +445,31 @@ class PPO:
 				obs_n[2] = theta_ddot
 
 				#done = terminated or truncated or (np.absolute(action)>1)								# For Gymnasium version
-				done = terminated or truncated or (action>1) or (action<-0.5)								# For Gymnasium version
+				done = terminated or truncated or (action.item()>=0.5) or (action.item()<-0.5)								# For Gymnasium version
 
 				#rew = self.calculate_reward(obs_n, action, math.radians(self.target_angle))
-				rew = self.calculate_rewardV2(obs_n, action.item(), math.radians(self.target_angle))
+				#rew = self.calculate_rewardV2(obs_n, action.item(), math.radians(self.target_angle))
+				rew = self.calculate_rewardV3(obs_n, action.item(), math.radians(self.target_angle))
 
 				# Track recent reward, action, and action log probability
 				ep_rews.append(rew)
 				batch_acts.append(action)
 				batch_log_probs.append(log_prob)
 
-				if self.noise_suppressor:
-					self.sigma_x0_noise = self.sigma_x0_noise * 0.8
-					if self.noise_threshold > 2:
-						self.sigma_x0_noise = 0.7629
-						self.noise_threshold -= 1
-					elif self.noise_threshold <= 2 and self.noise_threshold > 0:
-						self.sigma_x0_noise = 0.488256
-						self.noise_threshold -= 1
-					elif self.noise_threshold == 0:
-						self.noise_threshold -= 1
-						print(" Manejo del ruido - normal")
-					self.last_noise = self.ou_process(0.02, 1, self.sigma_x0_noise, self.sigma_x0_noise, 200, beta)
-					self.noise_suppressor = False
-					print(" Factor sigma / x0 >>", self.sigma_x0_noise)
+				# if self.noise_suppressor:
+				# 	self.sigma_x0_noise = self.sigma_x0_noise * 0.8
+				# 	if self.noise_threshold > 2:
+				# 		self.sigma_x0_noise = 0.7629
+				# 		self.noise_threshold -= 1
+				# 	elif self.noise_threshold <= 2 and self.noise_threshold > 0:
+				# 		self.sigma_x0_noise = 0.488256
+				# 		self.noise_threshold -= 1
+				# 	elif self.noise_threshold == 0:
+				# 		self.noise_threshold -= 1
+				# 		print(" Manejo del ruido - normal")
+				# 	self.last_noise = self.ou_process(0.02, 1, self.sigma_x0_noise, self.sigma_x0_noise, 200, beta)
+				# 	self.noise_suppressor = False
+				# 	print(" Factor sigma / x0 >>", self.sigma_x0_noise)
 
 				# If the environment tells us the episode is terminated, break
 				if done:
@@ -412,6 +478,8 @@ class PPO:
 			# Track episodic lengths and rewards
 			batch_lens.append(ep_t + 1)
 			batch_rews.append(ep_rews)
+
+		self.last_obs = obs_n[:3]
 
 		# Reshape data as tensors in the shape specified in function description, before returning
 		batch_obs = torch.tensor(batch_obs, dtype=torch.float, device=device)
@@ -454,20 +522,33 @@ class PPO:
 		batch_rtgs = torch.tensor(batch_rtgs, dtype=torch.float, device=device)
 
 		return batch_rtgs
+	
+	def normal_dist_generator(self, mean, variance=0.0):
+		if variance != 0.0:
+			# Initialize the covariance matrix used to query the actor for actions
+			self.cov_var = torch.full(size=(self.act_dim,), fill_value=variance, device=device)
+			self.cov_mat = torch.diag(self.cov_var)
+		dist = MultivariateNormal(mean * 0, self.cov_mat)
 
-	def get_actionV3(self, obs):
+		return dist
+
+	def get_actionV5(self, obs):
+
 		mean = self.actor(obs)
-		beta = 0.99
-		
-		dist = MultivariateNormal(mean*0, self.cov_mat)
-		noise = dist.sample()
-		self.last_noise = self.last_noise * beta + (1.0 - beta)*noise
 
-		action = torch.clamp(mean + self.last_noise, min=0, max=2)
+		if (self.sample_counter >= self.dist_sample_counter) or (self.sample_counter == 0):
+			self.sample_noise = self.dist.sample()
+			self.sample_counter = 1
+		else:
+			self.sample_counter += 1
 
-		log_prob = dist.log_prob(action)
+		self.logger['noise_signal'].append(self.sample_noise.item())
 
-		return action.detach().cpu().numpy(), log_prob
+		action = torch.clamp(self.sample_noise + mean, min=0, max=0.3)
+
+		log_prob = self.dist.log_prob(action - mean)
+
+		return action.detach().cpu().numpy(), log_prob.detach()
 
 	def get_actionV4(self, obs, ep_t):
 		mean = self.actor(obs)
@@ -555,6 +636,8 @@ class PPO:
 
 		# Sample an action from the distribution
 		action = dist.sample()
+		
+		self.logger['noise_signal'].append((mean - action).item())
 		action = torch.clamp(action, min=0, max=0.25)
 
 		# Calculate the log probability for that action
@@ -597,6 +680,19 @@ class PPO:
 				index += 1
 
 		return V, torch.tensor(log_probs, dtype=float, device=device)
+
+	def evaluateV5(self, batch_obs, batch_acts):
+
+		V = self.critic(batch_obs).squeeze()
+
+		mean = self.actor(batch_obs)
+		mean = torch.clamp(mean, min=0.0, max=0.3)
+
+		dist = self.normal_dist_generator(mean)
+
+		log_probs = dist.log_prob(batch_acts - mean)
+
+		return V, log_probs
 
 	def evaluate(self, batch_obs, batch_acts):
 		"""
@@ -698,7 +794,8 @@ class PPO:
 		avg_actor_loss = np.mean([losses.float().cpu().mean().numpy() for losses in self.logger['actor_losses']])
 		avg_critic_loss = np.mean([losses.float().cpu().mean().numpy() for losses in self.logger['critic_losses']])
 
-		avg_pwm_signal = np.mean(self.logger['pwm_signal'])
+		avg_pwm_signal = np.median(self.logger['pwm_signal'])
+		avg_noise_signal = np.mean(self.logger['noise_signal'])
 
 		# Round decimal places for more aesthetic logging messages
 		avg_ep_lens = str(round(avg_ep_lens, 2))
@@ -713,32 +810,6 @@ class PPO:
 		average_len.append(float(avg_ep_lens))
 
 		print(f" >> Iteration #{i_so_far} >> Timesteps: {t_so_far}/{total_timesteps} >> Target angle: {self.target_angle}")
-
-		# plt.figure(1,figsize=(10, 10))
-
-		# # Clear previous plot
-		# plt.clf()
-
-		# plt.subplot(2, 2, 1)
-		# plt.plot(timesteps_sofar, average_reward, color="blue")
-		# plt.title("Training rewards (average)")
-		# plt.grid(True)
-		# plt.subplot(2, 2, 2)
-		# plt.plot(timesteps_sofar, average_loss, color="green")
-		# plt.title("Average Loss")
-		# plt.grid(True)
-		# plt.subplot(2, 2, 3)
-		# plt.plot(timesteps_sofar, time_for_iteration, color="red")
-		# plt.title("Time for iteration (seg)")
-		# plt.grid(True)
-		# plt.subplot(2, 2, 4)
-		# plt.plot(timesteps_sofar, average_len, color="purple")
-		# plt.title("Average Batch Length")
-		# plt.grid(True)
-		# plt.pause(0.01)
-		# if is_ipython and (t_so_far < total_timesteps):
-		# 	display.display(plt.gcf())
-		# 	display.clear_output(wait=True)
   
 		avg_theta_error_cost = np.mean(self.logger['theta_error_cost'])
 		avg_velocity_cost = np.mean(self.logger['velocity_cost'])
@@ -750,13 +821,19 @@ class PPO:
 			 "Average Critic Loss": float(avg_critic_loss), 
 			 "Iteration/Epoch took": float(delta_t), 
 			 "Average Batch Length": float(avg_ep_lens),
-			 "Last Noise": float(self.last_noise.mean()),
+			 #"Last Noise": float(self.last_noise.mean()),
 			 "avg_PWM_signal": avg_pwm_signal,
-			 
+			 "avg_Noise_signal": avg_noise_signal,
+			 "N_static_samples": self.dist_sample_counter,
+
 			 'avg_theta_error_cost': avg_theta_error_cost,
 			 'avg_velocity_cost': avg_velocity_cost,
 			 'avg_extra_cost': avg_extra_cost,
 			 'theta_good': avg_theta_good,
+
+			 "current angle": math.degrees(self.last_obs[0]),
+             "velocity pole": self.last_obs[1],
+             "acceleration pole": self.last_obs[2],
 			 })
 		
 		# path_to_video = "video/ppo_pahm.mp4"
@@ -767,6 +844,7 @@ class PPO:
 		self.logger['batch_rews'] = []
 		self.logger['actor_losses'] = []
 		self.logger['pwm_signal'] = []
+		self.logger['noise_signal'] = []
 
 		self.logger['theta_error_cost'] = []
 		self.logger['velocity_cost'] = []
