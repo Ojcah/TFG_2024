@@ -206,6 +206,13 @@ class LearnedPAHM(gym.Env):
         self.surf = pygame.Surface((self.screen_dim, self.screen_dim))
         self.surf.fill((255, 255, 255))
 
+        font = pygame.font.Font(None, 24)                                    ## Added
+        angle_text = f"Angle: {(self.state[0]*180/np.pi):.2f}"               ## Added
+        text_surface = font.render(angle_text, True, (0,0,0))                ## Added
+        text_surface = pygame.transform.flip(text_surface, False, True)      ## Added
+        text_pos = (10, 5)                                                   ## Added
+        self.surf.blit(text_surface, text_pos)                               ## Added
+
         bound = 2.2
         scale = self.screen_dim / (bound * 2)
         offset = self.screen_dim // 2
