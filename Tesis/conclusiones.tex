@@ -1,5 +1,10 @@
-\chapter{Conclusiones}
+\chapter{Conclusiones y recomendaciones}
+\label{ch:conclusion}
 
+
+\section{Conclusiones}
+
+\begin{comment}
 Las conclusiones no son un resumen de lo realizado sino a lo que ha llevado el
 desarrollo de la tesis, no perdiendo de vista los objetivos planteados desde
 el principio y los resultados obtenidos.  En otras palabras, qué se concluye o
@@ -13,4 +18,26 @@ aportes específicos del trabajo.
 
 Es usual concluir con lo que queda por hacer, o sugerencias para mejorar los
 resultados.
+
+\end{comment}
+
+
+
+En el presente documento se demostraron los primeros pasos en la implementación de modelos de aprendizaje reforzado en aplicaciones de control de plantas mediante modelos entrenados con el método \textit{deep Q-networks} (DQN) y optimización de política próxima (PPO).
+
+La selección de los métodos de RL utilizados, respondió directamente a las necesidades expuestas en la matriz de Pugh de la tabla \ref{tab:MatrizPugh}. La implementación de cada método requirió ajustes, como la necesidad de la discretización del espacio de acciones a $10$ posibles en DQN o los cambios efectuados al proceso de entrenamiento base de cada modelo, especialmente al método PPO.
+
+Con base en los resultados expuestos en el capítulo \ref{ch:resultados}, se debe resaltar el papel del diseño de la función de recompensa para lograr resultados satisfactorios con algoritmos de aprendizaje reforzado. Invertir tiempo y esfuerzo en diseñar funciones de recompensa informativas y equilibradas puede mejorar significativamente la eficiencia del entrenamiento, el rendimiento y la eficacia general de los agentes.
+
+En el presente documento los procesos de control del modelo DQN y PPO muestran un comportamiento subamortiguado, lo cual resalta la necesidad de ajustes de la función de recompensa para llegar al ángulo objetivo solicitado o inclusive un porcentaje de error de estado estacionario por debajo del $10 \%$.
+
+El trabajo futuro podría explorar técnicas más sofisticadas de modelado de recompensas e investigar cómo el diseño de la función de recompensa interactúa con diferentes configuraciones de hiperparámetros para los algoritmos DQN y PPO.
+
+
+
+\section{Recomendaciones}
+
+Se recomienda tomar la base expuesta en el presente proyecto y explorar el uso de otros métodos como el DDPG y el SAC, que cuentan con contenido y registro de ser capaces de controlar la planta en cuestión. Por consiguiente, es necesario el acceso a un equipo computacional con características o recursos suficientes para la implementación de dichos modelos.
+
+Dado que se trata de un proyecto con los primeros pasos en implementación virtual, se recomienda ajustar hiperparámetros en diferentes escalas y el ajuste a la función de recompensa para obtener resultados previos representativos a la hora de probar el modelo con la planta real PAMH y evitar posibles daños a la integridad de la planta. 
 

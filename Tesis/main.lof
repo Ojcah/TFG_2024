@@ -1,10 +1,28 @@
 \babel@toc {spanish}{}\relax 
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {1.1}{\ignorespaces Proyección de la evolución de los sistemas de control. Fuente: \blx@tocontentsinit {0}\cite {Dorf}.\relax }}{2}{figure.caption.11}%
+\contentsline {figure}{\numberline {1.2}{\ignorespaces Diagrama de etapas involucradas en la solución. En gris se muestran las etapas realizadas en \blx@tocontentsinit {0}\cite {JorgeBrenes}. En verde se muestran las etapas correspondientes a este trabajo y en blanco las etapas a realizar en un trabajo futuro. Adaptado de: \blx@tocontentsinit {0}\cite {JorgeBrenes}.\relax }}{3}{figure.caption.12}%
+\contentsline {figure}{\numberline {1.3}{\ignorespaces Diagrama de control para la PAHM. La línea punteada de color rojo muestra el bloque a dearrollar. Fuente: \blx@tocontentsinit {0}\cite {JorgeBrenes}.\relax }}{3}{figure.caption.13}%
+\contentsline {figure}{\numberline {1.4}{\ignorespaces Etapas del entrenamiento del modelo de RL usando la red neuronal imitadora (RNAM) para simular el PAMH real. La línea punteada de color rojo muestra el bloque de implementación y entrenamiento. En gris el producto del trabajo en \blx@tocontentsinit {0}\cite {JorgeBrenes}.\relax }}{4}{figure.caption.14}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Modelo simplificado del PAMH.\relax }}{3}{figure.caption.9}%
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Resumen de categorización del RL \textcolor {SkyBlue}{DataScience}.\relax }}{4}{figure.caption.10}%
-\contentsline {figure}{\numberline {2.3}{\ignorespaces Esquemático del control predictivo del modelo (MPC) \textcolor {SkyBlue}{DataScience}.\relax }}{5}{figure.caption.12}%
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Modelo simplificado del PAMH. Fuente: \blx@tocontentsinit {0}\cite {PAMHppt}\relax }}{5}{figure.caption.15}%
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Modelo de neurona artificial. Fuente: \blx@tocontentsinit {0}\cite {RNACaravaca}.\relax }}{7}{figure.caption.16}%
+\contentsline {figure}{\numberline {2.3}{\ignorespaces Modelo red neuronal artificial. Fuente: \blx@tocontentsinit {0}\cite {DataScience}.\relax }}{8}{figure.caption.17}%
+\contentsline {figure}{\numberline {2.4}{\ignorespaces Etapas básicas del RL. Fuente: \blx@tocontentsinit {0}\cite {DataScience}.\relax }}{9}{figure.caption.18}%
+\contentsline {figure}{\numberline {2.5}{\ignorespaces Efecto de la selección de la probabilidad $\varepsilon $ en el desempeño del agente. Fuente \blx@tocontentsinit {0}\cite {RLIntro}.\relax }}{12}{figure.caption.25}%
+\contentsline {figure}{\numberline {2.6}{\ignorespaces Resumen de categorización del RL \blx@tocontentsinit {0}\cite {DataScience}.\relax }}{12}{figure.caption.27}%
 \addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Función de recompensa con $\theta _{objetivo}=45^o$.\relax }}{21}{figure.caption.28}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces $\theta _{correcto}$ con $\theta _{objetivo}=45^o$.\relax }}{21}{figure.caption.29}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Estructura de la RNA utilizada en el método DQN.\relax }}{23}{figure.caption.32}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Estructura de la RNA utilizada en el método PPO.\relax }}{24}{figure.caption.35}%
 \addvspace {10\p@ }
-\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Duración del episodio en prueba de implementación DQN con entorno \textit {CartPole}.\relax }}{27}{figure.caption.37}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Proceso de entrenamiento con la implementación PPO con entorno \textit {Pendulum}.\relax }}{27}{figure.caption.38}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Proceso de entrenamiento recompensa-pérdida de la implementación DQN con entorno PAMH.\relax }}{29}{figure.caption.39}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Últimos ángulos muestreados de los episodios del entrenamiento DQN con PAMH. La línea tenue en el fondo representa la señal completa, y la línea oscura dicha señal filtrada para rescatar su tendencia.\relax }}{30}{figure.caption.40}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Recompensa promedio de los entrenamientos con diferentes valores de varianza $\sigma ^2$. La curva rosa contempla $\sigma ^2=0.001$, la curva verde contempla $\sigma ^2=0.01$ y la curva morada contempla el barrido en el rango de $\sigma ^2=[0.01, \,\, 0.001]$. Las líneas tenues en el fondo representan la señal completa, y las líneas oscuras dichas señales filtradas para rescatar sus tendencias.\relax }}{30}{figure.caption.41}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Últimos ángulos muestreados de los episodios en el entrenamiento. La curva rosa contempla $\sigma ^2=0.001$, la curva verde contempla $\sigma ^2=0.01$ y la curva morada contempla el barrido en el rango de $\sigma ^2=[0.01, \,\, 0.001]$. Las líneas tenues en el fondo representan la señal completa, y las líneas oscuras dichas señales filtradas para rescatar sus tendencias.\relax }}{31}{figure.caption.42}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Curva de respuesta del modelo DQN ángulo respecto al tiempo.\relax }}{31}{figure.caption.43}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Curva de respuesta del modelo PPO ángulo respecto al tiempo.\relax }}{32}{figure.caption.44}%
 \addvspace {10\p@ }

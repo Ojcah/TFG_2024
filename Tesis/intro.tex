@@ -6,6 +6,8 @@
 %% $Id: intro.tex 1477 2010-07-28 21:34:43Z palvarado $
 %% ---------------------------------------------------------------------------
 
+\begin{comment}
+
 $********************************************$\\
 \textbf{Alfonso Chacón} 
 
@@ -39,14 +41,88 @@ El diagrama que pone de la solución es más bien un esquema de la secuencia de 
 
 $********************************************$\\
 
+\end{comment}
+
 \chapter{Introducción}
 \label{chp:intro}
+
+\section{Aprendizaje automático en control}
+
+Los sistemas de control automático en la ingeniería buscan satisfacer criterios de optimalidad preestablecidos. Algunos ejemplos de aplicación de técnicas de control son los movimientos precisos de los brazos robóticos en una planta de ensamblaje, la autonomía de procesos en los vehículos automotores y eléctricos, el funcionamiento de los reactores químicos o nucleares, el funcionamiento de equipos médicos, entre otros, todos buscando garantizar comportamientos que optimicen el rendimiento o costo de recursos \cite{Kuo}.
+
+Con el paso de los años el control automático ha reaccionado a cambios y demandas que la industria exige. Se busca optimizar funciones de manera que se alcancen capacidades de autonomía y flexibilidad, mientras se asegura la precisión y eficiencia de los sistemas. Sin embargo, las técnicas utilizadas en control en general logran solo una de estas capacidades. Por ejemplo, los sistemas de control programables ofrecen flexibilidad en el sistema, pero si se cambia ligeramente la configuración de la planta, el control deja de funcionar, evidenciando su falta de autonomía; y por otro lado, las automatizaciones permiten la autonomía de los equipos, pero únicamente responden a un tipo de maquinaria, por lo que no ofrecen flexibilidad \cite{Dorf}. La figura \ref{fig:Controlproj} ilustra que las nuevas tecnologías en robótica e inteligencia artificial IA buscan ofrecer las dos capacidades mencionadas y de manera consecuente, llevan a un salto de calidad, seguridad y rentabilidad \cite{Dorf} \cite{AI}.
+
+\begin{figure}[hh]
+	\centering
+	\includegraphics[scale=0.4]{fig/new/Proyección.png}
+	\caption{Proyección de la evolución de los sistemas de control. Fuente: \cite{Dorf}.}
+	\label{fig:Controlproj}
+\end{figure}
+
+Los métodos clásicos de diseño en control, se basan a menudo en modelos matemáticos lineales, que no aplican a sistemas que presentan dinámicas no lineales o perturbaciones externas significativas. Dentro de los beneficios de utilizar IA para el control de equipos o sistemas se tiene, primero, la adaptabilidad en entornos inciertos. Las plantas a controlar, incluyendo robots, deberán operar en ambientes con obstáculos o cambios imprevisibles. Los métodos de control tradicionales se basan en respuestas preprogramadas, que pueden no funcionar en situaciones imprevistas. El aprendizaje reforzado (RL, por sus siglas en inglés) permite a ``agentes'' aprender por ensayo y error, adaptando su comportamiento en función de recompensas recibidas por acciones específicas. Esto los hace menos susceptibles a fallar a la hora de manejar lo inesperado, e incluso habilita a los sistemas a continuar aprendiendo durante su operación; pueden optimizar su comportamiento aun si su entorno cambia \cite{Cable-Driven} \cite{SoftComputing}.
+
+Tareas usualmente invariantes junto con una programación estática, dificultan al controlador el adaptarse a situaciones imprevistas o descomponer tareas complejas en una serie de acciones más sencillas, resultando en todo un reto para el desarrollo con métodos de control tradicionales. El RL destaca en este tipo de situaciones. Aprender de las recompensas asociadas a cada acción permite que el sistema pueda desarrollar una estrategia o política para realizar trabajos de especial cuidado, incluso sin programación explícita para cada paso \cite{Cable-Driven}.
+
+Al considerar sistemas no lineales de alta complejidad, el desarrollo de sistemas de control clásico moderno requieren conocimientos especializados, punto en el que las nuevas prácticas del RL alivianan esta carga. Al proporcionar una estructura general para el aprendizaje, el RL permite a los sistemas adquirir las habilidades necesarias a través de la interacción con el entorno \cite{SoftComputing}.
+
+
+\section{Control con aprendizaje reforzado}
+
+En el Laboratorio de Procesamiento de Imágenes y Señales (SIP-Lab) de la Escuela de Ingeniería Electrónica del ITCR se experimenta con la aplicación de RL en el control para su posterior incorporación en actividades de investigación y docencia.
+
+En la figura \ref{fig:DiagProyecto}, se ilustran las fases del marco experimental a utilizar. Como planta física se emplea un péndulo amortiguado con motor y hélice (PAMH). Como primer paso, se evaluó una red neuronal imitadora de la planta física como parte del proyecto de graduación de Brenes Alfaro \cite{JorgeBrenes}, que resultó en un modelo con características similares a la planta real. Este modelo permite experimentar sin riesgo de dañar la planta física real durante los procesos de aprendizaje
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/new/DiagProyecto.png}
+    \caption{Diagrama de etapas involucradas en la solución. En gris se muestran las etapas realizadas en \cite{JorgeBrenes}. En verde se muestran las etapas correspondientes a este trabajo y en blanco las etapas a realizar en un trabajo futuro. Adaptado de: \cite{JorgeBrenes}.}
+    \label{fig:DiagProyecto}
+\end{figure}
+
+Ya que se cuenta con un modelo imitador, el siguiente paso en el desarrollo del proyecto correspondiente al entrenamiento de un modelo controlador de la planta de laboratorio. En la figura \ref{fig:DiagramaGeneral} se muestra la estructura general del sistema controlador, resaltada la sección que corresponde al presente proyecto, que se utilizará con los interruptores A y C abiertos y B cerrado. En iteraciones posteriores corresponderá desconectar B y conectar la planta real con A.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/new/DiagramaGeneralv2.png}
+    \caption{Diagrama de control para la PAHM. La línea punteada de color rojo muestra el bloque a dearrollar. Fuente: \cite{JorgeBrenes}.}
+    \label{fig:DiagramaGeneral}
+\end{figure}
+
+
+
+\section{Modelo controlador de planta de laboratorio PAMH con RL}
+
+Este trabajo corresponde entonces a una segunda etapa de un proyecto de control del PAMH mediante técnicas de RL y redes neuronales artificiales. En la figura \ref{fig:DiagEtapas} se muestra la distribución de las etapas del presente trabajo. El primer paso consistie en recopilar, estudiar y calificar los modelos de RL para su selección como método a implementar. Seguidamente se entrena el modelo incorporando la implementación de un modelo RNAM virtual de la planta, con ajustes a sus  hiperparámetros. Por último, se evalúa el desempeño en el control del entorno PAMH.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{fig/new/DiagEtapas.png}
+    \caption{Etapas del entrenamiento del modelo de RL usando la red neuronal imitadora (RNAM) para simular el PAMH real. La línea punteada de color rojo muestra el bloque de implementación y entrenamiento. En gris el producto del trabajo en \cite{JorgeBrenes}.}
+    \label{fig:DiagEtapas}
+\end{figure}
+
+
+\section{Objetivos y estructura del documento}
+
+El objetivo general del presente proyecto es diseñar un sistema de aprendizaje automático para el control del ángulo de una planta no lineal PAMH. El primer objetivo específico se enfoca en la selección de un método de aprendizaje reforzado apto para el control no lineal. Esto último es necesario por las características del sistema PAMH. En la selección se deben tomar en cuenta los recursos y los algoritmos de RL disponibles; por lo tanto, es necesario calificar los métodos planteados en primera mano y su congruencia respecto al objetivo a cumplir.
+
+Seguidamente, el segundo objetivo específico es implementar el método de RL seleccionado, utilizando el modelo mimetizador (RNAM) como planta a controlar. Es necesario hacer los ajustes respectivos al algoritmo y especificar la función de recompensa del método para lograr controlar el ángulo del péndulo.
+
+Como tercer objetivo se deben evaluar los resultados del modelo de RL para el control de la RNAM. Se deben identificar las deficiencias y ventajas del caso.
+
+El presente documento contiene en su capítulo \ref{ch:teoria} los principios teóricos del funcionamiento del aprendizaje reforzado, así como una explicación de los métodos utilizados. En el capítulo \ref{ch:ControlPAMH} se describe la secuencia de tareas realizadas para alcanzar los objetivos específicos mencionados anteriormente.
+
+Por último, el capítulo \ref{ch:resultados} y el capítulo \ref{ch:conclusion} muestran los resultados de los procesos de entrenamiento con las valoraciones de estos y se plantean conclusiones y recomendaciones.
+
+
+
+
+
+
 
 
 
 \begin{comment}
-
-
 
 \section{Entorno del proyecto}
 
@@ -220,10 +296,7 @@ En la Figura \ref{fig:Diagbloques} se muestra el diagrama de bloques de la soluc
 
 \begin{comment}
 Bajo dicha modalidad de trabajo se espera el cumplimiento de algunas condiciones necesarias para un correcto entrenamiento y validación del modelo a elaborar, las cuales se muestran en el cuadro \ref{tab:condiciones}
-\end{comment}
-Bajo dicha modalidad de trabajo se espera el cumplimiento de algunos requisitos necesarios para un correcto entrenamiento y validación del modelo a elaborar, los cuales se muestran en el cuadro \ref{tab:requisitos}
 
-\begin{comment}
 \begin{table}[!h]
 \caption{Conjunto de condiciones mínimas necesarias para un entrenamiento eficiente del modelo.}
 \label{tab:condiciones}
@@ -287,24 +360,6 @@ Diseñar un sistema de aprendizaje automático para el control del ángulo de un
 
 
 \end{comment}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{*************************************************}
 
 
 
