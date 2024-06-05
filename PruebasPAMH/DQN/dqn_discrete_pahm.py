@@ -59,7 +59,6 @@ class DQN:
         # Extract environment information
         self.env = env
         self.obs_dim = env.observation_space.shape[0] + 3
-        #self.act_dim = env.action_space.shape[0]
         self.act_dim = self.num_intervals
 
 		 # Initialize actor and critic networks
@@ -72,6 +71,9 @@ class DQN:
 
         self.steps_done = 0
         self.noise_amplitude = 6
+        self.variance = 0.005
+
+        self.pwm_logger = torch.zeros(10, dtype=torch.long, device=device)
 
         # This logger will help us with printing out summaries of each iteration
         self.logger = {
@@ -96,7 +98,7 @@ class DQN:
         
         theta_error_cost = (theta_error ** 2)
         
-        velocity_cost = 100 * (theta_dot ** 2)
+        velocity_cost = 10 * (theta_dot ** 2)
 
         if theta_error <= 0.0873: # ~ 5°
             theta_good = np.max([0.0, 1.0 - theta_error]) * (1.0 - np.abs(velocity_cost))
@@ -124,14 +126,23 @@ class DQN:
         
         velocity_cost = 100 * (theta_dot ** 2)
 
-        theta_good = np.max([0.0, 1.0 - theta_error_cost]) * (1.0 - np.abs(velocity_cost))  
+        theta_good = 2 * np.exp(- theta_error_cost/self.variance) * (1.0 - np.abs(velocity_cost))
+
+        pwm_repeated = torch.unique(self.pwm_logger).cpu().numpy().size
+        # if pwm_repeated <= 2:
+        if pwm_repeated == 1:
+            extra_cost = 2.0
+        else:
+            extra_cost = 0.0
 
         self.logger['theta_error_cost'].append(-theta_error_cost)
         self.logger['velocity_cost'].append(-velocity_cost)
-        self.logger['theta_good'].append(theta_good)
+        self.logger['theta_good'].append(theta_good)     
 
+        #reward_n = np.min([-theta_error_cost, -extra_cost]) + theta_good
         reward_n = -theta_error_cost + theta_good
-        
+        # reward_n = np.min([-theta_error_cost, -velocity_cost])
+
         return torch.tensor([reward_n.item()], device=device)
     
 
@@ -140,10 +151,8 @@ class DQN:
             AAAAAAA
         """
         # Calcula el índice de la acción discreta
-        #discrete_action = int(action.item() * self.num_intervals)
-        #discrete_action = int(action.item() * 18)
         discrete_action = int(action.item() * 36)
-        #return torch.clamp(torch.tensor(discrete_action, device=device), min=0, max=self.num_intervals-1)
+        # discrete_action = int((action.item() ** 2) / 0.007)
         return torch.clamp(torch.tensor(discrete_action, device=device), min=0, max=9)
     
     def undiscretize_action(self, discrete_action):
@@ -151,9 +160,11 @@ class DQN:
             BBBBBBB
         """
         # Calcula el valor normalizado dentro del rango [0, 1]
-        #continuous_action = discrete_action / self.num_intervals
-        #continuous_action = discrete_action / 18
         continuous_action = discrete_action / 36
+        # continuous_action = np.sqrt(0.007 * discrete_action)
+        if continuous_action > 0.25:
+            continuous_action = np.array([[0.25]])
+
         return continuous_action
 
     def learn(self):
@@ -169,6 +180,9 @@ class DQN:
         target_step = self.num_episodes//len(targets_options)
         i_target = 0
         u_option = 1
+
+        pole_plots = np.array([0.0, 0.0, 0.0, 0.0])
+        step = 0
 
         ep_rews = []
 
@@ -194,7 +208,8 @@ class DQN:
             last_vel = 0.0
             theta_ddot = 0.0
 
-            self.theta_good = 0.0
+            last_reward = torch.tensor([0.0], device=device)
+            reward = torch.tensor([0.0], device=device)
 
             obs, info = self.env.reset()
             obs_n = np.array([obs.item(), 0.0, 0.0, math.radians(self.target_angle)])
@@ -210,7 +225,9 @@ class DQN:
                 last_obs = obs.item()
                 last_vel = obs_n[0, 1].item()
 
-                obs, reward, terminated, truncated, _ = self.env.step(action_step[0])
+                last_reward = reward
+
+                obs, reward_base, terminated, truncated, _ = self.env.step(action_step[0])
 
                 obs_n[0, 0] = obs.item()
                 theta_dot = obs.item() - last_obs
@@ -223,6 +240,7 @@ class DQN:
                 #reward = self.calculate_reward(obs_n[0].cpu().detach().numpy(), action.item(), math.radians(self.target_angle))
                 reward = self.calculate_rewardV2(obs_n[0].cpu().detach().numpy(), math.radians(self.target_angle))
 
+                # reward_sh = reward - last_reward
                 # ///////////////////////////////////////////////////////////
 
                 done = terminated or truncated or (t==200)
@@ -230,7 +248,11 @@ class DQN:
 
                 ep_rews.append(reward[0].item())
                 reward = torch.tensor([reward], device=device)
+                # ep_rews.append(reward_sh[0].item())
+                # reward_shaping = torch.tensor([reward_sh], device=device)
                 ## *********************************************************************************
+
+                pole_plots = obs_n[0].cpu().detach().numpy()
 
                 if terminated:
                     next_state = None
@@ -240,6 +262,7 @@ class DQN:
 
                 # Store the transition in memory
                 self.memory_obj.push(obs_n, action, next_state, reward)
+                # self.memory_obj.push(obs_n, action, next_state, reward_shaping)
 
                 # Move to the next state
                 obs_n = next_state
@@ -258,6 +281,8 @@ class DQN:
                 if done:
                     self.logger['rews'].append(ep_rews)
                     ep_rews = []
+                    step = t
+                    self.pwm_logger.zero_()
                     break
             
             if i_episode == (self.num_episodes//2):
@@ -267,9 +292,13 @@ class DQN:
                 self.noise_amplitude = 2
                 print(f" >> Máximo ruido agregado : {self.noise_amplitude}")
 
-            self._log_summary(i_episode)
+            self._log_summary(i_episode, pole_plots, step)
             ## ***********************************************SAVE CHECKPOINTS*********************************************
-            if (epoch == epoch_save_checkspoints) or ((i_episode+1) == self.num_episodes):
+            if (epoch == epoch_save_checkspoints):
+                epoch = 1
+                # Guardar el modelo
+                torch.save(self.policy_net.state_dict(), f"Checkpoints/dqn_actor_{i_episode}.pth")
+            elif ((i_episode+1) == self.num_episodes):
                 epoch = 1
                 # Guardar el modelo
                 torch.save(self.policy_net.state_dict(), f"actor-critic/dqn_actor.pth")
@@ -349,10 +378,8 @@ class DQN:
         self.steps_done += 1
         # *************************************************************************
         with torch.no_grad():
-            #value_discrete = self.policy_net(state).max(1).indices.view(1, 1)
             value_discrete = torch.argmax(self.policy_net(state), dim=1)
         if sample > eps_threshold:
-            #newvalue = torch.clamp(value_discrete, min=0, max=self.num_intervals-1)
             newvalue = torch.clamp(value_discrete, min=0, max=9)
             self.logger['noise'].append(0.0)
 
@@ -360,20 +387,9 @@ class DQN:
             noise = random.randint(-self.noise_amplitude, self.noise_amplitude)
             self.logger['noise'].append(noise)
             newvalue = torch.clamp(value_discrete + noise, min=0, max=9)
-
-            # noise = np.random.normal(0, 0.15, size=None)
-            # self.logger['noise'].append(noise)
-            # value_noise = self.undiscretize_action(value_discrete) + noise
-            # newvalue = self.discretize_action(value_noise)
-
-            # noise = random.uniform(0.0, 1.0)
-            # noise_val = self.undiscretize_action(value_discrete) - noise
-            # self.logger['noise'].append(noise_val)
-            # newvalue = self.discretize_action(torch.tensor([noise], dtype=float, device=device))
-
-            # newvalue = self.discretize_action(self.env.action_space.sample())
-            # self.logger['noise'].append(1.0)
         
+        self.pwm_logger = torch.roll(self.pwm_logger, -1)
+        self.pwm_logger[-1] = newvalue        
         # *************************************************************************
         if newvalue == 0:
             return torch.tensor([[0]], dtype=torch.long, device=device)
@@ -420,7 +436,7 @@ class DQN:
             torch.manual_seed(self.seed)
             print(f"Successfully set seed to {self.seed}")
 
-    def _log_summary(self, i_episode):
+    def _log_summary(self, i_episode, obs, step):
         """
 			Print to stdout what we've logged so far in the most recent batch.
 
@@ -445,7 +461,7 @@ class DQN:
         loss_means = torch.mean(losses, dtype=float)
         noise_means = torch.mean(noises, dtype=float)
 
-        avg_pwm_signal = np.mean(self.logger['pwm_signal'])
+        avg_pwm_signal = np.median(self.logger['pwm_signal'])
 
         avg_theta_error_cost = np.mean(self.logger['theta_error_cost'])
         avg_velocity_cost = np.mean(self.logger['velocity_cost'])
@@ -462,12 +478,16 @@ class DQN:
         wandb.log({"Average Reward": rew_means.item(),
                        "Average Loss":  loss_means.item(),
                        "Average Noise":  noise_means.item(),
-                       "Episode length": delta_t,
+                       "Episode length": step,
                        "Average PWM": avg_pwm_signal,
                        
                        "avg_theta_error_cost": avg_theta_error_cost,
                        "avg_velocity_cost": avg_velocity_cost,
                        "avg_theta_good": avg_theta_good,
+
+                       "current angle": math.degrees(obs[0]),
+                       "velocity pole": obs[1],
+                       "acceleration pole": obs[2],
                        })
             
         self.logger['rews'] = []

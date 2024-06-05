@@ -33,16 +33,24 @@ class FeedForwardNN(nn.Module):
 	"""
     def __init__(self, n_observations, n_actions):
         super(FeedForwardNN, self).__init__()
-        self.layer1 = nn.Linear(n_observations, 128)
+        self.layer1 = nn.Linear(n_observations, 64)
         self.activation1 = nn.ReLU()
-        self.layer2 = nn.Linear(128, 128)
+        self.layer2 = nn.Linear(64, 128)
         self.activation2 = nn.ReLU()
-        self.output_layer = nn.Linear(128, n_actions)
+        self.layer3 = nn.Linear(128, 128)
+        self.activation3 = nn.ReLU()
+        self.layer4 = nn.Linear(128, 64)
+        self.activation4 = nn.ReLU()
+        self.output_layer = nn.Linear(64, n_actions)
     def forward(self, x):
         x = self.layer1(x)
         x = self.activation1(x)
         x = self.layer2(x)
         x = self.activation2(x)
+        x = self.layer3(x)
+        x = self.activation3(x)
+        x = self.layer4(x)
+        x = self.activation4(x)
         return self.output_layer(x)
     
 ## **************************************************************************************
