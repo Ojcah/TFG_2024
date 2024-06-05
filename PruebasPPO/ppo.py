@@ -436,31 +436,31 @@ class PPO:
 
 		print(f" >> Iteration #{i_so_far} >> Average reward: {avg_ep_rews}")
 
-		# plt.figure(figsize=(10, 10))
+		plt.figure(figsize=(10, 10))
 
-		# # Clear previous plot
-		# plt.clf()
+		# Clear previous plot
+		plt.clf()
 
-		# plt.subplot(2, 2, 1)
-		# plt.plot(timesteps_sofar, average_reward, color="blue")
-		# plt.title("Training rewards (average)")
-		# plt.grid(True)
-		# plt.subplot(2, 2, 2)
-		# plt.plot(timesteps_sofar, average_loss, color="green")
-		# plt.title("Average Loss")
-		# plt.grid(True)
-		# plt.subplot(2, 2, 3)
-		# plt.plot(timesteps_sofar, time_for_iteration, color="red")
-		# plt.title("Time for iteration (seg)")
-		# plt.grid(True)
-		# plt.subplot(2, 2, 4)
-		# plt.plot(timesteps_sofar, average_len, color="purple")
-		# plt.title("Average Episodic Length")
-		# plt.grid(True)
-		# plt.pause(0.01)
-		# if is_ipython and (t_so_far < total_timesteps):
-		# 	display.display(plt.gcf())
-		# 	display.clear_output(wait=True)
+		plt.subplot(2, 2, 1)
+		plt.plot(timesteps_sofar, average_reward, color="blue")
+		plt.title("Training rewards (average)")
+		plt.grid(True)
+		plt.subplot(2, 2, 2)
+		plt.plot(timesteps_sofar, average_loss, color="green")
+		plt.title("Average Loss")
+		plt.grid(True)
+		plt.subplot(2, 2, 3)
+		plt.plot(timesteps_sofar, time_for_iteration, color="red")
+		plt.title("Time for iteration (seg)")
+		plt.grid(True)
+		plt.subplot(2, 2, 4)
+		plt.plot(timesteps_sofar, average_len, color="purple")
+		plt.title("Average Episodic Length")
+		plt.grid(True)
+		plt.pause(0.01)
+		if is_ipython and (t_so_far < total_timesteps):
+			display.display(plt.gcf())
+			display.clear_output(wait=True)
 
 
 		# # Print logging statements
@@ -474,10 +474,10 @@ class PPO:
 		# print(f"------------------------------------------------------", flush=True)
 		# print(flush=True)
   
-		writer.add_scalar("Average Reward", float(avg_ep_rews), float(t_so_far))
-		writer.add_scalar("Average Loss", float(avg_actor_loss), float(t_so_far))
-		writer.add_scalar("Time for iteration (seg)", float(delta_t), float(t_so_far))
-		writer.add_scalar("Average Episodic Length", float(avg_ep_lens), float(t_so_far))
+		# writer.add_scalar("Average Reward", float(avg_ep_rews), float(t_so_far))
+		# writer.add_scalar("Average Loss", float(avg_actor_loss), float(t_so_far))
+		# writer.add_scalar("Time for iteration (seg)", float(delta_t), float(t_so_far))
+		# writer.add_scalar("Average Episodic Length", float(avg_ep_lens), float(t_so_far))
 
 		# Reset batch-specific logging data
 		self.logger['batch_lens'] = []

@@ -16,8 +16,8 @@ import numpy as np
 # *******************************************************************************************
 # *******************************************************************************************
 
-env = gym.make("CartPole-v1")
-#env = gym.make("CartPole-v1", render_mode="human")
+#env = gym.make("CartPole-v1")
+env = gym.make("CartPole-v1", render_mode="human")
 
 # set up matplotlib
 is_ipython = 'inline' in matplotlib.get_backend()
