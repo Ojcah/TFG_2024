@@ -112,8 +112,12 @@ def _log_summary(ep_len, ep_ret, ep_num, target_angle, time_limits, just_angle):
 				None
 		"""	
 		# Rise time
-		delta_t = (time_limits[1]- time_limits[0]) / 1e9
-		deltas = np.linspace(0.0, delta_t, ep_len+1)
+		# delta_t = (time_limits[1]- time_limits[0]) / 1e9
+		# deltas = np.linspace(0.0, delta_t, ep_len+1)
+		delta_t = 20 / 1e3 # son 20ms
+		deltas = np.linspace(0.0, delta_t * (ep_len+1), num=(ep_len+1))
+
+
 
 		final_value = just_angle[-1]
 		rise_value = [0.1*final_value, 0.9*final_value]
@@ -158,7 +162,7 @@ def _log_summary(ep_len, ep_ret, ep_num, target_angle, time_limits, just_angle):
 			plt.axhline(y=high_value, color='r', linestyle='--', label='Max value')
 			plt.axvline(x=deltas[indice_10], color='m', linestyle='--', label=f'Final value 10%%')
 			plt.axvline(x=deltas[indice_90], color='m', linestyle='--', label=f'Final value 90%%')
-			plt.xlabel("Time [ns]")
+			plt.xlabel("Time [s]")
 			plt.ylabel("Angle [°]")
 			plt.title("Current Angle")
 			plt.grid(True)
