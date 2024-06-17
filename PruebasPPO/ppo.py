@@ -25,6 +25,7 @@ average_reward = []
 average_loss = []
 timesteps_sofar = []
 time_for_iteration = []
+median_torque = []
 
 # set up matplotlib
 is_ipython = 'inline' in matplotlib.get_backend()
@@ -82,6 +83,7 @@ class PPO:
 			'batch_lens': [],       # episodic lengths in batch
 			'batch_rews': [],       # episodic returns in batch
 			'actor_losses': [],     # losses of actor network in current iteration
+			'torque': [],
 		}
 
 	def calculate_reward(self, observ, torque, target_angle): # Todos los valores estan en radianes
@@ -209,16 +211,19 @@ class PPO:
 		batch_rews = []
 		batch_rtgs = []
 		batch_lens = []
+		batch_torque = []
 
 		# Episodic data. Keeps track of rewards per episode, will get cleared
 		# upon each new episode
 		ep_rews = []
+		ep_torque = []
 
 		t = 0 # Keeps track of how many timesteps we've run so far this batch
 
 		# Keep simulating until we've run more than or equal to specified timesteps per batch
 		while t < self.timesteps_per_batch:
 			ep_rews = [] # rewards collected per episode
+			ep_torque = []
 
 			# Reset the environment. sNote that obs is short for observation. 
 			obs, _ = self.env.reset()
@@ -245,11 +250,12 @@ class PPO:
 
 				done = terminated or truncated or (np.absolute(action)>2)								# For Gymnasium version
 
-				rew = self.calculate_reward(obs, action, math.radians(target_angle))
+				# rew = self.calculate_reward(obs, action, math.radians(target_angle))
 
 				# Track recent reward, action, and action log probability
 				ep_rews.append(rew)
 				batch_acts.append(action)
+				ep_torque.append(np.abs(action.item()))
 				batch_log_probs.append(log_prob)
 
 				# If the environment tells us the episode is terminated, break
@@ -259,6 +265,8 @@ class PPO:
 			# Track episodic lengths and rewards
 			batch_lens.append(ep_t + 1)
 			batch_rews.append(ep_rews)
+			batch_torque.append(ep_torque)
+
 
 		# Reshape data as tensors in the shape specified in function description, before returning
 		batch_obs = torch.tensor(batch_obs, dtype=torch.float, device=device)
@@ -269,6 +277,7 @@ class PPO:
 		# Log the episodic returns and episodic lengths in this batch.
 		self.logger['batch_rews'] = batch_rews
 		self.logger['batch_lens'] = batch_lens
+		self.logger['torque'] = batch_torque
 
 		return batch_obs, batch_acts, batch_log_probs, batch_rtgs, batch_lens
 
@@ -419,7 +428,9 @@ class PPO:
 		t_so_far = self.logger['t_so_far']
 		i_so_far = self.logger['i_so_far']
 		avg_ep_lens = np.mean(self.logger['batch_lens'])
-		avg_ep_rews = np.mean([np.sum(ep_rews) for ep_rews in self.logger['batch_rews']])
+		avg_ep_rews = np.mean([np.mean(ep_rews) for ep_rews in self.logger['batch_rews']])
+		mid_torque_signal = np.median([np.median(torq) for torq in self.logger['torque']])
+
 		#avg_actor_loss = np.mean([losses.float().mean() for losses in self.logger['actor_losses']])
 		avg_actor_loss = np.mean([losses.float().cpu().mean().numpy() for losses in self.logger['actor_losses']])
 
@@ -427,12 +438,16 @@ class PPO:
 		avg_ep_lens = str(round(avg_ep_lens, 2))
 		avg_ep_rews = str(round(avg_ep_rews, 2))
 		avg_actor_loss = str(round(avg_actor_loss, 5))
+		mid_ep_torque = str(round(mid_torque_signal, 2))
 
 		average_reward.append(float(avg_ep_rews))
 		average_loss.append(float(avg_actor_loss))
 		timesteps_sofar.append(float(t_so_far))
 		time_for_iteration.append(float(delta_t))
 		average_len.append(float(avg_ep_lens))
+		median_torque.append(float(mid_ep_torque))
+
+		
 
 		print(f" >> Iteration #{i_so_far} >> Average reward: {avg_ep_rews}")
 
@@ -450,8 +465,8 @@ class PPO:
 		plt.title("Average Loss")
 		plt.grid(True)
 		plt.subplot(2, 2, 3)
-		plt.plot(timesteps_sofar, time_for_iteration, color="red")
-		plt.title("Time for iteration (seg)")
+		plt.plot(timesteps_sofar, median_torque, color="red")
+		plt.title("Median torque")
 		plt.grid(True)
 		plt.subplot(2, 2, 4)
 		plt.plot(timesteps_sofar, average_len, color="purple")
@@ -483,5 +498,5 @@ class PPO:
 		self.logger['batch_lens'] = []
 		self.logger['batch_rews'] = []
 		self.logger['actor_losses'] = []
-
+		self.logger['torque'] = []
 		
