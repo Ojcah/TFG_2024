@@ -16,8 +16,8 @@ import numpy as np
 # *******************************************************************************************
 # *******************************************************************************************
 
-#env = gym.make("CartPole-v1")
-env = gym.make("CartPole-v1", render_mode="human")
+env = gym.make("CartPole-v1")
+#env = gym.make("CartPole-v1", render_mode="human")
 
 # set up matplotlib
 is_ipython = 'inline' in matplotlib.get_backend()
@@ -216,7 +216,7 @@ def optimize_model():
 
 if torch.cuda.is_available():
     #num_episodes = 600
-    num_episodes = 100
+    num_episodes = 1000
 else:
     #num_episodes = 50
     num_episodes = 20
