@@ -73,7 +73,7 @@ class DQN:
         self.noise_amplitude = 6
         self.variance = 0.005
 
-        self.pwm_logger = torch.zeros(10, dtype=torch.long, device=device)
+        self.pwm_logger = torch.zeros(15, dtype=torch.long, device=device)
 
         # This logger will help us with printing out summaries of each iteration
         self.logger = {
@@ -114,7 +114,7 @@ class DQN:
         
         return torch.tensor([reward_n.item()], device=device)
     
-    def calculate_rewardV2(self, observ, target_angle): # Todos los valores estan en radianes
+    def calculate_rewardV2(self, observ, pwm, target_angle): # Todos los valores estan en radianes
         theta = observ[0]
         theta_dot = observ[1]
         
@@ -131,7 +131,7 @@ class DQN:
         pwm_repeated = torch.unique(self.pwm_logger).cpu().numpy().size
         # if pwm_repeated <= 2:
         if pwm_repeated == 1:
-            extra_cost = 2.0
+            extra_cost = (20 ** np.absolute(pwm)) + 1
         else:
             extra_cost = 0.0
 
@@ -139,8 +139,8 @@ class DQN:
         self.logger['velocity_cost'].append(-velocity_cost)
         self.logger['theta_good'].append(theta_good)     
 
-        #reward_n = np.min([-theta_error_cost, -extra_cost]) + theta_good
-        reward_n = -theta_error_cost + theta_good
+        reward_n = np.min([-theta_error_cost, -extra_cost]) + theta_good
+        # reward_n = -theta_error_cost + theta_good
         # reward_n = np.min([-theta_error_cost, -velocity_cost])
 
         return torch.tensor([reward_n.item()], device=device)
@@ -151,8 +151,13 @@ class DQN:
             AAAAAAA
         """
         # Calcula el índice de la acción discreta
-        discrete_action = int(action.item() * 36)
-        # discrete_action = int((action.item() ** 2) / 0.007)
+        if action.item() > 0.01:
+            discrete_action = int(action.item() * 36)
+            # discrete_action = int((action.item() ** 2) / 0.007)
+            # discrete_action = int(9 + (np.log(action.item()/0.25)) / 0.4)
+        else:
+            discrete_action = 0
+        
         return torch.clamp(torch.tensor(discrete_action, device=device), min=0, max=9)
     
     def undiscretize_action(self, discrete_action):
@@ -162,8 +167,11 @@ class DQN:
         # Calcula el valor normalizado dentro del rango [0, 1]
         continuous_action = discrete_action / 36
         # continuous_action = np.sqrt(0.007 * discrete_action)
+        # continuous_action = 0.25 * np.exp(0.4 * (discrete_action - 9))
         if continuous_action > 0.25:
             continuous_action = np.array([[0.25]])
+        elif continuous_action < 0.007:
+            continuous_action = np.array([[0.0]])
 
         return continuous_action
 
@@ -238,7 +246,7 @@ class DQN:
                 # ///////////////////////////////////////////////////////////
                 #reward = torch.tensor([reward], device=device) # Pendulum original target: theta=0°
                 #reward = self.calculate_reward(obs_n[0].cpu().detach().numpy(), action.item(), math.radians(self.target_angle))
-                reward = self.calculate_rewardV2(obs_n[0].cpu().detach().numpy(), math.radians(self.target_angle))
+                reward = self.calculate_rewardV2(obs_n[0].cpu().detach().numpy(), action_step[0].item(), math.radians(self.target_angle))
 
                 # reward_sh = reward - last_reward
                 # ///////////////////////////////////////////////////////////

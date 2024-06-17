@@ -85,7 +85,7 @@ def calculate_rewardV2(observ, pwm, target_angle): # Todos los valores estan en 
 		theta_error = np.abs(theta_n - target_angle)
 		
 		theta_error_cost = (theta_error ** 2)
-		velocity_cost = 50 * (theta_dot ** 2)
+		velocity_cost = 100 * (theta_dot ** 2)
 
 		variance_rew = 0.005
 
@@ -267,7 +267,7 @@ def rollout(policy, env, render, target_angle):
 		yield ep_len, ep_ret, np.array([delta_t0, delta_t1]), just_for_the_angle
 
 
-def eval_policy(policy, env, render=False, target_angle=60):
+def eval_policy(policy, env, render=False, target_angle=45):
 	"""
 		The main function to evaluate our policy with. It will iterate a generator object
 		"rollout", which will simulate each episode and return the most recent episode's

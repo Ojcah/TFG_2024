@@ -13,22 +13,32 @@ def discretize_action(action, num_intervals):
     """
         AAAAAAA
     """
-    # Calcula el índice de la acción discreta
-    #discrete_action = int(action.item() * num_intervals)
-    #discrete_action = int(action.item() * 18)
-    discrete_action = int(action.item() * 36)
-    return torch.clamp(torch.tensor(discrete_action, device=device), min=0, max=num_intervals-1)
+	# Calcula el índice de la acción discreta
+    if action.item() > 0.01:
+        # discrete_action = int(action.item() * 36)
+        # discrete_action = int((action.item() ** 2) / 0.007)
+        discrete_action = int(9 + (np.log(action.item()/0.25)) / 0.4)
+    else:
+        discrete_action = 0
+        
+    return torch.clamp(torch.tensor(discrete_action, device=device), min=0, max=9)
     
 def undiscretize_action(discrete_action, num_intervals):
     """
         BBBBBBB
     """
     # Calcula el valor normalizado dentro del rango [0, 1]
-    #continuous_action = discrete_action / 18
-    continuous_action = discrete_action / 36
+    # continuous_action = discrete_action / 36
+	# continuous_action = np.sqrt(0.007 * discrete_action)
+    continuous_action = 0.25 * np.exp(0.4 * (discrete_action - 9))
+    if continuous_action > 0.25:
+        continuous_action = np.array([0.25])
+    elif continuous_action < 0.007:
+        continuous_action = np.array([0.0])
+
     return continuous_action
 
-def calculate_rewardV2(observ, target_angle): # Todos los valores estan en radianes
+def calculate_rewardV3(observ, target_angle): # Todos los valores estan en radianes
         theta = observ[0]
         theta_dot = observ[1]
         
@@ -48,7 +58,7 @@ def calculate_rewardV2(observ, target_angle): # Todos los valores estan en radia
         
         return torch.tensor([reward_n.item()], device=device)
 
-def calculate_rewardV2(observ, target_angle): # Todos los valores estan en radianes
+def calculate_rewardV2(observ, pwm, target_angle, pwm_logger): # Todos los valores estan en radianes
         theta = observ[0]
         theta_dot = observ[1]
         
@@ -64,15 +74,15 @@ def calculate_rewardV2(observ, target_angle): # Todos los valores estan en radia
 
         theta_good = 2 * np.exp(- theta_error_cost/variance) * (1.0 - np.abs(velocity_cost))
 
-        # pwm_repeated = torch.unique(pwm_logger).cpu().numpy().size
-        # # if pwm_repeated <= 2:
-        # if pwm_repeated == 1:
-        #     extra_cost = 2.0
-        # else:
-        #     extra_cost = 0.0
+        pwm_repeated = torch.unique(pwm_logger).cpu().numpy().size
+        # if pwm_repeated <= 2:
+        if pwm_repeated == 1:
+            extra_cost = (20 ** np.absolute(pwm)) + 1
+        else:
+            extra_cost = 0.0
 
-        #reward_n = np.min([-theta_error_cost, -extra_cost]) + theta_good
-        reward_n = -theta_error_cost + theta_good
+        reward_n = np.min([-theta_error_cost, -extra_cost]) + theta_good
+        #reward_n = -theta_error_cost + theta_good
         # reward_n = np.min([-theta_error_cost, -velocity_cost])
 
         return torch.tensor([reward_n.item()], device=device)
@@ -153,7 +163,7 @@ def _log_summary(ep_rew, ep_num, target_angle, ep_len, times_limits, just_angles
 		ax2.legend(loc="upper right")
 
 		# Mostrar la figura
-		plt.show()
+		#plt.show()
 		
 
 def rollout(policy_net, env, render, target_angle):
@@ -161,6 +171,8 @@ def rollout(policy_net, env, render, target_angle):
 		SSS
 	"""
 	num_intervals = 10
+
+	pwm_logger = torch.zeros(30, dtype=torch.long, device=device)
 	
 	last_obs = 0.0
 	theta_dot = 0.0
@@ -198,6 +210,9 @@ def rollout(policy_net, env, render, target_angle):
 			# Query deterministic action from policy and run it
 			action = torch.argmax(policy_net(obs_n), dim=1)
 			action_step = undiscretize_action(action.cpu().detach().numpy(), num_intervals)
+			
+			pwm_logger = torch.roll(pwm_logger, -1)
+			pwm_logger[-1] = action
 
 			last_rew = rew
 
@@ -215,7 +230,7 @@ def rollout(policy_net, env, render, target_angle):
 			done = terminated or truncated							# For Gymnasium
 
 			#rew = calculate_reward(obs_n, action, math.radians(target_angle), ep_len)
-			rew = calculate_reward(obs_n[0].cpu().detach().numpy(), math.radians(target_angle))
+			rew = calculate_rewardV2(obs_n[0].cpu().detach().numpy(), action_step.item(), math.radians(target_angle), pwm_logger)
 
 			# rew_shaping = rew - last_rew
 
@@ -229,8 +244,9 @@ def rollout(policy_net, env, render, target_angle):
 			just_for_the_angle = np.append(just_for_the_angle, math.degrees(obs_n[0, 0]))
 			just_for_the_PWM = np.append(just_for_the_PWM, action_step.item())
 
-			if done or (t==400):
+			if done or (t==500):
 				delta_t1 = time.time_ns()
+				pwm_logger.zero_()
 				break	
 		
 		# Track episodic length
@@ -260,3 +276,5 @@ def eval_policy(policy, env, render=False, target_angle=45):
 	# Rollout with the policy and environment, and log each episode's data
 	for ep_num, (ep_rew, ep_len, times_limits, just_angles, just_PWM) in enumerate(rollout(policy, env, render, target_angle)):
 		_log_summary(ep_rew=ep_rew, ep_num=ep_num, target_angle=math.radians(target_angle), ep_len=ep_len, times_limits=times_limits, just_angles=just_angles, just_PWM=just_PWM)
+		if ep_num == 5:
+			break

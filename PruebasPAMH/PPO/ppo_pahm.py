@@ -188,7 +188,7 @@ class PPO:
 		theta_error = np.abs(theta_n - target_angle)
 		
 		theta_error_cost = (theta_error ** 2)
-		velocity_cost = 50 * (theta_dot ** 2)
+		velocity_cost = 100 * (theta_dot ** 2)
 
         #theta_good = np.max([0.0, 1.0 - theta_error_cost]) * (1.0 - np.abs(velocity_cost))  
 		theta_good = 2 * np.exp(- theta_error_cost/self.variance_rew) * (1.0 - np.abs(velocity_cost))  
@@ -205,6 +205,32 @@ class PPO:
 		
 		reward_n = np.min([-theta_error_cost, -extra_cost]) + theta_good
 		return reward_n.item()
+
+
+	def calculate_rewardV4(self, observ, pwm, target_angle): # Todos los valores estan en radianes
+		theta = observ[0]
+		theta_dot = observ[1]
+		theta_n = ((theta + np.pi) % (2*np.pi)) - np.pi
+		theta_error = np.abs(theta_n - target_angle)
+		
+		theta_error_cost = (theta_error ** 2)
+		velocity_cost = 100 * (theta_dot ** 2)
+
+		funcV1 = 1 - (2 * theta_error ** 1)
+		funcV2 = np.log(0.001 + np.abs(theta_error)) / np.log(0.001)
+		
+		self.logger['theta_error_cost'].append(-theta_error_cost)
+		self.logger['velocity_cost'].append(-velocity_cost)
+		#self.logger['extra_cost'].append(-extra_cost)
+		#self.logger['theta_good'].append(theta_good)
+		self.logger['extra_cost'].append(funcV1)
+		self.logger['theta_good'].append(funcV2)        
+		
+		#reward_n = np.min([-theta_error_cost, -extra_cost]) + theta_good
+		reward_n = np.min([funcV1, funcV2])
+		return reward_n.item()
+
+
 
 	def learn(self, total_timesteps):
 		"""
@@ -347,7 +373,10 @@ class PPO:
 			self._log_summary(total_timesteps)
 
 			# Save our model if it's time
-			if (i_so_far % self.save_freq == 0) or (t_so_far >= total_timesteps):
+			if (i_so_far % self.save_freq == 0):
+				torch.save(self.actor.state_dict(), f'./Checkpoints/ppo_actor_{i_so_far}.pth')
+				torch.save(self.critic.state_dict(), f'./Checkpoints/ppo_critic_{i_so_far}.pth')
+			elif (t_so_far >= total_timesteps):
 				torch.save(self.actor.state_dict(), './actor-critic/ppo_actor.pth')
 				torch.save(self.critic.state_dict(), './actor-critic/ppo_critic.pth')
 		print(" >> Complete <<")
@@ -449,7 +478,8 @@ class PPO:
 
 				#rew = self.calculate_reward(obs_n, action, math.radians(self.target_angle))
 				#rew = self.calculate_rewardV2(obs_n, action.item(), math.radians(self.target_angle))
-				rew = self.calculate_rewardV3(obs_n, action.item(), math.radians(self.target_angle))
+				#rew = self.calculate_rewardV3(obs_n, action.item(), math.radians(self.target_angle))
+				rew = self.calculate_rewardV4(obs_n, action.item(), math.radians(self.target_angle))
 
 				# Track recent reward, action, and action log probability
 				ep_rews.append(rew)
