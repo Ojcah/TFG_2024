@@ -1,8 +1,0 @@
--q
--dNOPAUSE
--sDEVICE=pbmraw
--sOUTPUTFILE=Firma_TEC-4.pbm
--r600
--g1417x289
-tmp$.ps
-quit.ps
