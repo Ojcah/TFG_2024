@@ -1,0 +1,16 @@
+[0] Config.pm:306> INFO - This is Biber 2.18
+[0] Config.pm:309> INFO - Logfile is 'main.blg'
+[278] biber-MSWIN32:340> INFO - === 
+[394] Biber.pm:418> INFO - Reading 'main.bcf'
+[595] Biber.pm:978> INFO - Found 26 citekeys in bib section 0
+[628] Biber.pm:4401> INFO - Processing section 0
+[663] Biber.pm:4592> INFO - Looking for bibtex file 'literatura.bib' for section 0
+[776] bibtex.pm:1713> INFO - LaTeX decoding ...
+[861] bibtex.pm:1518> INFO - Found BibTeX data source 'literatura.bib'
+[1166] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[1166] UCollate.pm:68> INFO - Overriding locale 'es-ES' defaults 'variable = shifted' with 'variable = non-ignorable'
+[1166] Biber.pm:4221> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'es-ES'
+[1234] bbl.pm:654> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[1258] bbl.pm:757> INFO - Output to main.bbl
+[1259] Biber.pm:130> WARN - BibTeX subsystem: C:\Users\Kley2\AppData\Local\Temp\biber_tmp_XQhL\c61ccb34f23828ed7e5b3976dd87481f_18060.utf8, line 286, warning: 15 characters of junk seen at toplevel
+[1259] Biber.pm:132> INFO - WARNINGS: 1

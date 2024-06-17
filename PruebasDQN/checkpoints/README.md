@@ -1,0 +1,1 @@
+Para almacenar los checkpoints de entrenamiento

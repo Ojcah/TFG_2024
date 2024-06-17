@@ -1,0 +1,1 @@
+Carpeta para modelos en entrenamiento /checkpoints del codigo original
