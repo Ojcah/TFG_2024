@@ -1,3 +1,4 @@
+.gitignore
 PruebasMPC/.ipynb_checkpoints/
 PruebasDQN/models/
 PruebasDQN/checkpoints/
@@ -8,3 +9,12 @@ PruebasPPO/__pycache__/
 PruebasDDPG/checkpoints/
 PruebasDDPG/models/
 PruebasDDPG/__pycache__/
+PruebasPAMH/__pycache__/
+PruebasPAMH/actor-critic/
+PruebasPAMH/PPO/__pycache__/
+PruebasPAMH/DQN/__pycache__/
+PruebasPAMH/PAMH/__pycache__/
+Gym_wrapper/__pycache__/
+GRU_PyTorch/__pycache__/
+PruebasPAMH/wandb
+wandb/
