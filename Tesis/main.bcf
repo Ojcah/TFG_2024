@@ -2449,6 +2449,10 @@
     <bcf:citekey order="105" intorder="1">PytorchDQN</bcf:citekey>
     <bcf:citekey order="106" intorder="1">PPOcoding</bcf:citekey>
     <bcf:citekey order="107" intorder="1">PytorchDQN</bcf:citekey>
+    <bcf:citekey order="108" intorder="1">DQNbase</bcf:citekey>
+    <bcf:citekey order="109" intorder="1">DQNbase</bcf:citekey>
+    <bcf:citekey order="110" intorder="1">PPObase</bcf:citekey>
+    <bcf:citekey order="111" intorder="1">PPObase</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.9)  4 JUN 2024 13:18
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.8.9)  17 JUN 2024 15:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1579,10 +1579,9 @@ Package csquotes Info: Redefining alias 'default' -> 'spanish'.
 LaTeX Info: Redefining \. on input line 24.
 LaTeX Info: Redefining \% on input line 24.
  (./licencia.aux)
-(./disclaimer.aux) (./acta_aprob_licel.aux) (./acta_eval_licel.aux)
-(./resumen.aux) (./dedicatoria.aux) (./agradecimientos.aux) (./glosario.aux)
-(./intro.aux) (./teoria.aux) (./solucion.aux) (./resultados.aux)
-(./conclusiones.aux))
+(./disclaimer.aux) (./resumen.aux) (./dedicatoria.aux) (./agradecimientos.aux)
+(./glosario.aux) (./intro.aux) (./teoria.aux) (./solucion.aux)
+(./resultados.aux) (./conclusiones.aux) (./apendice.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 63.
@@ -1697,7 +1696,7 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 \openout2 = `titlepage_licel_es.aux'.
 
 (./titlepage_licel_es.tex
-<./fig//Firma_TEC-4.pdf, id=175, 201.75375pt x 41.15375pt>
+<./fig//Firma_TEC-4.pdf, id=183, 201.75375pt x 41.15375pt>
 File: ./fig//Firma_TEC-4.pdf Graphic file (type pdf)
 <use ./fig//Firma_TEC-4.pdf>
 Package pdftex.def Info: ./fig//Firma_TEC-4.pdf  used on input line 27.
@@ -1710,7 +1709,7 @@ C-4.pdf>])
 \openout2 = `licencia.aux'.
 
  (./licencia.tex
-<./fig//by-sa.pdf, id=185, 121.45375pt x 43.16125pt>
+<./fig//by-sa.pdf, id=193, 121.45375pt x 43.16125pt>
 File: ./fig//by-sa.pdf Graphic file (type pdf)
 <use ./fig//by-sa.pdf>
 Package pdftex.def Info: ./fig//by-sa.pdf  used on input line 47.
@@ -1761,38 +1760,59 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 4
 
 
 ])
-\openout2 = `acta_aprob_licel.aux'.
+<actas/acta_aprob_firmada.pdf, id=212, 614.295pt x 794.97pt>
+File: actas/acta_aprob_firmada.pdf Graphic file (type pdf)
+<use actas/acta_aprob_firmada.pdf>
+Package pdftex.def Info: actas/acta_aprob_firmada.pdf  used on input line 108.
+(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
+File: actas/acta_aprob_firmada.pdf Graphic file (type pdf)
+<use actas/acta_aprob_firmada.pdf>
+Package pdftex.def Info: actas/acta_aprob_firmada.pdf  used on input line 108.
+(pdftex.def)             Requested size: 614.29349pt x 794.96806pt.
+<actas/acta_aprob_firmada.pdf, id=215, page=1, 614.295pt x 794.97pt>
+File: actas/acta_aprob_firmada.pdf Graphic file (type pdf)
+<use actas/acta_aprob_firmada.pdf, page 1>
+Package pdftex.def Info: actas/acta_aprob_firmada.pdf , page1 used on input lin
+e 108.
+(pdftex.def)             Requested size: 636.94063pt x 824.32326pt.
+File: actas/acta_aprob_firmada.pdf Graphic file (type pdf)
+<use actas/acta_aprob_firmada.pdf, page 1>
+Package pdftex.def Info: actas/acta_aprob_firmada.pdf , page1 used on input lin
+e 108.
+(pdftex.def)             Requested size: 592.65036pt x 766.9593pt.
+File: actas/acta_aprob_firmada.pdf Graphic file (type pdf)
+<use actas/acta_aprob_firmada.pdf, page 1>
+Package pdftex.def Info: actas/acta_aprob_firmada.pdf , page1 used on input lin
+e 108.
+(pdftex.def)             Requested size: 592.65036pt x 766.9593pt.
+File: actas/acta_aprob_firmada.pdf Graphic file (type pdf)
+<use actas/acta_aprob_firmada.pdf, page 1>
+Package pdftex.def Info: actas/acta_aprob_firmada.pdf , page1 used on input lin
+e 108.
+(pdftex.def)             Requested size: 592.65036pt x 766.9593pt.
+File: actas/acta_aprob_firmada.pdf Graphic file (type pdf)
+<use actas/acta_aprob_firmada.pdf, page 1>
+Package pdftex.def Info: actas/acta_aprob_firmada.pdf , page1 used on input lin
+e 108.
+(pdftex.def)             Requested size: 592.65036pt x 766.9593pt.
+ [4
 
- (./acta_aprob_licel.tex [4
 
 
+ <./actas/acta_aprob_firmada.pdf>]
+\openout2 = `resumen.aux'.
 
-
-])
-\openout2 = `acta_eval_licel.aux'.
-
- (./acta_eval_licel.tex
+ (./resumen.tex
 [5
 
 
-
-
-])
-\openout2 = `resumen.aux'.
-
- (./resumen.tex [6
-
-
-
-
-
-] [7
+] [6
 
 
 ])
 \openout2 = `dedicatoria.aux'.
 
- (./dedicatoria.tex) [8
+ (./dedicatoria.tex) [7
 
 
 
@@ -1800,8 +1820,7 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 4
 ]
 \openout2 = `agradecimientos.aux'.
 
- (./agradecimientos.tex
-[9
+ (./agradecimientos.tex [8
 
 
 
@@ -1810,7 +1829,8 @@ LaTeX Font Info:    Trying to load font information for U+stmry on input line 4
 LaTeX Info: Redefining \sptext on input line 1.
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
- [1
+
+[1
 
 
 
@@ -1820,8 +1840,8 @@ LaTeX Info: Redefining \% on input line 1.
 \tf@toc=\write9
 \openout9 = `main.toc'.
 
-LaTeX Info: Redefining \. on input line 136.
-LaTeX Info: Redefining \% on input line 136.
+LaTeX Info: Redefining \. on input line 137.
+LaTeX Info: Redefining \% on input line 137.
  [2] (./main.lof
 LaTeX Info: Redefining \sptext on input line 1.
 LaTeX Info: Redefining \. on input line 1.
@@ -1832,8 +1852,8 @@ LaTeX Info: Redefining \% on input line 1.
 \tf@lof=\write10
 \openout10 = `main.lof'.
 
-LaTeX Info: Redefining \. on input line 137.
-LaTeX Info: Redefining \% on input line 137.
+LaTeX Info: Redefining \. on input line 138.
+LaTeX Info: Redefining \% on input line 138.
  [4] (./main.lot
 LaTeX Info: Redefining \sptext on input line 1.
 LaTeX Info: Redefining \. on input line 1.
@@ -1847,7 +1867,8 @@ LaTeX Info: Redefining \% on input line 1.
 ]
 \openout2 = `glosario.aux'.
 
- (./glosario.tex (./main.nls)) [6
+ (./glosario.tex (./main.nls))
+[6
 
 
 
@@ -1856,7 +1877,7 @@ LaTeX Info: Redefining \% on input line 1.
 
  (./intro.tex Excluding 'comment' comment.
 Cap\'{\i }tulo 1.
-<fig/new/Proyección.png, id=388, 702.37407pt x 481.8pt>
+<fig/new/Proyección.png, id=425, 702.37407pt x 481.8pt>
 File: fig/new/Proyección.png Graphic file (type png)
 <use fig/new/Proyección.png>
 Package pdftex.def Info: fig/new/Proyección.png  used on input line 57.
@@ -1871,7 +1892,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ]
-<fig/new/DiagProyecto.png, id=404, 1171.37625pt x 383.18156pt>
+<fig/new/DiagProyecto.png, id=441, 1171.37625pt x 383.18156pt>
 File: fig/new/DiagProyecto.png Graphic file (type png)
 <use fig/new/DiagProyecto.png>
 Package pdftex.def Info: fig/new/DiagProyecto.png  used on input line 77.
@@ -1879,7 +1900,7 @@ Package pdftex.def Info: fig/new/DiagProyecto.png  used on input line 77.
 LaTeX Info: Redefining \. on input line 80.
 LaTeX Info: Redefining \% on input line 80.
  [2 <./fig/new/Proyección.png>]
-<fig/new/DiagramaGeneralv2.png, id=419, 864.98157pt x 361.35pt>
+<fig/new/DiagramaGeneralv2.png, id=456, 864.98157pt x 361.35pt>
 File: fig/new/DiagramaGeneralv2.png Graphic file (type png)
 <use fig/new/DiagramaGeneralv2.png>
 Package pdftex.def Info: fig/new/DiagramaGeneralv2.png  used on input line 86.
@@ -1892,21 +1913,21 @@ Overfull \hbox (8.15288pt too wide) in paragraph at lines 93--93
 LaTeX Info: Redefining \. on input line 96.
 LaTeX Info: Redefining \% on input line 96.
 [3 <./fig/new/DiagProyecto.PNG> <./fig/new/DiagramaGeneralv2.png>]
-<fig/new/DiagEtapas.png, id=429, 1022.31938pt x 477.28313pt>
+<fig/new/DiagEtapas.png, id=466, 1022.31938pt x 477.28313pt>
 File: fig/new/DiagEtapas.png Graphic file (type png)
 <use fig/new/DiagEtapas.png>
 Package pdftex.def Info: fig/new/DiagEtapas.png  used on input line 99.
 (pdftex.def)             Requested size: 363.96904pt x 169.92099pt.
 
 Excluding 'comment' comment. Excluding 'comment' comment.)
-LaTeX Info: Redefining \. on input line 157.
-LaTeX Info: Redefining \% on input line 157.
+LaTeX Info: Redefining \. on input line 158.
+LaTeX Info: Redefining \% on input line 158.
  [4 <./fig/new/DiagEtapas.PNG>]
 \openout2 = `teoria.aux'.
 
  (./teoria.tex
 Cap\'{\i }tulo 2.
-<fig/new/ModeloPendulo.png, id=444, 681.54625pt x 615.29875pt>
+<fig/new/ModeloPendulo.png, id=480, 681.54625pt x 615.29875pt>
 File: fig/new/ModeloPendulo.png Graphic file (type png)
 <use fig/new/ModeloPendulo.png>
 Package pdftex.def Info: fig/new/ModeloPendulo.png  used on input line 12.
@@ -1920,12 +1941,12 @@ Package pdftex.def Info: fig/new/ModeloPendulo.png  used on input line 12.
 LaTeX Info: Redefining \. on input line 46.
 LaTeX Info: Redefining \% on input line 46.
  [6]
-<fig/new/NeuronaRNA.png, id=472, 592.46344pt x 213.04594pt>
+<fig/new/NeuronaRNA.png, id=510, 592.46344pt x 213.04594pt>
 File: fig/new/NeuronaRNA.png Graphic file (type png)
 <use fig/new/NeuronaRNA.png>
 Package pdftex.def Info: fig/new/NeuronaRNA.png  used on input line 58.
 (pdftex.def)             Requested size: 325.8559pt x 117.17561pt.
-<fig/new/RNA.png, id=478, 488.57532pt x 350.05782pt>
+<fig/new/RNA.png, id=516, 488.57532pt x 350.05782pt>
 File: fig/new/RNA.png Graphic file (type png)
 <use fig/new/RNA.png>
 Package pdftex.def Info: fig/new/RNA.png  used on input line 67.
@@ -1937,7 +1958,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Info: Redefining \. on input line 86.
 LaTeX Info: Redefining \% on input line 86.
 [7 <./fig/new/NeuronaRNA.PNG>]
-<fig/new/ReinforcementLearning.png, id=495, 606.01407pt x 319.94531pt>
+<fig/new/ReinforcementLearning.png, id=532, 606.01407pt x 319.94531pt>
 File: fig/new/ReinforcementLearning.png Graphic file (type png)
 <use fig/new/ReinforcementLearning.png>
 Package pdftex.def Info: fig/new/ReinforcementLearning.png  used on input line 
@@ -1956,7 +1977,7 @@ LaTeX Info: Redefining \% on input line 133.
 LaTeX Info: Redefining \. on input line 159.
 LaTeX Info: Redefining \% on input line 159.
  [10]
-<fig/new/avaro_eps.png, id=537, 542.025pt x 526.96875pt>
+<fig/new/avaro_eps.png, id=573, 542.025pt x 526.96875pt>
 File: fig/new/avaro_eps.png Graphic file (type png)
 <use fig/new/avaro_eps.png>
 Package pdftex.def Info: fig/new/avaro_eps.png  used on input line 170.
@@ -1965,7 +1986,7 @@ Package pdftex.def Info: fig/new/avaro_eps.png  used on input line 170.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<fig/new/CatRL.png, id=542, 908.39375pt x 496.85625pt>
+<fig/new/CatRL.png, id=578, 908.39375pt x 496.85625pt>
 File: fig/new/CatRL.png Graphic file (type png)
 <use fig/new/CatRL.png>
 Package pdftex.def Info: fig/new/CatRL.png  used on input line 182.
@@ -1986,8 +2007,8 @@ LaTeX Info: Redefining \% on input line 235.
 LaTeX Info: Redefining \. on input line 262.
 LaTeX Info: Redefining \% on input line 262.
  [14])
-LaTeX Info: Redefining \. on input line 159.
-LaTeX Info: Redefining \% on input line 159.
+LaTeX Info: Redefining \. on input line 160.
+LaTeX Info: Redefining \% on input line 160.
  [15]
 \openout2 = `solucion.aux'.
 
@@ -2011,7 +2032,7 @@ put line 150.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<fig/new/Rewardfunc.png, id=652, 553.31718pt x 485.56406pt>
+<fig/new/Rewardfunc.png, id=691, 553.31718pt x 485.56406pt>
 File: fig/new/Rewardfunc.png Graphic file (type png)
 <use fig/new/Rewardfunc.png>
 Package pdftex.def Info: fig/new/Rewardfunc.png  used on input line 185.
@@ -2022,7 +2043,7 @@ LaTeX Info: Redefining \% on input line 189.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<fig/new/Rewardfunccampana.png, id=659, 549.55313pt x 484.81125pt>
+<fig/new/Rewardfunccampana.png, id=698, 549.55313pt x 484.81125pt>
 File: fig/new/Rewardfunccampana.png Graphic file (type png)
 <use fig/new/Rewardfunccampana.png>
 Package pdftex.def Info: fig/new/Rewardfunccampana.png  used on input line 192.
@@ -2041,7 +2062,7 @@ Overfull \hbox (4.88626pt too wide) in paragraph at lines 231--237
  [][] 
  []
 
-<fig/new/RNADQN.png, id=684, 1132.23pt x 537.50812pt>
+<fig/new/RNADQN.png, id=723, 1132.23pt x 537.50812pt>
 File: fig/new/RNADQN.png Graphic file (type png)
 <use fig/new/RNADQN.png>
 Package pdftex.def Info: fig/new/RNADQN.png  used on input line 245.
@@ -2052,7 +2073,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Info: Redefining \. on input line 253.
 LaTeX Info: Redefining \% on input line 253.
 [22]
-<fig/new/RNAPPO.png, id=697, 1059.20718pt x 532.23843pt>
+<fig/new/RNAPPO.png, id=736, 1059.20718pt x 532.23843pt>
 File: fig/new/RNAPPO.png Graphic file (type png)
 <use fig/new/RNAPPO.png>
 Package pdftex.def Info: fig/new/RNAPPO.png  used on input line 266.
@@ -2067,20 +2088,20 @@ LaTeX Info: Redefining \% on input line 275.
 LaTeX Info: Redefining \. on input line 290.
 LaTeX Info: Redefining \% on input line 290.
  [24 <./fig/new/RNAPPO.PNG>])
-LaTeX Info: Redefining \. on input line 160.
-LaTeX Info: Redefining \% on input line 160.
+LaTeX Info: Redefining \. on input line 161.
+LaTeX Info: Redefining \% on input line 161.
  [25]
 \openout2 = `resultados.aux'.
 
  (./resultados.tex
 Cap\'{\i }tulo 4.
 Excluding 'comment' comment.
-<fig/new/CartPole1_1.png, id=722, 442.65375pt x 297.36093pt>
+<fig/new/CartPole1_1.png, id=761, 442.65375pt x 297.36093pt>
 File: fig/new/CartPole1_1.png Graphic file (type png)
 <use fig/new/CartPole1_1.png>
 Package pdftex.def Info: fig/new/CartPole1_1.png  used on input line 59.
 (pdftex.def)             Requested size: 204.73041pt x 137.5318pt.
-<fig/new/CartPole1.png, id=723, 509.65407pt x 409.53pt>
+<fig/new/CartPole1.png, id=762, 509.65407pt x 409.53pt>
 File: fig/new/CartPole1.png Graphic file (type png)
 <use fig/new/CartPole1.png>
 Package pdftex.def Info: fig/new/CartPole1.png  used on input line 66.
@@ -2095,12 +2116,12 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 
 ]
-<fig/new/Pendulum1_1.png, id=730, 201.00093pt x 185.19188pt>
+<fig/new/Pendulum1_1.png, id=769, 201.00093pt x 185.19188pt>
 File: fig/new/Pendulum1_1.png Graphic file (type png)
 <use fig/new/Pendulum1_1.png>
 Package pdftex.def Info: fig/new/Pendulum1_1.png  used on input line 83.
 (pdftex.def)             Requested size: 136.48926pt x 125.75359pt.
-<fig/new/Pendulum1.png, id=731, 636.87938pt x 625.58719pt>
+<fig/new/Pendulum1.png, id=770, 636.87938pt x 625.58719pt>
 File: fig/new/Pendulum1.png Graphic file (type png)
 <use fig/new/Pendulum1.png>
 Package pdftex.def Info: fig/new/Pendulum1.png  used on input line 90.
@@ -2109,12 +2130,12 @@ LaTeX Info: Redefining \. on input line 104.
 LaTeX Info: Redefining \% on input line 104.
  [27 <./fig/new/CartPole1_1.PNG> <./fig/new/CartPole1.PNG> <./fig/new/Pendulum1
 _1.PNG> <./fig/new/Pendulum1.PNG>]
-<fig/new/DQNentrenados.png, id=745, 786.68906pt x 450.9347pt>
+<fig/new/DQNentrenados.png, id=784, 786.68906pt x 450.9347pt>
 File: fig/new/DQNentrenados.png Graphic file (type png)
 <use fig/new/DQNentrenados.png>
 Package pdftex.def Info: fig/new/DQNentrenados.png  used on input line 119.
 (pdftex.def)             Requested size: 272.97852pt x 156.474pt.
-<fig/new/DQNperdida.png, id=746, 785.93625pt x 449.42906pt>
+<fig/new/DQNperdida.png, id=785, 785.93625pt x 449.42906pt>
 File: fig/new/DQNperdida.png Graphic file (type png)
 <use fig/new/DQNperdida.png>
 Package pdftex.def Info: fig/new/DQNperdida.png  used on input line 126.
@@ -2123,7 +2144,7 @@ Package pdftex.def Info: fig/new/DQNperdida.png  used on input line 126.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<fig/new/DQNentrenadosang.png, id=747, 788.19469pt x 444.91219pt>
+<fig/new/DQNentrenadosang.png, id=786, 788.19469pt x 444.91219pt>
 File: fig/new/DQNentrenadosang.png Graphic file (type png)
 <use fig/new/DQNentrenadosang.png>
 Package pdftex.def Info: fig/new/DQNentrenadosang.png  used on input line 136.
@@ -2134,7 +2155,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 LaTeX Info: Redefining \. on input line 150.
 LaTeX Info: Redefining \% on input line 150.
 [28]
-<fig/new/PPOentrenados.png, id=756, 680.5425pt x 441.14813pt>
+<fig/new/PPOentrenados.png, id=794, 680.5425pt x 441.14813pt>
 File: fig/new/PPOentrenados.png Graphic file (type png)
 <use fig/new/PPOentrenados.png>
 Package pdftex.def Info: fig/new/PPOentrenados.png  used on input line 157.
@@ -2143,7 +2164,7 @@ Package pdftex.def Info: fig/new/PPOentrenados.png  used on input line 157.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<fig/new/PPOentrenadosang.png, id=757, 682.04813pt x 441.90094pt>
+<fig/new/PPOentrenadosang.png, id=795, 682.04813pt x 441.90094pt>
 File: fig/new/PPOentrenadosang.png Graphic file (type png)
 <use fig/new/PPOentrenadosang.png>
 Package pdftex.def Info: fig/new/PPOentrenadosang.png  used on input line 164.
@@ -2157,7 +2178,7 @@ LaTeX Info: Redefining \% on input line 173.
 LaTeX Info: Redefining \. on input line 175.
 LaTeX Info: Redefining \% on input line 175.
  [30 <./fig/new/DQNentrenadosang.PNG> <./fig/new/PPOentrenados.PNG>]
-<fig/new/DQNprueba.png, id=772, 928.97063pt x 561.59813pt>
+<fig/new/DQNprueba.png, id=811, 928.97063pt x 561.59813pt>
 File: fig/new/DQNprueba.png Graphic file (type png)
 <use fig/new/DQNprueba.png>
 Package pdftex.def Info: fig/new/DQNprueba.png  used on input line 178.
@@ -2165,14 +2186,14 @@ Package pdftex.def Info: fig/new/DQNprueba.png  used on input line 178.
 LaTeX Info: Redefining \. on input line 185.
 LaTeX Info: Redefining \% on input line 185.
  [31 <./fig/new/PPOentrenadosang.PNG> <./fig/new/DQNprueba.PNG>]
-<fig/new/PPOprueba.png, id=780, 912.40875pt x 648.92438pt>
+<fig/new/PPOprueba.png, id=819, 912.40875pt x 648.92438pt>
 File: fig/new/PPOprueba.png Graphic file (type png)
 <use fig/new/PPOprueba.png>
 Package pdftex.def Info: fig/new/PPOprueba.png  used on input line 191.
 (pdftex.def)             Requested size: 364.95703pt x 259.56516pt.
 )
-LaTeX Info: Redefining \. on input line 161.
-LaTeX Info: Redefining \% on input line 161.
+LaTeX Info: Redefining \. on input line 162.
+LaTeX Info: Redefining \% on input line 162.
  [32 <./fig/new/PPOprueba.PNG>]
 \openout2 = `conclusiones.aux'.
 
@@ -2185,21 +2206,33 @@ Excluding 'comment' comment. [33
 
 
 ])
-LaTeX Info: Redefining \. on input line 162.
-LaTeX Info: Redefining \% on input line 162.
+LaTeX Info: Redefining \. on input line 163.
+LaTeX Info: Redefining \% on input line 163.
  [34] [35
 
 
 
 ]
-Overfull \hbox (9.70805pt too wide) in paragraph at lines 170--170
+Overfull \hbox (9.70805pt too wide) in paragraph at lines 171--171
 [][]$\T1/cmtt/m/n/12 https : / / medium . com / mindboard / advantage -[] funct
 ion -[] in -[] deep -[] reinforcement -[]
  []
 
-LaTeX Info: Redefining \. on input line 180.
-LaTeX Info: Redefining \% on input line 180.
+LaTeX Info: Redefining \. on input line 178.
+LaTeX Info: Redefining \% on input line 178.
 [36]
+\openout2 = `apendice.aux'.
+
+ (./apendice.tex
+Ap\'{e}ndice A.
+[37
+
+
+]
+Ap\'{e}ndice B.
+) [38
+
+]
 No file main.ind.
 
 AED: lastpage setting LastPage
@@ -2208,23 +2241,23 @@ LaTeX Info: Redefining \sptext on input line 24.
 LaTeX Info: Redefining \. on input line 24.
 LaTeX Info: Redefining \% on input line 24.
  (./licencia.aux) (./disclaimer.aux)
-(./acta_aprob_licel.aux) (./acta_eval_licel.aux) (./resumen.aux)
-(./dedicatoria.aux) (./agradecimientos.aux) (./glosario.aux) (./intro.aux)
-(./teoria.aux) (./solucion.aux) (./resultados.aux) (./conclusiones.aux))
+(./resumen.aux) (./dedicatoria.aux) (./agradecimientos.aux) (./glosario.aux)
+(./intro.aux) (./teoria.aux) (./solucion.aux) (./resultados.aux)
+(./conclusiones.aux) (./apendice.aux))
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 5C0DFD9A549C2658FAA973900A534FF9;8780.
+(rerunfilecheck)             Checksum: 0F05556BA24E1B4C71314CF6AB7CF402;9168.
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 54860 strings out of 477678
- 1251374 string characters out of 5833468
- 2118901 words of memory out of 5000000
- 72412 multiletter control sequences out of 15000+600000
- 498540 words of font info for 110 fonts, out of 8000000 for 9000
+ 54878 strings out of 477678
+ 1251099 string characters out of 5833468
+ 2116222 words of memory out of 5000000
+ 72428 multiletter control sequences out of 15000+600000
+ 499615 words of font info for 112 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 115i,16n,120p,1495b,3372s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 115i,17n,120p,1495b,3372s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {c:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{c:/texl
 ive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<c:/texlive/2022/
 texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2022/texmf-dis
@@ -2250,17 +2283,16 @@ fb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb><c:/tex
 live/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2022/
 texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb><c:/texlive/2022/texmf-dist
 /fonts/type1/public/cm-super/sfsl1095.pfb><c:/texlive/2022/texmf-dist/fonts/typ
-e1/public/cm-super/sfsl1200.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/
-cm-super/sfti1000.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/s
-fti1095.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1200.pf
-b><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1728.pfb><c:/texl
-ive/2022/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb><c:/texlive/2022/t
-exmf-dist/fonts/type1/public/cm-super/sftt1200.pfb><c:/texlive/2022/texmf-dist/
-fonts/type1/public/cm-super/sfxc1200.pfb>
-Output written on main.pdf (51 pages, 2595755 bytes).
+e1/public/cm-super/sfti1000.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/
+cm-super/sfti1095.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/s
+fti1200.pfb><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfti1728.pf
+b><c:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb><c:/texl
+ive/2022/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb><c:/texlive/2022/t
+exmf-dist/fonts/type1/public/cm-super/sfxc1200.pfb>
+Output written on main.pdf (52 pages, 2731997 bytes).
 PDF statistics:
- 1023 PDF objects out of 1200 (max. 8388607)
- 829 compressed objects within 9 object streams
- 190 named destinations out of 1000 (max. 500000)
- 484 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1073 PDF objects out of 1200 (max. 8388607)
+ 864 compressed objects within 9 object streams
+ 195 named destinations out of 1000 (max. 500000)
+ 520 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,12 +1,68 @@
-\chapter{Demostración del teorema de Nyquist}
-\label{apx:apendice}
+\chapter{Algoritmo del método DQN}
+\label{apx:apendiceDQN}
 
-El título anterior es solo un ejemplo ilustrativo.  Éste teorema no ameritaría
-un apéndice pues es parte normal del currículum de Electrónica, pero apéndices
-usualmente involucran aspectos de esta índole, que se salen de la línea de la
-tesis, pero que es conveniente incluir por completitud.
+\begin{algorithm}[h]
+\caption{Deep Q-Learning con repetición de experiencias. Fuente: \cite{DQNbase}.}\label{alg:DQN}
+\begin{algorithmic}[1]
+\State Inicialice repositorio de experiencia $D$ con capacidad $N$.
+\State Inicialice función acción-valor $Q$ con pesos aleatorios $\underline{\theta}$.
+\State Inicialice función acción-valor objetivo $\hat{Q}$ con pesos $\underline{\theta}^- = \underline{\theta}$.
+\For{$episodio=1, \dots, M$}
+    \State Inicialice secuencia $s_1 = \{ x_1 \}$ y su mapeo $\phi_1 = \phi(s_1)$.
+    \For{$t=1, \dots, T$}
+        \If{$\text{rand}_{[0,1]} < \varepsilon$}
+            \State $a_t = \text{acción aleatoria}$
+        \Else
+            \State $a_t = \arg \max_a Q(\phi (s_t), a; \underline{\theta})$
+        \EndIf
+        \State Ejecute $a_t$ y observe $R_t = R(s_t, a_t, s_{t+1})$ y nuevo valor $x_{t+1}$.
+        \State Haga $s_{t+1} = s_t, a_t, x_{t+1}$, procurese $\phi_{t+1} = \phi(s_{t+1})$.
+        \State Almacene transición $(\phi_t, a_t, R_t, \phi_{t+1})$ en $D$.
+        \State Muestre aleatoriamente $D$ con un mini-lote.
+        \State Asigne 
+        \[
+        y_j = \begin{cases} 
+        R_j & \text{si en $j+1$ termina episodio} \\ 
+        R_j + \gamma \max_{a'} \hat{Q}(\phi_{j+1}, a'; \underline{\theta}^-) & \text{para el resto}
+        \end{cases}
+        \]
+        \State Haga un paso de descenso de gradiente sobre $(y_j - 				Q(\phi_j, a_j; \underline{\theta}))^2$ con respecto a $					\underline{\theta}$.
+        \State Cada $C$ pasos restablezca $\hat{Q} = Q$.
+    \EndFor
+\EndFor
+\end{algorithmic}
+\end{algorithm}
 
-Los anexos contienen toda información adicional que se considere pertinente
-agregar, como manuales de usuario, demostraciones matemáticas que se salen de
-la línea principal de la tesis, pero que pueden considerarse parte de los
-resultados del trabajo.
+
+
+\chapter{Algoritmo del método PPO}
+\label{apx:apendicePPO}
+
+
+\begin{algorithm}[h]
+\caption{Optimización de política próxima (\textit{PPO-Clip}). Fuente: \cite{PPObase}.}\label{alg:PPO}
+\begin{algorithmic}[1]
+\State Inicialice parámetros de la política $\theta_0$.
+\State Inicialice los parámetros de la función de valor $\phi_0$.
+\For{$k=0,1,2,\dots$}
+	\State Recoge el conjunto de trajectoria $D_k=\{\tau_i\}$ al 			correr la política $\pi_k =\pi (\theta_k)$ en el entorno.
+	\State Calcula el \textit{reward-to-go} $\hat{R}_t$.
+	\State Calcula la estimación de ventaja $\hat{A}_t$ (usando 			cualquier método de estimación de ventaja) basada en el actual 			valor de la función $V_{\phi_k}$.
+	\State Actualizar la política al maximizar el objetivo del PPO-			Clip:
+	\[g(\varepsilon , A) = \begin{cases} 
+        (1+\varepsilon)A & \text{$A\geq 0$} \\ 
+        (1-\varepsilon)A & \text{$A < 0$}
+        \end{cases}\]
+    \[
+    \theta_{k+1} = \arg \max_{\phi} \frac{1}{|D_k| T}\sum_{\tau\in 			D_k} \sum^T_{t=0} \min \left(\frac{\pi_{\theta}(a_t | s_t)}				{\pi_{\theta_k}(a_t | s_t)}\, A^{\pi_{\theta_k}}(s_t,\, a_t),\,\, 		g(\varepsilon, A^{\pi_{\theta_k}}(s_t,\, a_t)) \right)
+    \]
+    típicamente mediante ascenso en gradiente estocástico con Adam.
+    \State Ajustar la función de valor por regresión sobre el error 		cuadrático medio (MSE):
+    \[
+	\phi_{k+1} = \arg\min_{\phi}\frac{1}{|D_k| T} \sum_{\tau\in 			D_k} \sum^T_{t=0} \left(V_{\phi}(s_t)-\hat{R}_t  \right)^2
+    \]
+    típicamente mediante algún descenso de gradiente.
+\EndFor
+\end{algorithmic}
+\end{algorithm}
+

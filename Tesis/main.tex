@@ -104,15 +104,16 @@
   %%   Al acta firmada, en formato PDF (ya sea firmado con tabletas gráficas o
   %%   en papel y escaneada) la integra al documento con el comando para incluir
   %%   el pdf directamente \includepdf{archivo} 
-  \include{acta_aprob_licel}  % Remover en versión final
-  %\includepdf{acta_aprob_firmada} % Incluir el acta firmada acá.
-
+  %\include{acta_aprob_licel}  % Remover en versión final
+  \includepdf[width=1.4\textwidth, offset=0.75in -1.00in]{actas/acta_aprob_firmada} % Incluir el acta firmada acá.
+  
   %% El acta de evaluación usualmente la extrae del documento y
   %% la entrega al tribunal para que sea firmada, y ellos la hacen
   %% llegar al profesor del curso de TFG.  Ese documento no
   %% debe aparecer en la tesis final, así que esta línea deberá
   %% comentarla en la versión final:
-  \include{acta_eval_licel}   % >> Remover en versión final <<
+  %\include{acta_eval_licel}   % >> Remover en versión final <<
+  %\includepdf{actas/acta_aprob_firmada}
     
   %% Para la maestría en electrónica:
   %\include{acta_aprob_mscel}  % Remover en versión final
@@ -171,10 +172,10 @@
   %----------------------------------------------------------------------------
 
   %----------------------------------------------------------------------------
-  %\appendix
+  \appendix
   %----------------------------------------------------------------------------
 
-  %\include{apendice}
+  \include{apendice}
 
   %----------------------------------------------------------------------------
   \backmatter

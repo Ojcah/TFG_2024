@@ -189,7 +189,7 @@ Cada método cuenta con sus premisas que los hacen adecuados para sistemas o ent
 
 \subsection{Deep Q-Network (DQN)}
 
-El algoritmo (\textit{Deep Q-Learning}, DQL) es un método de aprendizaje reforzado introducido por la compañía DeepMind Technologies (hoy Google DeepMind) en el año $2013$. El DQL usa RNA para aproximar los llamados valores Q, por lo que se suele definir al método como DQN (\textit{Deep Q-Network}) \cite{DQNbase}. 
+El algoritmo (\textit{Deep Q-Learning}, DQL) es un método de aprendizaje reforzado introducido por la compañía DeepMind Technologies (hoy Google DeepMind) en el año $2013$. El DQL usa RNA para aproximar los llamados valores Q, por lo que se suele definir al método como DQN (\textit{Deep Q-Network}). El algoritmo de funcionamiento general del método se muestra en el apéndice \ref{apx:apendiceDQN} \cite{DQNbase}.
 
 Los valores Q provienen del algoritmo clásico de aprendizaje Q (\textit{Q-learning}). Como se observa en la figura \ref{fig:RLcategorias}, se trata de un método fuera de política (\textit{off-policy}), de manera que el aprendizaje de un agente se realiza mediante la exploración de acciones que no siguen la política que haya aprendido el sistema \cite{DataScience}\cite{DQNexplained}. Se define el valor $V(s)$ en un estado $s$ como la recompensa esperada en el estado $s$, si se siguiera una política óptima a partir de allí, o en otras palabras, la mejor recompensa esperable a partir del estado $s$. El valor Q es similar, y se relaciona con el valor $V(s)$ con:
 \begin{equation}
@@ -227,7 +227,7 @@ donde $target_j$ es la referencia objetivo del lote anterior y el término $Q(\p
 
 \subsection{Optimización de política próxima (PPO)}
 
-Se trata de un método basado en política (\textit{on-policy}) propuesto en $2017$ por la empresa OpenAI que aprende directamente a predecir la acción para espacios de estado discretos y continuos. Se busca cumplir una política definida y optimizarla poco a poco con actualizaciones. El método nace con la necesidad de utilizar un algoritmo de mayor accesibilidad en su implementación, al contrario de métodos similares pero de mayor complejidad, como el TRPO (\textit{trust region policy optimization}) \cite{PPObase}. 
+Se trata de un método basado en política (\textit{on-policy}) propuesto en $2017$ por la empresa OpenAI que aprende directamente a predecir la acción para espacios de estado discretos y continuos. Se busca cumplir una política definida y optimizarla poco a poco con actualizaciones. El método nace con la necesidad de utilizar un algoritmo de mayor accesibilidad en su implementación, al contrario de métodos similares pero de mayor complejidad, como el TRPO (\textit{trust region policy optimization}). El algoritmo del método PPO se muestra en el apéndice \ref{apx:apendicePPO} \cite{PPObase}. 
 
 Entre las funciones clave del método PPO se encuentra la razón de los pesos de la política actual respecto a la anterior, con base en la función de política (\ref{ecu:policy}):
 \begin{equation}
