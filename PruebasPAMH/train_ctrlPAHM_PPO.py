@@ -127,8 +127,6 @@ def train(env, hyperparameters, actor_model, critic_model):
 ## **************************************************************************************
 ## **************************************************************************************
 
-wandb.login(key="0005da299924ab3d8473fa6a5f120b46a82a6a7a")
-
 
 wandb.init(project = "PAMH_PPO", 
            name = args.run_name,
