@@ -90,8 +90,6 @@ def train(env, hyperparameters, policy_model, target_model):
 ## **************************************************************************************
 ## **************************************************************************************
 
-wandb.login(key="0005da299924ab3d8473fa6a5f120b46a82a6a7a")
-
 wandb.init(project = "PAMH_DQN", 
            name = args.run_name,
            #resume = 'Allow',
